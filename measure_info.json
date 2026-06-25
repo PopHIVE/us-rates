@@ -32,6 +32,87 @@
       "description": "The 2020 Census Urban Area to County Allocation File maps Census-defined urban areas (urbanized areas with population ≥ 50,000 and urban clusters with population 2,500–49,999) to counties. Each row represents a county-urban area intersection and includes the share of county population, land area, and housing units within that urban area. Summing across all urban areas for a county yields total percent urban. Counties not appearing in the file have no urban area and are considered 100% rural. Urban area boundaries are based on the 2020 decennial Census and reflect the updated delineation methodology that increased the minimum population threshold for urbanized areas from 50,000 to 50,000 and revised cluster definitions.",
       "restrictions": "Public domain. U.S. Census Bureau data are generally not subject to copyright restrictions.",
       "date_accessed": 2026
+    },
+    "epic": {
+      "name": "Epic Cosmos",
+      "url": "https://cosmos.epic.com",
+      "organization": "Epic Systems",
+      "organization_url": "https://www.epic.com",
+      "description": "Epic Cosmos is a HIPAA-compliant aggregated dataset built from the electronic health records of participating health systems using Epic, covering more than 300 million patients. Prevalence estimates reflect patients seen within participating health systems and the share of each county's population captured varies; counties with low capture may be unrepresentative.",
+      "restrictions": "Epic Cosmos data require attribution to Epic Cosmos.",
+      "date_accessed": 2025
+    },
+    "brfss": {
+      "name": "Behavioral Risk Factor Surveillance System",
+      "url": "https://www.cdc.gov/brfss",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "The Behavioral Risk Factor Surveillance System (BRFSS) is an annual state-based telephone survey of U.S. adults collecting self-reported data on health conditions and behaviors. Estimates are self-reported and carry sampling confidence intervals.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2025
+    },
+    "cms": {
+      "name": "CMS Mapping Medicare Disparities",
+      "url": "https://data.cms.gov",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "organization_url": "https://www.cms.gov",
+      "description": "Chronic condition prevalence and preventive service utilization computed from Medicare fee-for-service claims. Estimates reflect the Medicare beneficiary population, not the general population, and small counts may be suppressed.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2025
+    },
+    "nis": {
+      "name": "National Immunization Survey",
+      "url": "https://www.cdc.gov/vaccines/imz-managers/nis",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "The National Immunization Survey (NIS) estimates childhood vaccination coverage from a national telephone survey with provider-verified vaccination histories. Coverage is reported by birth cohort at milestone ages; the most recent cohorts have not yet reached all milestone ages.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2025
+    },
+    "svv": {
+      "name": "SchoolVaxView",
+      "url": "https://www.cdc.gov/schoolvaxview",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "SchoolVaxView reports vaccination coverage and exemption rates among kindergartners, compiled from state and local immunization programs. Coverage and exemption definitions vary by state.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2025
+    },
+    "nchs": {
+      "name": "National Center for Health Statistics",
+      "url": "https://www.cdc.gov/nchs",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "The National Center for Health Statistics (NCHS) compiles U.S. mortality data from death certificates, including provisional drug overdose counts and age-adjusted death rates by cause. Provisional counts are subject to revision and some are suppressed or pending investigation.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2025
+    },
+    "healthmap": {
+      "name": "HealthMap MMR Coverage",
+      "url": "https://www.healthmap.org",
+      "organization": "Boston Children's Hospital",
+      "organization_url": "https://www.childrenshospital.org",
+      "description": "County-level MMR vaccination coverage compiled and modeled by HealthMap from state and local immunization data. Coverage definitions vary by source jurisdiction.",
+      "restrictions": "Attribution required.",
+      "date_accessed": 2025
+    },
+    "wapo": {
+      "name": "Washington Post / state health departments",
+      "url": "https://www.washingtonpost.com",
+      "organization": "The Washington Post",
+      "organization_url": "https://www.washingtonpost.com",
+      "description": "County- and school-level kindergarten MMR vaccination rates compiled by The Washington Post from state health department records. Coverage definitions vary by state.",
+      "restrictions": "Attribution required.",
+      "date_accessed": 2025
+    },
+    "fattah": {
+      "name": "County Vaccine Exemption Estimates",
+      "url": "https://www.pophive.org/childhood-immunizations",
+      "organization": "PopHIVE, Yale School of Public Health",
+      "organization_url": "https://www.pophive.org",
+      "description": "County- and state-level medical and non-medical MMR exemption rate estimates. Exemption definitions and reporting completeness vary by state; some county values are state-level estimates.",
+      "restrictions": "Attribution required.",
+      "date_accessed": 2025
     }
   },
   "chr_premature_death": {
@@ -1680,6 +1761,748 @@
     "sources": [
       {
         "id": "census_ua_county"
+      }
+    ]
+  },
+  "epic_diabetes_hba1c": {
+    "id": "epic_diabetes_hba1c",
+    "short_name": "Diabetes (Epic, HbA1c)",
+    "long_name": "Diabetes Prevalence (Epic Cosmos, HbA1c-based)",
+    "category": "chronic",
+    "short_description": "Percentage of patients with diabetes, identified by HbA1c, in Epic Cosmos health systems.",
+    "long_description": "Percentage of patients with diabetes identified by elevated HbA1c laboratory results among patients seen within Epic Cosmos-participating health systems. The share of each county's population captured by Epic Cosmos varies, so counties with low capture may be unrepresentative.",
+    "statement": "In {location}, {value}% of patients in Epic Cosmos health systems had diabetes.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "epic"
+      }
+    ]
+  },
+  "epic_obesity_bmi": {
+    "id": "epic_obesity_bmi",
+    "short_name": "Obesity (Epic, BMI)",
+    "long_name": "Obesity Prevalence (Epic Cosmos, BMI-based)",
+    "category": "chronic",
+    "short_description": "Percentage of patients with obesity, identified by BMI, in Epic Cosmos health systems.",
+    "long_description": "Percentage of patients with obesity (body mass index ≥ 30) identified from recorded BMI among patients seen within Epic Cosmos-participating health systems. The share of each county's population captured by Epic Cosmos varies, so counties with low capture may be unrepresentative.",
+    "statement": "In {location}, {value}% of patients in Epic Cosmos health systems had obesity.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "epic"
+      }
+    ]
+  },
+  "brfss_diabetes": {
+    "id": "brfss_diabetes",
+    "short_name": "Diabetes (BRFSS)",
+    "long_name": "Diagnosed Diabetes Prevalence (BRFSS)",
+    "category": "chronic",
+    "short_description": "Percentage of adults who report ever being told they have diabetes.",
+    "long_description": "Percentage of adults who report ever being told by a doctor that they have diabetes, from the CDC Behavioral Risk Factor Surveillance System (BRFSS). Estimates are self-reported and carry sampling confidence intervals.",
+    "statement": "In {location}, {value}% of adults had diagnosed diabetes.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "brfss"
+      }
+    ]
+  },
+  "brfss_obesity": {
+    "id": "brfss_obesity",
+    "short_name": "Obesity (BRFSS)",
+    "long_name": "Adult Obesity Prevalence (BRFSS)",
+    "category": "chronic",
+    "short_description": "Percentage of adults with a body mass index of 30 or higher.",
+    "long_description": "Percentage of adults with a self-reported body mass index (BMI) of 30 or higher, from the CDC Behavioral Risk Factor Surveillance System (BRFSS). Estimates are self-reported and carry sampling confidence intervals.",
+    "statement": "In {location}, {value}% of adults were obese.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "brfss"
+      }
+    ]
+  },
+  "cms_{condition}": {
+    "short_name": "{condition.short_name} (Medicare)",
+    "long_name": "{condition.short_name} prevalence among Medicare beneficiaries",
+    "category": "chronic",
+    "short_description": "Percentage of Medicare beneficiaries with {condition.short_name}.",
+    "long_description": "Percentage of Medicare fee-for-service beneficiaries with {condition.short_name}, from the CMS Mapping Medicare Disparities tool. Estimates reflect the Medicare population, not the general population, and small counts may be suppressed.",
+    "statement": "In {location}, {value}% of Medicare beneficiaries had {condition.short_name}.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cms"
+      }
+    ],
+    "variants": {
+      "acute_myocardial_infarction": { "short_name": "acute myocardial infarction" },
+      "adhd": { "short_name": "ADHD" },
+      "alcohol_use_disorder": { "short_name": "alcohol use disorder" },
+      "alzheimers": { "short_name": "Alzheimer's disease" },
+      "anemia": { "short_name": "anemia" },
+      "anxiety": { "short_name": "anxiety disorders" },
+      "asthma": { "short_name": "asthma" },
+      "atrial_fibrilation": { "short_name": "atrial fibrillation" },
+      "bipolar": { "short_name": "bipolar disorder" },
+      "chronic_kidney": { "short_name": "chronic kidney disease" },
+      "colorectal_breast_prostate_lung_cancer": { "short_name": "colorectal, breast, prostate, or lung cancer" },
+      "copd": { "short_name": "COPD" },
+      "depression": { "short_name": "depression" },
+      "depressive_disorder": { "short_name": "depressive disorder" },
+      "diabetes": { "short_name": "diabetes" },
+      "drug_use_disorder": { "short_name": "drug use disorder" },
+      "glaucoma": { "short_name": "glaucoma" },
+      "heart_failure_non_ischemic": { "short_name": "non-ischemic heart failure" },
+      "hip_pelvic_fracture": { "short_name": "hip or pelvic fracture" },
+      "hyperlidipemia": { "short_name": "hyperlipidemia" },
+      "hypertension": { "short_name": "hypertension" },
+      "ischemic_heart_disease": { "short_name": "ischemic heart disease" },
+      "obesity": { "short_name": "obesity" },
+      "opioid_use_disorder_dx_px_based": { "short_name": "opioid use disorder (diagnosis/procedure-based)" },
+      "opioid_use_disorder_overarching": { "short_name": "opioid use disorder (overarching)" },
+      "osteoporosis": { "short_name": "osteoporosis" },
+      "parkinsons": { "short_name": "Parkinson's disease" },
+      "ptsd": { "short_name": "PTSD" },
+      "rheumoatoid_arthritis": { "short_name": "rheumatoid arthritis" },
+      "schizophrenia": { "short_name": "schizophrenia" },
+      "schizophrenia_other_psychotic": { "short_name": "schizophrenia and other psychotic disorders" },
+      "stroke_ischemic_attack": { "short_name": "stroke or transient ischemic attack" },
+      "tobacco_use_disorder": { "short_name": "tobacco use disorder" }
+    }
+  },
+  "cms_scrn_prvnt_{service}": {
+    "short_name": "{service.short_name} (Medicare)",
+    "long_name": "{service.short_name} utilization among Medicare beneficiaries",
+    "category": "immunization",
+    "short_description": "Percentage of eligible Medicare beneficiaries who received {service.short_name}.",
+    "long_description": "Percentage of eligible Medicare fee-for-service beneficiaries who received {service.short_name}, from the CMS Mapping Medicare Disparities tool. Estimates reflect the Medicare population, not the general population, and small counts may be suppressed.",
+    "statement": "In {location}, {value}% of eligible Medicare beneficiaries received {service.short_name}.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cms"
+      }
+    ],
+    "variants": {
+      "annual_wellness": { "short_name": "an annual wellness visit" },
+      "cardiovascular_disease": { "short_name": "cardiovascular disease screening" },
+      "colorectal_cancer": { "short_name": "colorectal cancer screening" },
+      "depression": { "short_name": "depression screening" },
+      "diabetes": { "short_name": "diabetes screening" },
+      "influenza_vaccine": { "short_name": "influenza vaccination" },
+      "mammogram": { "short_name": "a mammogram" },
+      "pap_test": { "short_name": "a Pap test" },
+      "pelvic_exam": { "short_name": "a pelvic exam" },
+      "pneumococcal_vaccine": { "short_name": "pneumococcal vaccination" },
+      "prostate_cancer": { "short_name": "prostate cancer screening" },
+      "sti": { "short_name": "sexually transmitted infection screening" }
+    }
+  },
+  "nis_{vaccine}": {
+    "short_name": "{vaccine.short_name} (NIS)",
+    "long_name": "Childhood vaccination coverage: {vaccine.short_name} (NIS)",
+    "category": "immunization",
+    "short_description": "Percentage of children vaccinated with {vaccine.short_name}.",
+    "long_description": "Percentage of children vaccinated with {vaccine.short_name}, from the CDC National Immunization Survey (NIS). Coverage is reported by birth cohort at the milestone assessment age; the most recent cohorts have not yet reached all milestone ages.",
+    "statement": "In {location}, {value}% of children received {vaccine.short_name}.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nis"
+      }
+    ],
+    "variants": {
+      "1_dose_mmr": { "short_name": "≥1 dose MMR" },
+      "1_dose_varicella": { "short_name": "≥1 dose varicella" },
+      "combined_7_series": { "short_name": "the combined 7-vaccine series" },
+      "dtap_1_dose": { "short_name": "≥1 dose DTaP" },
+      "dtap_2_doses": { "short_name": "≥2 doses DTaP" },
+      "dtap_3_doses": { "short_name": "≥3 doses DTaP" },
+      "dtap_4_doses": { "short_name": "≥4 doses DTaP" },
+      "hep_a_1_dose": { "short_name": "≥1 dose Hep A" },
+      "hep_a_2_doses": { "short_name": "≥2 doses Hep A" },
+      "hep_b_1_dose": { "short_name": "≥1 dose Hep B" },
+      "hep_b_1_dose_1_day": { "short_name": "≥1 dose Hep B (by 1 day)" },
+      "hep_b_1_dose_2_day": { "short_name": "≥1 dose Hep B (by 2 days)" },
+      "hep_b_1_dose_3_day_birth_dose": { "short_name": "Hep B birth dose (by 3 days)" },
+      "hep_b_2_doses": { "short_name": "≥2 doses Hep B" },
+      "hep_b_3_doses": { "short_name": "≥3 doses Hep B" },
+      "hib_1_dose": { "short_name": "≥1 dose Hib" },
+      "hib_2_doses": { "short_name": "≥2 doses Hib" },
+      "hib_3_doses": { "short_name": "≥3 doses Hib" },
+      "hib_full_series": { "short_name": "the full Hib series" },
+      "hib_primary_series": { "short_name": "the Hib primary series" },
+      "pcv_1_dose": { "short_name": "≥1 dose PCV" },
+      "pcv_2_doses": { "short_name": "≥2 doses PCV" },
+      "pcv_3_doses": { "short_name": "≥3 doses PCV" },
+      "pcv_4_doses": { "short_name": "≥4 doses PCV" },
+      "polio_1_dose": { "short_name": "≥1 dose polio" },
+      "polio_2_doses": { "short_name": "≥2 doses polio" },
+      "polio_3_doses": { "short_name": "≥3 doses polio" },
+      "rotavirus": { "short_name": "rotavirus vaccine" }
+    }
+  },
+  "svv_{vaccine}": {
+    "short_name": "{vaccine.short_name} (Kindergarten)",
+    "long_name": "Kindergarten vaccination coverage: {vaccine.short_name}",
+    "category": "immunization",
+    "short_description": "Percentage of kindergartners vaccinated with {vaccine.short_name}.",
+    "long_description": "Percentage of kindergartners vaccinated with {vaccine.short_name}, from CDC SchoolVaxView. Coverage definitions vary by state.",
+    "statement": "In {location}, {value}% of kindergartners received {vaccine.short_name}.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "svv"
+      }
+    ],
+    "variants": {
+      "dtap": { "short_name": "DTaP" },
+      "hep_b": { "short_name": "Hep B" },
+      "mmr": { "short_name": "MMR" },
+      "polio": { "short_name": "polio" },
+      "varicella": { "short_name": "varicella" }
+    }
+  },
+  "svv_exempt_{type}": {
+    "short_name": "Kindergarten {type.short_name}",
+    "long_name": "Kindergarten vaccine exemption rate: {type.short_name}",
+    "category": "immunization",
+    "short_description": "Percentage of kindergartners with a {type.short_name}.",
+    "long_description": "Percentage of kindergartners with a {type.short_name} from one or more required vaccines, from CDC SchoolVaxView. Exemption definitions vary by state.",
+    "statement": "In {location}, {value}% of kindergartners had a {type.short_name}.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "svv"
+      }
+    ],
+    "variants": {
+      "full": { "short_name": "any vaccine exemption" },
+      "medical": { "short_name": "medical exemption" },
+      "personal": { "short_name": "personal (non-medical) exemption" }
+    }
+  },
+  "exempt_mmr_{type}": {
+    "short_name": "MMR {type.short_name}",
+    "long_name": "MMR {type.short_name} rate",
+    "category": "immunization",
+    "short_description": "Estimated percentage with a {type.short_name} from MMR vaccination.",
+    "long_description": "Estimated percentage of children with a {type.short_name} from MMR vaccination. Exemption definitions and reporting completeness vary by state; some county values are state-level estimates.",
+    "statement": "In {location}, the MMR {type.short_name} rate was {value}%.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "fattah"
+      }
+    ],
+    "variants": {
+      "medical": { "short_name": "medical exemption" },
+      "nonmedical": { "short_name": "non-medical exemption" }
+    }
+  },
+  "wapo_mmr_coverage": {
+    "id": "wapo_mmr_coverage",
+    "short_name": "MMR Coverage (Kindergarten)",
+    "long_name": "Kindergarten MMR Vaccination Coverage (Washington Post)",
+    "category": "immunization",
+    "short_description": "Percentage of kindergartners vaccinated against measles, mumps, and rubella.",
+    "long_description": "Percentage of kindergartners vaccinated against measles, mumps, and rubella (MMR), compiled by The Washington Post from state health department records. Coverage definitions vary by state.",
+    "statement": "In {location}, {value}% of kindergartners were vaccinated against MMR.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "wapo"
+      }
+    ]
+  },
+  "healthmap_mmr_coverage": {
+    "id": "healthmap_mmr_coverage",
+    "short_name": "MMR Coverage (HealthMap)",
+    "long_name": "MMR Vaccination Coverage (HealthMap)",
+    "category": "immunization",
+    "short_description": "Modeled MMR vaccination coverage from HealthMap.",
+    "long_description": "MMR vaccination coverage compiled and modeled by HealthMap from state and local immunization data. Coverage definitions vary by source jurisdiction.",
+    "statement": "In {location}, modeled MMR vaccination coverage was {value}%.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "healthmap"
+      }
+    ]
+  },
+  "nchs_overdose_deaths": {
+    "id": "nchs_overdose_deaths",
+    "short_name": "Overdose Deaths",
+    "long_name": "Drug Overdose Deaths (NCHS, provisional)",
+    "category": "injury",
+    "short_description": "Provisional count of drug overdose deaths.",
+    "long_description": "Provisional monthly count of drug overdose deaths from the CDC National Center for Health Statistics. Counts are provisional, subject to revision, and small counts may be suppressed.",
+    "statement": "In {location}, there were {value} drug overdose deaths.",
+    "measure_type": "Count",
+    "unit": "Count",
+    "time_resolution": "Month",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_overdose_pct_pending": {
+    "id": "nchs_overdose_pct_pending",
+    "short_name": "Overdose Deaths Pending Investigation",
+    "long_name": "Percentage of Overdose Deaths Pending Investigation (NCHS)",
+    "category": "injury",
+    "short_description": "Percentage of overdose death records pending investigation.",
+    "long_description": "Percentage of drug overdose death records still pending investigation, from the CDC National Center for Health Statistics. Higher values indicate counts more likely to be revised upward.",
+    "statement": "In {location}, {value}% of overdose death records were pending investigation.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Month",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_deaths_{cause}": {
+    "short_name": "{cause.short_name} Deaths",
+    "long_name": "{cause.short_name} deaths (NCHS, provisional)",
+    "category": "injury",
+    "short_description": "Provisional count of {cause.short_name} deaths.",
+    "long_description": "Provisional monthly count of {cause.short_name} deaths from the CDC National Center for Health Statistics. Counts are provisional, subject to revision, and small counts may be suppressed.",
+    "statement": "In {location}, there were {value} {cause.short_name} deaths.",
+    "measure_type": "Count",
+    "unit": "Count",
+    "time_resolution": "Month",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ],
+    "variants": {
+      "all_cause": { "short_name": "all-cause" },
+      "any_opioid": { "short_name": "any-opioid" },
+      "cocaine": { "short_name": "cocaine-involved" },
+      "heroin": { "short_name": "heroin-involved" },
+      "methadone": { "short_name": "methadone-involved" },
+      "overdose": { "short_name": "drug overdose" }
+    }
+  },
+  "nchs_pct_complete": {
+    "id": "nchs_pct_complete",
+    "short_name": "Death Data Completeness",
+    "long_name": "Percentage of Death Records Complete (NCHS)",
+    "category": "injury",
+    "short_description": "Estimated completeness of provisional death records.",
+    "long_description": "Estimated percentage completeness of provisional mortality records for the period, from the CDC National Center for Health Statistics. Lower values indicate counts more likely to be revised upward.",
+    "statement": "In {location}, provisional death records were {value}% complete.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Month",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_pct_pending_invest": {
+    "id": "nchs_pct_pending_invest",
+    "short_name": "Deaths Pending Investigation",
+    "long_name": "Percentage of Death Records Pending Investigation (NCHS)",
+    "category": "injury",
+    "short_description": "Percentage of death records pending investigation.",
+    "long_description": "Percentage of mortality records still pending investigation, from the CDC National Center for Health Statistics. Higher values indicate counts more likely to be revised upward.",
+    "statement": "In {location}, {value}% of death records were pending investigation.",
+    "measure_type": "Percent",
+    "unit": "Percent",
+    "time_resolution": "Month",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_all_causes": {
+    "id": "nchs_rate_all_causes",
+    "short_name": "All-Cause Mortality",
+    "long_name": "All-Cause Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted deaths from all causes per 100,000 population.",
+    "long_description": "Age-adjusted death rate from all causes per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the all-cause mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_alzheimer_disease": {
+    "id": "nchs_rate_alzheimer_disease",
+    "short_name": "Alzheimer's Disease Mortality",
+    "long_name": "Alzheimer's Disease Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted Alzheimer's disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from Alzheimer's disease per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the Alzheimer's disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_cancer": {
+    "id": "nchs_rate_cancer",
+    "short_name": "Cancer Mortality",
+    "long_name": "Cancer Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted cancer deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from cancer (malignant neoplasms) per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the cancer mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_chronic_liver_disease_and_cirrhosis": {
+    "id": "nchs_rate_chronic_liver_disease_and_cirrhosis",
+    "short_name": "Chronic Liver Disease Mortality",
+    "long_name": "Chronic Liver Disease and Cirrhosis Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted chronic liver disease and cirrhosis deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from chronic liver disease and cirrhosis per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the chronic liver disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_chronic_lower_respiratory_diseases": {
+    "id": "nchs_rate_chronic_lower_respiratory_diseases",
+    "short_name": "Chronic Lower Respiratory Disease Mortality",
+    "long_name": "Chronic Lower Respiratory Diseases Mortality Rate (NCHS)",
+    "category": "respiratory",
+    "short_description": "Age-adjusted chronic lower respiratory disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from chronic lower respiratory diseases per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the chronic lower respiratory disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_covid_19": {
+    "id": "nchs_rate_covid_19",
+    "short_name": "COVID-19 Mortality",
+    "long_name": "COVID-19 Mortality Rate (NCHS)",
+    "category": "respiratory",
+    "short_description": "Age-adjusted COVID-19 deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from COVID-19 per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the COVID-19 mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_diabetes": {
+    "id": "nchs_rate_diabetes",
+    "short_name": "Diabetes Mortality",
+    "long_name": "Diabetes Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted diabetes deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from diabetes per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the diabetes mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_drug_overdose": {
+    "id": "nchs_rate_drug_overdose",
+    "short_name": "Drug Overdose Mortality",
+    "long_name": "Drug Overdose Mortality Rate (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted drug overdose deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from drug overdose per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the drug overdose mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_falls_ages_65_and_over": {
+    "id": "nchs_rate_falls_ages_65_and_over",
+    "short_name": "Falls Mortality (65+)",
+    "long_name": "Fall-Related Mortality Rate, Ages 65 and Over (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted fall-related deaths among adults 65 and over per 100,000.",
+    "long_description": "Age-adjusted death rate from falls among adults ages 65 and over per 100,000 population in that age group, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the fall-related mortality rate among adults 65 and over was {value} per 100,000.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_firearm_related_injury": {
+    "id": "nchs_rate_firearm_related_injury",
+    "short_name": "Firearm Mortality",
+    "long_name": "Firearm-Related Injury Mortality Rate (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted firearm-related deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from firearm-related injuries per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the firearm-related mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_heart_disease": {
+    "id": "nchs_rate_heart_disease",
+    "short_name": "Heart Disease Mortality",
+    "long_name": "Heart Disease Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted heart disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from heart disease per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the heart disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_hiv_disease": {
+    "id": "nchs_rate_hiv_disease",
+    "short_name": "HIV Disease Mortality",
+    "long_name": "HIV Disease Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted HIV disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from HIV disease per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the HIV disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_homicide": {
+    "id": "nchs_rate_homicide",
+    "short_name": "Homicide Mortality",
+    "long_name": "Homicide Mortality Rate (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted homicide deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from homicide per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the homicide mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_hypertension": {
+    "id": "nchs_rate_hypertension",
+    "short_name": "Hypertension Mortality",
+    "long_name": "Hypertension Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted hypertension deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from essential hypertension and hypertensive renal disease per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the hypertension mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_influenza_and_pneumonia": {
+    "id": "nchs_rate_influenza_and_pneumonia",
+    "short_name": "Influenza & Pneumonia Mortality",
+    "long_name": "Influenza and Pneumonia Mortality Rate (NCHS)",
+    "category": "respiratory",
+    "short_description": "Age-adjusted influenza and pneumonia deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from influenza and pneumonia per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the influenza and pneumonia mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_kidney_disease": {
+    "id": "nchs_rate_kidney_disease",
+    "short_name": "Kidney Disease Mortality",
+    "long_name": "Kidney Disease Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted kidney disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from nephritis, nephrotic syndrome, and nephrosis per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the kidney disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_parkinson_disease": {
+    "id": "nchs_rate_parkinson_disease",
+    "short_name": "Parkinson's Disease Mortality",
+    "long_name": "Parkinson's Disease Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted Parkinson's disease deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from Parkinson's disease per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the Parkinson's disease mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_pneumonitis_due_to_solids_and_liquids": {
+    "id": "nchs_rate_pneumonitis_due_to_solids_and_liquids",
+    "short_name": "Aspiration Pneumonitis Mortality",
+    "long_name": "Pneumonitis Due to Solids and Liquids Mortality Rate (NCHS)",
+    "category": "respiratory",
+    "short_description": "Age-adjusted deaths from pneumonitis due to solids and liquids per 100,000 population.",
+    "long_description": "Age-adjusted death rate from pneumonitis due to solids and liquids (aspiration pneumonitis) per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the aspiration pneumonitis mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_stroke": {
+    "id": "nchs_rate_stroke",
+    "short_name": "Stroke Mortality",
+    "long_name": "Stroke (Cerebrovascular Disease) Mortality Rate (NCHS)",
+    "category": "chronic",
+    "short_description": "Age-adjusted stroke deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from cerebrovascular diseases (stroke) per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the stroke mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_suicide": {
+    "id": "nchs_rate_suicide",
+    "short_name": "Suicide Mortality",
+    "long_name": "Suicide Mortality Rate (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted suicide deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from intentional self-harm (suicide) per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the suicide mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "nchs_rate_unintentional_injuries": {
+    "id": "nchs_rate_unintentional_injuries",
+    "short_name": "Unintentional Injury Mortality",
+    "long_name": "Unintentional Injury Mortality Rate (NCHS)",
+    "category": "injury",
+    "short_description": "Age-adjusted unintentional injury deaths per 100,000 population.",
+    "long_description": "Age-adjusted death rate from unintentional (accidental) injuries per 100,000 population, from the CDC National Center for Health Statistics.",
+    "statement": "In {location}, the unintentional injury mortality rate was {value} per 100,000 population.",
+    "measure_type": "Rate",
+    "unit": "Per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
       }
     ]
   }
