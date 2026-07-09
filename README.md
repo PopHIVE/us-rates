@@ -210,6 +210,34 @@ The root `measure_info.json` documents every measure used across the repository.
 
 ---
 
+## Updating the Data
+
+The repo is built by a pipeline of R scripts that pull from a sibling `Ingest` clone (expected at `../Ingest` relative to this repo) and write into the folder structure described above. Run everything at once with the wrapper script, from the repo root:
+
+```
+Rscript code/update_all.R
+```
+
+This runs, in order:
+
+1. **`all_fips.R`** — refreshes `resources/all_fips.csv.gz`, the FIPS-code-to-name reference table (via `tidycensus`).
+2. **`scaffold_structure.R`** — creates any new `states/{state}/counties/{fips}_{name}/` folders (safe to re-run; existing folders are never overwritten). Skip with `--skip-scaffold` once the tree is already up to date.
+3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
+4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz`.
+5. **`code/populate_county_rates.R`** — writes `states/*/counties/*/county_rates.csv.gz`.
+
+To skip the (usually unnecessary) scaffolding step on a routine data refresh:
+
+```
+Rscript code/update_all.R --skip-scaffold
+```
+
+**Before running:** make sure the `Ingest` repo alongside this one is up to date, since the `populate_*` scripts read directly from `../Ingest/data/`. Any script can also be run individually (see the `Usage` comment at the top of each file) if you only need to refresh one part of the pipeline.
+
+**Adding a new data source:** add a block to the relevant `populate_*_rates.R` script(s) that reads the new Ingest source, reshapes it into long format (`geography`, `time`, `measure`, `value`), and joins it into that script's `combined` bind_rows() call — then add a corresponding entry to `measure_info.json` for every new measure name.
+
+---
+
 ## Principles
 
 * **FIPS-first:** All geographies are identified by FIPS codes, never by name alone.

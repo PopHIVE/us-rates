@@ -14,11 +14,11 @@ library(vroom)
 library(stringr)
 
 # ---------------------------------------------------------------------------
-# Config — update FIPS_FILE if your Ingest clone is in a different location
+# Config — FIPS_FILE is written by all_fips.R; run that first if it's missing
 # ---------------------------------------------------------------------------
 
 REPO_ROOT <- "."
-FIPS_FILE <- "../Ingest/resources/all_fips.csv.gz"
+FIPS_FILE <- "./resources/all_fips.csv.gz"
 
 # ---------------------------------------------------------------------------
 # 1. Load FIPS reference
