@@ -7,6 +7,7 @@
 #   3. code/populate_national_rates.R - write national/national_rates.csv.gz
 #   4. code/populate_state_rates.R    - write states/*/state_rates.csv.gz
 #   5. code/populate_county_rates.R   - write states/*/counties/*/county_rates.csv.gz
+#   6. code/check_ct_geography.R      - fail if CT geography conventions overlap
 #
 # Must be run from the repo root (paths in every step are relative to root).
 #
@@ -30,7 +31,8 @@ steps <- list(
   list(name = "Folder scaffolding", script = "scaffold_structure.R",            run = !skip_scaffold),
   list(name = "National rates",     script = "code/populate_national_rates.R",  run = TRUE),
   list(name = "State rates",        script = "code/populate_state_rates.R",     run = TRUE),
-  list(name = "County rates",       script = "code/populate_county_rates.R",    run = TRUE)
+  list(name = "County rates",       script = "code/populate_county_rates.R",    run = TRUE),
+  list(name = "CT geography check", script = "code/check_ct_geography.R",       run = TRUE)
 )
 
 for (step in steps) {
