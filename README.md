@@ -78,6 +78,30 @@ FIPS codes must always be stored as zero-padded strings, never as integers.
 
 ---
 
+## Connecticut: Counties vs. Planning Regions
+
+Connecticut retired its 8 counties in favor of 9 planning regions as county equivalents, effective with the Census Bureau's 2022 vintage. Because sources migrate to this convention at different times, `states/connecticut/counties/` holds folders for **both** conventions at once:
+
+| Convention        | FIPS range      | Folders                                                    |
+|--------------------|-----------------|-------------------------------------------------------------|
+| Legacy counties    | `09001`-`09015` | `09001_fairfield` ... `09015_windham` (8)                    |
+| Planning regions   | `09110`-`09190` | `09110_capitol` ... `09190_western_connecticut` (9)          |
+
+Both sets come from `tidycensus::fips_codes`, which lists both conventions simultaneously — no CT-specific branching is needed elsewhere in the pipeline as a result.
+
+Sources migrate to planning regions on their own schedules, so the same `Ingest` bundle can carry both conventions for different years or even different measures within the same year. As of the last refresh:
+
+| Source                                    | Convention                                                                                          |
+|--------------------------------------------|------------------------------------------------------------------------------------------------------|
+| Census (ACS)                                | Legacy counties through 2021, planning regions from 2022 on — a clean cutover                        |
+| County Health Rankings                      | Legacy counties 2010-2024; the 2025 release splits measures across both conventions (never the same measure under both) |
+| Epic Cosmos, NCHS mortality, CMS MMD         | Legacy counties throughout, including releases after 2022                                            |
+| WaPo vaccination rates, HealthMap            | Planning regions throughout, including years before 2022 (these aggregate by Council-of-Governments boundary, which predates the 2022 FIPS change) |
+
+Because the two conventions carve up the same towns, summing county folders for a given `(measure, time)` pair double-counts if that pair is ever reported under both conventions. `code/check_ct_geography.R` checks for exactly that after every `populate_county_rates.R` run and fails the pipeline if it finds one.
+
+---
+
 ## File Format Standard
 
 All data files must follow PopHIVE's **long format** with compressed CSV encoding:
@@ -225,6 +249,7 @@ This runs, in order:
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
 4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states/*/counties/*/county_rates.csv.gz`.
+6. **`code/check_ct_geography.R`** — fails the pipeline if any `(measure, time)` pair is reported under both of CT's county/planning-region conventions (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions)).
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:
 
