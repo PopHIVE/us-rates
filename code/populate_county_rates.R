@@ -201,10 +201,24 @@ nchs_long <- vroom(
   ) %>%
   select(geography, time, measure, value)
 
+# AHRF workforce, facility, demographic, and environmental measures.
+ahrf_long <- vroom(
+  file.path(INGEST_PATH, "area_health_resource_file/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(geography)) %>%
+  pivot_longer(
+    cols      = starts_with("ahrf_"),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  select(geography, time, measure, value)
+
 combined <- bind_rows(
   chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
-  cms_long, nchs_long
+  cms_long, nchs_long, ahrf_long
 ) %>%
   arrange(geography, time, measure)
 
