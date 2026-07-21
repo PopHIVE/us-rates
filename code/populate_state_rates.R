@@ -17,6 +17,8 @@ library(arrow)
 REPO_ROOT   <- "."
 INGEST_PATH <- "../Ingest/data"
 
+source(file.path(REPO_ROOT, "code", "geography_helpers.R"))
+
 year_end <- function(y) as.Date(paste0(as.integer(y), "-12-31"))
 
 month_end <- function(d) {
@@ -55,18 +57,14 @@ all_fips <- vroom(
 )
 
 state_fips <- all_fips %>%
-  filter(nchar(geography) == 2) %>%
+  filter(nchar(geography) == 2, geography != "00") %>%
   rename(state_fips = geography)
 
 name_to_fips <- state_fips %>%
   select(state_fips, geography_name)
 
-safe_name <- function(x) {
-  x %>%
-    str_to_lower() %>%
-    str_replace_all("[^a-z0-9]+", "_") %>%
-    str_remove("^_|_$")
-}
+# safe_name() (place name -> folder name) comes from geography_helpers.R,
+# sourced above.
 
 message("Loading CHR and Census data...")
 
@@ -195,7 +193,7 @@ nchs_long <- vroom(
   file.path(INGEST_PATH, "nchs_mortality/standard/data.csv.gz"),
   show_col_types = FALSE
 ) %>%
-  filter(!is.na(geography), nchar(geography) == 2) %>%
+  filter(!is.na(geography), nchar(geography) == 2, geography != "00") %>%
   select(geography, time, starts_with("n_deaths_"),
          pct_complete, pct_pending_invest) %>%
   pivot_longer(

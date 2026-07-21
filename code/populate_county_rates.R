@@ -18,6 +18,8 @@ library(arrow)
 REPO_ROOT <- "."
 INGEST_PATH <- "../Ingest/data"
 
+source(file.path(REPO_ROOT, "code", "geography_helpers.R"))
+
 year_end <- function(y) as.Date(paste0(as.integer(y), "-12-31"))
 
 month_end <- function(d) {
@@ -44,7 +46,7 @@ county_fips <- all_fips %>%
   rename(fips = geography)
 
 state_name_lookup <- all_fips %>%
-  filter(nchar(geography) == 2) %>%
+  filter(nchar(geography) == 2, geography != "00") %>%
   select(state_abbr = state, state_full = geography_name)
 
 message("Loading CHR and Census data...")
@@ -229,15 +231,7 @@ for (county_fips_code in counties) {
     pull(state_full)
   county_name <- match_row$geography_name[1]
 
-  # Determine folder path
-  safe_name <- function(x) {
-    x %>%
-      str_to_lower() %>%
-      str_replace_all("[^a-z0-9]+", "_") %>%
-      str_remove("_county$") %>%
-      str_remove("^_|_$")
-  }
-
+  # Determine folder path (safe_name() comes from geography_helpers.R)
   county_folder <- file.path(
     REPO_ROOT, "states", safe_name(state_full), "counties",
     paste0(county_fips_code, "_", safe_name(county_name))
