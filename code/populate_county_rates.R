@@ -220,6 +220,10 @@ combined <- bind_rows(
   wapo_long, healthmap_long, exempt_long,
   cms_long, nchs_long, ahrf_long
 ) %>%
+  # Guards against duplicate (geography, time, measure) rows from upstream
+  # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
+  # (51005), VA, once per pre/post-2013 independent-city-merger FIPS mapping.
+  distinct(geography, time, measure, .keep_all = TRUE) %>%
   arrange(geography, time, measure)
 
 message("Combined ", nrow(combined), " rows across all sources")
@@ -255,7 +259,7 @@ for (county_fips_code in counties) {
 
   # Write county_rates.csv.gz
   output_file <- file.path(county_folder, "county_rates.csv.gz")
-  vroom_write(county_data, output_file)
+  vroom_write(county_data, output_file, delim = ",")
 }
 
 message("\nComplete. County rate files written to states/*/counties/*/ folders.")

@@ -137,6 +137,6 @@ message("Combined ", nrow(combined), " national rows across all sources")
 national_dir <- file.path(REPO_ROOT, "national")
 dir.create(national_dir, recursive = TRUE, showWarnings = FALSE)
 
-vroom_write(combined, file.path(national_dir, "national_rates.csv.gz"))
+vroom_write(combined, file.path(national_dir, "national_rates.csv.gz"), delim = ",")
 
 message("\nComplete. Written to national/national_rates.csv.gz")

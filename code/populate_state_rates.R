@@ -256,7 +256,8 @@ for (fips in states) {
   dir.create(state_folder, recursive = TRUE, showWarnings = FALSE)
   vroom_write(
     state_data,
-    file.path(state_folder, "state_rates.csv.gz")
+    file.path(state_folder, "state_rates.csv.gz"),
+    delim = ","
   )
 }
 

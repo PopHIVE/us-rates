@@ -223,14 +223,31 @@ The root `measure_info.json` documents every measure used across the repository.
 | `id`                | Measure name (matches the `measure` column value exactly)                  |
 | `short_name`        | Human-readable short label                                                 |
 | `long_name`         | Full descriptive name                                                      |
-| `category`          | One of: `respiratory`, `immunization`, `chronic`, `injury`, `demographic` |
+| `category`          | One of the categories listed below                                         |
+| `subcategory`       | A subcategory from the table below, or `null` if the category has none     |
 | `short_description` | One-sentence description                                                   |
 | `long_description`  | Detailed description including methodology notes                           |
 | `statement`         | Template string for display: `"In {location}, ..."`                       |
-| `measure_type`      | One of: `Incidence`, `Prevalence`, `Rate`, `Percent`, `Count`             |
+| `measure_type`      | One of: `Incidence`, `Prevalence`, `Rate`, `Percent`, `Count`, `Category` |
 | `unit`              | e.g., `Cases per 100,000`, `Percent`, `Count`                             |
 | `time_resolution`   | One of: `Week`, `Month`, `Year`                                           |
 | `sources`           | Array of source IDs matching entries in `_sources`                        |
+
+**Categories and their subcategories:**
+
+| Category                              | Subcategories                                                                                          |
+|----------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `chronic_disease`                      | `cancer`, `cardiovascular_metabolic`, `musculoskeletal`, `neurological`, `other_chronic_conditions`, `respiratory_disease` |
+| `environmental_health`                  | `air_and_water_quality`, `other_environmental_hazards`                                                  |
+| `infectious_disease`                    | none (`null`)                                                                                            |
+| `injury_and_violence`                   | none (`null`)                                                                                            |
+| `maternal_and_infant_health`            | none (`null`)                                                                                            |
+| `mental_health`                         | none (`null`)                                                                                            |
+| `overall_health_status_and_mortality`   | `length_and_quality_of_life`, `mortality_data_and_completeness`                                          |
+| `population_demographics`               | none (`null`)                                                                                            |
+| `preventive_care`                       | `clinical_screenings`, `immunizations`, `nutrition_and_exercise`, `sexual_and_reproductive_health`       |
+| `social_determinants_of_health`         | `economic_stability`, `education_access_and_quality`, `health_care_access_and_quality`, `neighborhood_and_built_environment`, `social_and_community_context` |
+| `substance_abuse`                       | `alcohol_use`, `drug_use_and_overdose`, `tobacco_use`                                                    |
 
 ---
 
