@@ -22,4 +22,4 @@ fips_code_combined <-   bind_rows(fips_codes_county,fips_codes_state,fips_nation
   rename(geography=fips,
          geography_name = county_name)
 
-vroom::vroom_write(fips_code_combined, './resources/all_fips.csv.gz')
+vroom::vroom_write(fips_code_combined, './resources/all_fips.csv.gz', delim = ",")
