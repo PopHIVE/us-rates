@@ -31,6 +31,8 @@ REPO_ROOT <- "."
 FIPS_FILE <- file.path(REPO_ROOT, "resources/all_fips.csv.gz")
 OUT_FILE  <- file.path(REPO_ROOT, "us-rates-geographies.json")
 
+source(file.path(REPO_ROOT, "code", "geography_helpers.R"))
+
 all_fips <- vroom(FIPS_FILE, col_types = "ccc", show_col_types = FALSE)
 
 # states/NA/ is currently shared by every non-state geography (PR, AS, GU, MP,
@@ -43,18 +45,10 @@ included_territories <- c(state.abb, "DC", "PR")
 all_fips <- all_fips %>%
   filter(geography == "00" | state %in% included_territories)
 
-# Same folder-naming rule used elsewhere in the pipeline. NA in -> "NA" out
-# (matches file.path()'s NA-to-"NA" coercion), so dataPath stays consistent
-# with what scaffold_structure.R / populate_*_rates.R actually create on disk.
-safe_name <- function(x) {
-  x %>%
-    str_to_lower() %>%
-    str_replace_all("[^a-z0-9]+", "_") %>%
-    str_remove("_county$") %>%
-    str_remove("^_|_$")
-}
-
-slug_name <- function(x) str_replace_all(safe_name(x), "_", "-")
+# safe_name()/slug_name() (place name -> folder name / URL slug) come from
+# geography_helpers.R, sourced above -- the same rule scaffold_structure.R
+# and populate_*_rates.R use, so dataPath stays consistent with what's
+# actually on disk (NA-for-territories quirk included).
 
 # Display-name fallback for state-level rows where geography_name is NA --
 # only affects the human-facing name/slug fields below.

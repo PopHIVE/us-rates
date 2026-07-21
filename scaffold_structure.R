@@ -20,6 +20,8 @@ library(stringr)
 REPO_ROOT <- "."
 FIPS_FILE <- "./resources/all_fips.csv.gz"
 
+source(file.path(REPO_ROOT, "code", "geography_helpers.R"))
+
 # ---------------------------------------------------------------------------
 # 1. Load FIPS reference
 # ---------------------------------------------------------------------------
@@ -29,27 +31,16 @@ message("Loading FIPS reference...")
 all_fips <- vroom(FIPS_FILE, col_types = "ccc", show_col_types = FALSE)
 # Columns: geography (FIPS string), geography_name, state
 
-state_fips  <- all_fips |> filter(nchar(geography) == 2)
+state_fips  <- all_fips |> filter(nchar(geography) == 2, geography != "00")
 county_fips <- all_fips |> filter(nchar(geography) == 5)
 
 message("  ", nrow(state_fips), " states | ", nrow(county_fips), " counties")
 
-# ---------------------------------------------------------------------------
-# 2. Helper — safe folder name from a place name
-#    "Autauga County" -> "autauga"
-#    "New York County" -> "new_york"
-# ---------------------------------------------------------------------------
-
-safe_name <- function(x) {
-  x |>
-    str_to_lower() |>
-    str_replace_all("[^a-z0-9]+", "_") |>
-    str_remove("_county$") |>   # strip trailing " county" if present
-    str_remove("^_|_$")         # strip leading/trailing underscores
-}
+# safe_name() (place name -> folder name) comes from geography_helpers.R,
+# sourced above.
 
 # ---------------------------------------------------------------------------
-# 3. Create national/ folder
+# 2. Create national/ folder
 # ---------------------------------------------------------------------------
 
 national_dir <- file.path(REPO_ROOT, "national")
@@ -57,7 +48,7 @@ dir.create(national_dir, recursive = TRUE, showWarnings = FALSE)
 message("Created: national/")
 
 # ---------------------------------------------------------------------------
-# 4. Build state and county folder tree
+# 3. Build state and county folder tree
 # ---------------------------------------------------------------------------
 
 message("Scaffolding states and counties...")
