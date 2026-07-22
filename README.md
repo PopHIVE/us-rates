@@ -17,6 +17,7 @@ us-rates/
 │
 ├── README.md
 ├── measure_info.json
+├── us-rates-geographies.json
 │
 ├── national/
 │   └── national_rates.csv.gz
@@ -207,9 +208,9 @@ The root `measure_info.json` documents every measure used across the repository.
     "category": "chronic",
     "short_description": "Percentage of adults with diagnosed diabetes.",
     "long_description": "Age-adjusted percentage of adults ever told by a doctor they have diabetes, excluding gestational diabetes. Source: CDC PLACES.",
-    "statement": "In {location}, {value} percent of adults have been diagnosed with diabetes.",
-    "measure_type": "Prevalence",
-    "unit": "Percent",
+    "statement": "In {location}, {value} of adults have been diagnosed with diabetes.",
+    "measure_type": "percent",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [{ "id": "cdc" }]
   }
@@ -227,9 +228,10 @@ The root `measure_info.json` documents every measure used across the repository.
 | `subcategory`       | A subcategory from the table below, or `null` if the category has none     |
 | `short_description` | One-sentence description                                                   |
 | `long_description`  | Detailed description including methodology notes                           |
-| `statement`         | Template string for display: `"In {location}, ..."`                       |
-| `measure_type`      | One of: `Incidence`, `Prevalence`, `Rate`, `Percent`, `Count`, `Category` |
-| `unit`              | e.g., `Cases per 100,000`, `Percent`, `Count`                             |
+| `statement`         | Template string for display: `"In {location}, ..."` — `{value}` holds a pre-formatted value; do not wrap it in `%`, `$`, or other symbols |
+| `measure_type`      | One of: `percent`, `number`, `dollars` — indicates how to format `{value}` |
+| `scale`             | Only present when `measure_type` is `percent`. One of: `0-1`, `0-100` — the scale the raw value is stored on |
+| `unit`              | Optional. A data label to show alongside the value, only when necessary to contextualize it (e.g. `Micrograms per cubic meter`). Omitted when `measure_type` already conveys enough (e.g. plain percents/dollars) |
 | `time_resolution`   | One of: `Week`, `Month`, `Year`                                           |
 | `sources`           | Array of source IDs matching entries in `_sources`                        |
 
@@ -267,6 +269,7 @@ This runs, in order:
 4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states/*/counties/*/county_rates.csv.gz`.
 6. **`code/check_ct_geography.R`** — fails the pipeline if any `(measure, time)` pair is reported under both of CT's county/planning-region conventions (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions)).
+7. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:
 
