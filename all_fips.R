@@ -18,7 +18,6 @@ fips_national = data.frame('fips'='00', 'state_code'='US','state'='US', 'county_
 
 fips_code_combined <-   bind_rows(fips_codes_county,fips_codes_state,fips_national) %>%
   dplyr::select(-state_code) %>%
- # mutate(fips=as.numeric(fips)) %>%
   rename(geography=fips,
          geography_name = county_name)
 
