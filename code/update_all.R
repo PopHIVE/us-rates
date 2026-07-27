@@ -7,7 +7,8 @@
 #   3. code/populate_national_rates.R - write national/national_rates.csv.gz
 #   4. code/populate_state_rates.R    - write states/*/state_rates.csv.gz and territories/*/{commonwealth,territory}_rates.csv.gz
 #   5. code/populate_county_rates.R   - write states|territories/*/counties/*/county_rates.csv.gz
-#   6. code/check_ct_geography.R      - fail if CT geography conventions overlap
+#   6. code/check_geography_renaming.R - fail if a renamed/split/merged
+#      geography's old and new FIPS conventions overlap
 #   7. code/generate_geography_manifest.R - refresh us-rates-geographies.json
 #
 # Must be run from the repo root (paths in every step are relative to root).
@@ -33,7 +34,7 @@ steps <- list(
   list(name = "National rates",     script = "code/populate_national_rates.R",  run = TRUE),
   list(name = "State rates",        script = "code/populate_state_rates.R",     run = TRUE),
   list(name = "County rates",       script = "code/populate_county_rates.R",    run = TRUE),
-  list(name = "CT geography check", script = "code/check_ct_geography.R",       run = TRUE),
+  list(name = "Geography renaming check", script = "code/check_geography_renaming.R", run = TRUE),
   list(name = "Geography manifest", script = "code/generate_geography_manifest.R", run = TRUE)
 )
 

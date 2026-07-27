@@ -137,7 +137,28 @@ Sources migrate to planning regions on their own schedules, so the same `Ingest`
 | Epic Cosmos, NCHS mortality, CMS MMD         | Legacy counties throughout, including releases after 2022                                            |
 | WaPo vaccination rates, HealthMap            | Planning regions throughout, including years before 2022 (these aggregate by Council-of-Governments boundary, which predates the 2022 FIPS change) |
 
-Because the two conventions carve up the same towns, summing county folders for a given `(measure, time)` pair double-counts if that pair is ever reported under both conventions. `code/check_ct_geography.R` checks for exactly that after every `populate_county_rates.R` run and fails the pipeline if it finds one.
+Because the two conventions carve up the same towns, summing county folders for a given `(measure, time)` pair double-counts if that pair is ever reported under both conventions. `code/check_geography_renaming.R` checks for exactly that after every `populate_county_rates.R` run and fails the pipeline if it finds one — see [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes) for the same issue elsewhere in the pipeline.
+
+---
+
+## Alaska: Historical Borough and Census Area Changes
+
+Alaska's boroughs and census areas have been renamed, split, and merged repeatedly, and `tidycensus::fips_codes` carries every historical version at once, so `states/alaska/counties/` holds folders for defunct geographies too:
+
+| Old (defunct)                                  | FIPS(es)          | Replaced by                                              | FIPS(es)                 |
+|-------------------------------------------------|-------------------|------------------------------------------------------------|----------------------------|
+| Prince of Wales-Outer Ketchikan Census Area (2008) | `02201`          | Prince of Wales-Hyder Census Area                          | `02198`                    |
+| Skagway-Yakutat-Angoon Census Area (pre-1992) -> Skagway-Hoonah-Angoon Census Area (1992-2007) | `02231`, `02232` | Skagway Municipality, Hoonah-Angoon Census Area | `02230`, `02105` |
+| Valdez-Cordova Census Area (2019)                | `02261`          | Chugach Census Area, Copper River Census Area               | `02063`, `02066`            |
+| Wade Hampton Census Area (renamed 2015)          | `02270`          | Kusilvak Census Area                                        | `02158`                    |
+| Wrangell-Petersburg Census Area (2008)           | `02280`          | Wrangell City and Borough, Petersburg Census Area            | `02275`, `02195`            |
+
+`code/check_geography_renaming.R` checks each of these 5 events the same way as the CT check above. Yakutat City and Borough (`02282`) isn't part of the Skagway lineage above despite the "Skagway-Yakutat-Angoon" name -- it's been separately tracked since at least 1992 and never overlaps with `02231`/`02232`.
+
+Two sources duplicate data onto these retired codes rather than cutting over cleanly, resolved in `populate_county_rates.R`:
+
+* `vaccine_exemptions_fattah` always writes the exact same value to a retired code and its successor(s), so the retired code's copy is dropped unconditionally (`drop_alaska_defunct_duplicates()`).
+* `area_health_resource_file` sometimes duplicates and sometimes disagrees between a retired code and its successor(s) for the same (measure, time) -- the disagreements are almost always a newly-created code's placeholder `0` before real tracking starts, or a retired code's value decaying to `0` in its last year or two before being dropped from the file. Each of the 79 affected rows is resolved by an explicit, documented override table (`ahrf_alaska_overrides`) rather than a general rule, since guessing wrong here means silently reporting the wrong health-workforce count.
 
 ---
 
@@ -306,7 +327,7 @@ This runs, in order:
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
 4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz` and `territories/*/{commonwealth,territory}_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states|territories/*/counties/*/county_rates.csv.gz`.
-6. **`code/check_ct_geography.R`** — fails the pipeline if any `(measure, time)` pair is reported under both of CT's county/planning-region conventions (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions)).
+6. **`code/check_geography_renaming.R`** — fails the pipeline if any `(measure, time)` pair is reported under both an old and new FIPS convention for a renamed/split/merged geography (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions) and [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes)).
 7. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:
