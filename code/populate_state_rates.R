@@ -248,10 +248,9 @@ for (fips in states) {
     next
   }
 
-  # is_territory() (state abbreviation -> territory?) comes from
-  # geography_helpers.R, sourced above. Territories get their own top-level
-  # territories/ folder instead of states/ -- see scaffold_structure.R.
-  top_level_dir <- if (is_territory(match_row$state[1])) "territories" else "states"
+  is_terr <- is_territory(match_row$state[1])
+  top_level_dir <- if (is_terr) "territories" else "states"
+  rates_filename <- if (is_terr) territory_rates_filename(match_row$state[1]) else "state_rates.csv.gz"
 
   state_folder <- file.path(
     REPO_ROOT, top_level_dir,
@@ -261,12 +260,12 @@ for (fips in states) {
   dir.create(state_folder, recursive = TRUE, showWarnings = FALSE)
   vroom_write(
     state_data,
-    file.path(state_folder, "state_rates.csv.gz"),
+    file.path(state_folder, rates_filename),
     delim = ","
   )
 }
 
 message(
   "\nComplete. State rate files written to states/*/state_rates.csv.gz ",
-  "and territories/*/state_rates.csv.gz"
+  "and territories/*/{commonwealth,territory}_rates.csv.gz"
 )

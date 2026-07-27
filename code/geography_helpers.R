@@ -36,3 +36,13 @@ slug_name <- function(x) stringr::str_replace_all(safe_name(x), "_", "-")
 US_TERRITORY_ABBRS <- c("AS", "GU", "MP", "PR", "UM", "VI")
 
 is_territory <- function(state_abbr) state_abbr %in% US_TERRITORY_ABBRS
+
+TERRITORY_COMMONWEALTH_ABBRS <- c("PR", "MP")
+
+territory_rates_filename <- function(state_abbr) {
+  if_else(
+    state_abbr %in% TERRITORY_COMMONWEALTH_ABBRS,
+    "commonwealth_rates.csv.gz",
+    "territory_rates.csv.gz"
+  )
+}

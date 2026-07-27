@@ -33,7 +33,7 @@
     "state": "AS",
     "stateFips": "60",
     "slug": "american-samoa",
-    "dataPath": "territories/american_samoa/state_rates.csv.gz"
+    "dataPath": "territories/american_samoa/territory_rates.csv.gz"
   },
   {
     "fips": "04",
@@ -123,7 +123,7 @@
     "state": "GU",
     "stateFips": "66",
     "slug": "guam",
-    "dataPath": "territories/guam/state_rates.csv.gz"
+    "dataPath": "territories/guam/territory_rates.csv.gz"
   },
   {
     "fips": "15",
@@ -348,7 +348,7 @@
     "state": "MP",
     "stateFips": "69",
     "slug": "northern-mariana-islands",
-    "dataPath": "territories/northern_mariana_islands/state_rates.csv.gz"
+    "dataPath": "territories/northern_mariana_islands/commonwealth_rates.csv.gz"
   },
   {
     "fips": "39",
@@ -393,7 +393,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "puerto-rico",
-    "dataPath": "territories/puerto_rico/state_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/commonwealth_rates.csv.gz"
   },
   {
     "fips": "44",
@@ -447,7 +447,7 @@
     "state": "UM",
     "stateFips": "74",
     "slug": "u-s-minor-outlying-islands",
-    "dataPath": "territories/u_s_minor_outlying_islands/state_rates.csv.gz"
+    "dataPath": "territories/u_s_minor_outlying_islands/territory_rates.csv.gz"
   },
   {
     "fips": "78",
@@ -456,7 +456,7 @@
     "state": "VI",
     "stateFips": "78",
     "slug": "u-s-virgin-islands",
-    "dataPath": "territories/u_s_virgin_islands/state_rates.csv.gz"
+    "dataPath": "territories/u_s_virgin_islands/territory_rates.csv.gz"
   },
   {
     "fips": "49",
