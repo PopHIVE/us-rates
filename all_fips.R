@@ -6,13 +6,10 @@ fips_codes_county <- tidycensus::fips_codes %>%
   dplyr::select(fips, county, state, state_code) %>%
   rename(county_name=county)
 
-fips_codes_state = fips_codes_county %>%
-  dplyr::select( state, state_code) %>%
+fips_codes_state <- tidycensus::fips_codes %>%
+  dplyr::select(state, state_code, state_name) %>%
   unique() %>%
-  rename(fips= state_code) %>%
-  mutate(county_name = state.name[match(state, state.abb)],
-         county_name = if_else(state=='DC', 'District of Columbia', county_name)
-  )
+  rename(fips = state_code, county_name = state_name)
 
 fips_national = data.frame('fips'='00', 'state_code'='US','state'='US', 'county_name'='United States')
 

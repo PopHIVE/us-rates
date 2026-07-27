@@ -51,14 +51,21 @@ message("Created: national/")
 # 3. Build state and county folder tree
 # ---------------------------------------------------------------------------
 
-message("Scaffolding states and counties...")
+message("Scaffolding states, territories, and counties...")
+
+# is_territory() (state abbreviation -> territory?) comes from
+# geography_helpers.R, sourced above. The 50 states + DC scaffold under
+# states/; American Samoa, Guam, Northern Mariana Islands, Puerto Rico, U.S.
+# Minor Outlying Islands, and the U.S. Virgin Islands scaffold under
+# territories/ instead -- they aren't states.
 
 for (i in seq_len(nrow(state_fips))) {
 
   state_fips_code <- state_fips$geography[i]
   state_name      <- safe_name(state_fips$geography_name[i])
+  top_level_dir   <- if (is_territory(state_fips$state[i])) "territories" else "states"
 
-  counties_dir <- file.path(REPO_ROOT, "states", state_name, "counties")
+  counties_dir <- file.path(REPO_ROOT, top_level_dir, state_name, "counties")
   dir.create(counties_dir, recursive = TRUE, showWarnings = FALSE)
 
   this_state_counties <- county_fips |>
@@ -74,7 +81,7 @@ for (i in seq_len(nrow(state_fips))) {
     dir.create(county_dir, recursive = TRUE, showWarnings = FALSE)
   }
 
-  message("  ", state_name, " (", state_fips_code, "): ",
+  message("  ", top_level_dir, "/", state_name, " (", state_fips_code, "): ",
           nrow(this_state_counties), " counties")
 }
 

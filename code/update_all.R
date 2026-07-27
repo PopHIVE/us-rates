@@ -3,10 +3,10 @@
 #
 # Runs the full us-rates data pipeline in order:
 #   1. all_fips.R                     - refresh resources/all_fips.csv.gz
-#   2. scaffold_structure.R           - create any new state/county folders
+#   2. scaffold_structure.R           - create any new state/territory/county folders
 #   3. code/populate_national_rates.R - write national/national_rates.csv.gz
-#   4. code/populate_state_rates.R    - write states/*/state_rates.csv.gz
-#   5. code/populate_county_rates.R   - write states/*/counties/*/county_rates.csv.gz
+#   4. code/populate_state_rates.R    - write states|territories/*/state_rates.csv.gz
+#   5. code/populate_county_rates.R   - write states|territories/*/counties/*/county_rates.csv.gz
 #   6. code/check_ct_geography.R      - fail if CT geography conventions overlap
 #   7. code/generate_geography_manifest.R - refresh us-rates-geographies.json
 #
