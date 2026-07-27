@@ -2,20 +2,14 @@
 # generate_geography_manifest.R
 #
 # Builds us-rates-geographies.json: a flat manifest of every geography
-# (national / state / county) with its display name, slug, and the relative
-# path to its rate file, for front-end/site consumption.
+# (national / state / territory / county) with its display name, slug, and
+# the relative path to its rate file, for front-end/site consumption.
 #
 # dataPath is built with the exact same folder-naming rule scaffold_structure.R,
 # populate_state_rates.R, and populate_county_rates.R use (derived from
-# resources/all_fips.csv.gz), so it always matches whatever is actually on
-# disk today -- including Puerto Rico's state_rates.csv.gz living under
-# states/NA/. PR isn't one of base R's 50 states, so all_fips.R leaves its
-# geography_name as NA; that's an existing, intentional convention for
-# non-state geographies and is left untouched here.
-#
-# name/slug use a separate display-name lookup (tidycensus::fips_codes$state_name,
-# which does cover territories) so non-state geographies still get a readable
-# name ("Puerto Rico") even though their files live under the NA folder.
+# resources/all_fips.csv.gz -- geography_name comes straight from
+# tidycensus::fips_codes$state_name there, so it's populated for every state,
+# DC, and territory alike), so it always matches whatever is actually on disk.
 #
 # Usage:
 #   Rscript code/generate_geography_manifest.R
@@ -25,7 +19,6 @@ library(dplyr)
 library(stringr)
 library(vroom)
 library(jsonlite)
-library(tidycensus)
 
 REPO_ROOT <- "."
 FIPS_FILE <- file.path(REPO_ROOT, "resources/all_fips.csv.gz")
@@ -35,36 +28,22 @@ source(file.path(REPO_ROOT, "code", "geography_helpers.R"))
 
 all_fips <- vroom(FIPS_FILE, col_types = "ccc", show_col_types = FALSE)
 
-# states/NA/ is currently shared by every non-state geography (PR, AS, GU, MP,
-# UM, VI) -- populate_state_rates.R writes each one's state_rates.csv.gz to
-# that same path, so only one territory's state-level data actually survives
-# there. Until that's addressed, restrict this manifest to the geographies
-# known to be reliably represented on disk: the 50 states, DC, and PR.
-included_territories <- c(state.abb, "DC", "PR")
-
-all_fips <- all_fips %>%
-  filter(geography == "00" | state %in% included_territories)
-
-# safe_name()/slug_name() (place name -> folder name / URL slug) come from
-# geography_helpers.R, sourced above -- the same rule scaffold_structure.R
+# safe_name()/slug_name() (place name -> folder name / URL slug) and
+# is_territory() (state abbreviation -> territory?) come from
+# geography_helpers.R, sourced above -- the same rules scaffold_structure.R
 # and populate_*_rates.R use, so dataPath stays consistent with what's
-# actually on disk (NA-for-territories quirk included).
-
-# Display-name fallback for state-level rows where geography_name is NA --
-# only affects the human-facing name/slug fields below.
-territory_names <- tidycensus::fips_codes %>%
-  distinct(state, state_name)
+# actually on disk.
 
 state_fips <- all_fips %>%
-  filter(geography != "00", nchar(geography) == 2)
-
-state_display <- state_fips %>%
-  left_join(territory_names, by = "state") %>%
-  mutate(display_name = coalesce(geography_name, state_name)) %>%
-  select(geography, state, raw_name = geography_name, display_name)
+  filter(geography != "00", nchar(geography) == 2) %>%
+  mutate(top_level_dir = if_else(is_territory(state), "territories", "states"))
 
 county_fips <- all_fips %>%
-  filter(nchar(geography) == 5)
+  filter(nchar(geography) == 5) %>%
+  left_join(
+    state_fips %>% select(state, state_name = geography_name, top_level_dir),
+    by = "state"
+  )
 
 national_row <- tibble(
   fips      = "00",
@@ -76,23 +55,19 @@ national_row <- tibble(
   dataPath  = "national/national_rates.csv.gz"
 )
 
-state_rows <- state_display %>%
+state_rows <- state_fips %>%
   mutate(
     fips      = geography,
-    name      = display_name,
-    level     = "state",
+    name      = geography_name,
+    level     = if_else(is_territory(state), "territory", "state"),
     stateFips = geography,
-    slug      = slug_name(display_name),
-    dataPath  = paste0("states/", safe_name(raw_name), "/state_rates.csv.gz")
+    slug      = slug_name(geography_name),
+    dataPath  = paste0(top_level_dir, "/", safe_name(geography_name), "/state_rates.csv.gz")
   ) %>%
-  arrange(display_name) %>%
+  arrange(geography_name) %>%
   select(fips, name, level, state, stateFips, slug, dataPath)
 
 county_rows <- county_fips %>%
-  left_join(
-    state_display %>% select(state, state_raw_name = raw_name, state_display_name = display_name),
-    by = "state"
-  ) %>%
   mutate(
     fips      = geography,
     name      = geography_name,
@@ -100,11 +75,11 @@ county_rows <- county_fips %>%
     stateFips = str_sub(geography, 1, 2),
     slug      = paste0(geography, "-", slug_name(geography_name)),
     dataPath  = paste0(
-      "states/", safe_name(state_raw_name), "/counties/",
+      top_level_dir, "/", safe_name(state_name), "/counties/",
       geography, "_", safe_name(geography_name), "/county_rates.csv.gz"
     )
   ) %>%
-  arrange(state_display_name, geography_name) %>%
+  arrange(state_name, geography_name) %>%
   select(fips, name, level, state, stateFips, slug, dataPath)
 
 manifest <- bind_rows(national_row, state_rows, county_rows)

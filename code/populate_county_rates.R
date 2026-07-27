@@ -249,9 +249,14 @@ for (county_fips_code in counties) {
     pull(state_full)
   county_name <- match_row$geography_name[1]
 
+  # is_territory() (state abbreviation -> territory?) comes from
+  # geography_helpers.R, sourced above. Territory counties (e.g. Puerto Rico's
+  # municipios) go under territories/ instead of states/.
+  top_level_dir <- if (is_territory(match_row$state[1])) "territories" else "states"
+
   # Determine folder path (safe_name() comes from geography_helpers.R)
   county_folder <- file.path(
-    REPO_ROOT, "states", safe_name(state_full), "counties",
+    REPO_ROOT, top_level_dir, safe_name(state_full), "counties",
     paste0(county_fips_code, "_", safe_name(county_name))
   )
 
@@ -262,4 +267,7 @@ for (county_fips_code in counties) {
   vroom_write(county_data, output_file, delim = ",")
 }
 
-message("\nComplete. County rate files written to states/*/counties/*/ folders.")
+message(
+  "\nComplete. County rate files written to states/*/counties/*/ and ",
+  "territories/*/counties/*/ folders."
+)

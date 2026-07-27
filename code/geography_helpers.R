@@ -23,3 +23,16 @@ safe_name <- function(x) {
 
 # "St. Clair County" -> "st-clair" (safe_name() with hyphens, for URL slugs).
 slug_name <- function(x) stringr::str_replace_all(safe_name(x), "_", "-")
+
+# The 6 non-state, non-DC U.S. territories with a 2-digit FIPS code in
+# tidycensus::fips_codes: American Samoa, Guam, Northern Mariana Islands,
+# Puerto Rico, U.S. Minor Outlying Islands, and the U.S. Virgin Islands.
+#
+# These get their own top-level `territories/` folder instead of `states/`
+# (see populate_state_rates.R / populate_county_rates.R / scaffold_structure.R
+# / generate_geography_manifest.R) -- they aren't states, and lumping them in
+# with the 50 states + DC was misleading. DC itself is a state-equivalent for
+# this repo's purposes and stays under `states/`.
+US_TERRITORY_ABBRS <- c("AS", "GU", "MP", "PR", "UM", "VI")
+
+is_territory <- function(state_abbr) state_abbr %in% US_TERRITORY_ABBRS

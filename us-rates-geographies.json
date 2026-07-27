@@ -27,6 +27,15 @@
     "dataPath": "states/alaska/state_rates.csv.gz"
   },
   {
+    "fips": "60",
+    "name": "American Samoa",
+    "level": "territory",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "american-samoa",
+    "dataPath": "territories/american_samoa/state_rates.csv.gz"
+  },
+  {
     "fips": "04",
     "name": "Arizona",
     "level": "state",
@@ -106,6 +115,15 @@
     "stateFips": "13",
     "slug": "georgia",
     "dataPath": "states/georgia/state_rates.csv.gz"
+  },
+  {
+    "fips": "66",
+    "name": "Guam",
+    "level": "territory",
+    "state": "GU",
+    "stateFips": "66",
+    "slug": "guam",
+    "dataPath": "territories/guam/state_rates.csv.gz"
   },
   {
     "fips": "15",
@@ -324,6 +342,15 @@
     "dataPath": "states/north_dakota/state_rates.csv.gz"
   },
   {
+    "fips": "69",
+    "name": "Northern Mariana Islands",
+    "level": "territory",
+    "state": "MP",
+    "stateFips": "69",
+    "slug": "northern-mariana-islands",
+    "dataPath": "territories/northern_mariana_islands/state_rates.csv.gz"
+  },
+  {
     "fips": "39",
     "name": "Ohio",
     "level": "state",
@@ -362,11 +389,11 @@
   {
     "fips": "72",
     "name": "Puerto Rico",
-    "level": "state",
+    "level": "territory",
     "state": "PR",
     "stateFips": "72",
     "slug": "puerto-rico",
-    "dataPath": "states/NA/state_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/state_rates.csv.gz"
   },
   {
     "fips": "44",
@@ -412,6 +439,24 @@
     "stateFips": "48",
     "slug": "texas",
     "dataPath": "states/texas/state_rates.csv.gz"
+  },
+  {
+    "fips": "74",
+    "name": "U.S. Minor Outlying Islands",
+    "level": "territory",
+    "state": "UM",
+    "stateFips": "74",
+    "slug": "u-s-minor-outlying-islands",
+    "dataPath": "territories/u_s_minor_outlying_islands/state_rates.csv.gz"
+  },
+  {
+    "fips": "78",
+    "name": "U.S. Virgin Islands",
+    "level": "territory",
+    "state": "VI",
+    "stateFips": "78",
+    "slug": "u-s-virgin-islands",
+    "dataPath": "territories/u_s_virgin_islands/state_rates.csv.gz"
   },
   {
     "fips": "49",
@@ -1402,6 +1447,51 @@
     "stateFips": "02",
     "slug": "02290-yukon-koyukuk-census-area",
     "dataPath": "states/alaska/counties/02290_yukon_koyukuk_census_area/county_rates.csv.gz"
+  },
+  {
+    "fips": "60010",
+    "name": "Eastern District",
+    "level": "county",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "60010-eastern-district",
+    "dataPath": "territories/american_samoa/counties/60010_eastern_district/county_rates.csv.gz"
+  },
+  {
+    "fips": "60020",
+    "name": "Manu'a District",
+    "level": "county",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "60020-manu-a-district",
+    "dataPath": "territories/american_samoa/counties/60020_manu_a_district/county_rates.csv.gz"
+  },
+  {
+    "fips": "60030",
+    "name": "Rose Island",
+    "level": "county",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "60030-rose-island",
+    "dataPath": "territories/american_samoa/counties/60030_rose_island/county_rates.csv.gz"
+  },
+  {
+    "fips": "60040",
+    "name": "Swains Island",
+    "level": "county",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "60040-swains-island",
+    "dataPath": "territories/american_samoa/counties/60040_swains_island/county_rates.csv.gz"
+  },
+  {
+    "fips": "60050",
+    "name": "Western District",
+    "level": "county",
+    "state": "AS",
+    "stateFips": "60",
+    "slug": "60050-western-district",
+    "dataPath": "territories/american_samoa/counties/60050_western_district/county_rates.csv.gz"
   },
   {
     "fips": "04001",
@@ -5542,6 +5632,15 @@
     "stateFips": "13",
     "slug": "13321-worth",
     "dataPath": "states/georgia/counties/13321_worth/county_rates.csv.gz"
+  },
+  {
+    "fips": "66010",
+    "name": "Guam",
+    "level": "county",
+    "state": "GU",
+    "stateFips": "66",
+    "slug": "66010-guam",
+    "dataPath": "territories/guam/counties/66010_guam/county_rates.csv.gz"
   },
   {
     "fips": "15001",
@@ -19026,6 +19125,42 @@
     "dataPath": "states/north_dakota/counties/38105_williams/county_rates.csv.gz"
   },
   {
+    "fips": "69085",
+    "name": "Northern Islands Municipality",
+    "level": "county",
+    "state": "MP",
+    "stateFips": "69",
+    "slug": "69085-northern-islands-municipality",
+    "dataPath": "territories/northern_mariana_islands/counties/69085_northern_islands_municipality/county_rates.csv.gz"
+  },
+  {
+    "fips": "69100",
+    "name": "Rota Municipality",
+    "level": "county",
+    "state": "MP",
+    "stateFips": "69",
+    "slug": "69100-rota-municipality",
+    "dataPath": "territories/northern_mariana_islands/counties/69100_rota_municipality/county_rates.csv.gz"
+  },
+  {
+    "fips": "69110",
+    "name": "Saipan Municipality",
+    "level": "county",
+    "state": "MP",
+    "stateFips": "69",
+    "slug": "69110-saipan-municipality",
+    "dataPath": "territories/northern_mariana_islands/counties/69110_saipan_municipality/county_rates.csv.gz"
+  },
+  {
+    "fips": "69120",
+    "name": "Tinian Municipality",
+    "level": "county",
+    "state": "MP",
+    "stateFips": "69",
+    "slug": "69120-tinian-municipality",
+    "dataPath": "territories/northern_mariana_islands/counties/69120_tinian_municipality/county_rates.csv.gz"
+  },
+  {
     "fips": "39001",
     "name": "Adams County",
     "level": "county",
@@ -21444,7 +21579,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72001-adjuntas-municipio",
-    "dataPath": "states/NA/counties/72001_adjuntas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72001_adjuntas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72003",
@@ -21453,7 +21588,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72003-aguada-municipio",
-    "dataPath": "states/NA/counties/72003_aguada_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72003_aguada_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72005",
@@ -21462,7 +21597,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72005-aguadilla-municipio",
-    "dataPath": "states/NA/counties/72005_aguadilla_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72005_aguadilla_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72007",
@@ -21471,7 +21606,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72007-aguas-buenas-municipio",
-    "dataPath": "states/NA/counties/72007_aguas_buenas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72007_aguas_buenas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72009",
@@ -21480,7 +21615,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72009-aibonito-municipio",
-    "dataPath": "states/NA/counties/72009_aibonito_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72009_aibonito_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72011",
@@ -21489,7 +21624,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72011-anasco-municipio",
-    "dataPath": "states/NA/counties/72011_anasco_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72011_anasco_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72013",
@@ -21498,7 +21633,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72013-arecibo-municipio",
-    "dataPath": "states/NA/counties/72013_arecibo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72013_arecibo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72015",
@@ -21507,7 +21642,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72015-arroyo-municipio",
-    "dataPath": "states/NA/counties/72015_arroyo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72015_arroyo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72017",
@@ -21516,7 +21651,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72017-barceloneta-municipio",
-    "dataPath": "states/NA/counties/72017_barceloneta_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72017_barceloneta_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72019",
@@ -21525,7 +21660,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72019-barranquitas-municipio",
-    "dataPath": "states/NA/counties/72019_barranquitas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72019_barranquitas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72021",
@@ -21534,7 +21669,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72021-bayamon-municipio",
-    "dataPath": "states/NA/counties/72021_bayamon_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72021_bayamon_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72023",
@@ -21543,7 +21678,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72023-cabo-rojo-municipio",
-    "dataPath": "states/NA/counties/72023_cabo_rojo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72023_cabo_rojo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72025",
@@ -21552,7 +21687,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72025-caguas-municipio",
-    "dataPath": "states/NA/counties/72025_caguas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72025_caguas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72027",
@@ -21561,7 +21696,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72027-camuy-municipio",
-    "dataPath": "states/NA/counties/72027_camuy_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72027_camuy_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72029",
@@ -21570,7 +21705,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72029-canovanas-municipio",
-    "dataPath": "states/NA/counties/72029_canovanas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72029_canovanas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72031",
@@ -21579,7 +21714,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72031-carolina-municipio",
-    "dataPath": "states/NA/counties/72031_carolina_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72031_carolina_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72033",
@@ -21588,7 +21723,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72033-catano-municipio",
-    "dataPath": "states/NA/counties/72033_catano_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72033_catano_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72035",
@@ -21597,7 +21732,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72035-cayey-municipio",
-    "dataPath": "states/NA/counties/72035_cayey_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72035_cayey_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72037",
@@ -21606,7 +21741,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72037-ceiba-municipio",
-    "dataPath": "states/NA/counties/72037_ceiba_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72037_ceiba_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72039",
@@ -21615,7 +21750,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72039-ciales-municipio",
-    "dataPath": "states/NA/counties/72039_ciales_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72039_ciales_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72041",
@@ -21624,7 +21759,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72041-cidra-municipio",
-    "dataPath": "states/NA/counties/72041_cidra_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72041_cidra_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72043",
@@ -21633,7 +21768,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72043-coamo-municipio",
-    "dataPath": "states/NA/counties/72043_coamo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72043_coamo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72045",
@@ -21642,7 +21777,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72045-comerio-municipio",
-    "dataPath": "states/NA/counties/72045_comerio_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72045_comerio_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72047",
@@ -21651,7 +21786,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72047-corozal-municipio",
-    "dataPath": "states/NA/counties/72047_corozal_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72047_corozal_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72049",
@@ -21660,7 +21795,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72049-culebra-municipio",
-    "dataPath": "states/NA/counties/72049_culebra_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72049_culebra_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72051",
@@ -21669,7 +21804,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72051-dorado-municipio",
-    "dataPath": "states/NA/counties/72051_dorado_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72051_dorado_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72053",
@@ -21678,7 +21813,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72053-fajardo-municipio",
-    "dataPath": "states/NA/counties/72053_fajardo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72053_fajardo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72054",
@@ -21687,7 +21822,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72054-florida-municipio",
-    "dataPath": "states/NA/counties/72054_florida_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72054_florida_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72055",
@@ -21696,7 +21831,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72055-guanica-municipio",
-    "dataPath": "states/NA/counties/72055_guanica_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72055_guanica_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72057",
@@ -21705,7 +21840,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72057-guayama-municipio",
-    "dataPath": "states/NA/counties/72057_guayama_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72057_guayama_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72059",
@@ -21714,7 +21849,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72059-guayanilla-municipio",
-    "dataPath": "states/NA/counties/72059_guayanilla_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72059_guayanilla_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72061",
@@ -21723,7 +21858,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72061-guaynabo-municipio",
-    "dataPath": "states/NA/counties/72061_guaynabo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72061_guaynabo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72063",
@@ -21732,7 +21867,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72063-gurabo-municipio",
-    "dataPath": "states/NA/counties/72063_gurabo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72063_gurabo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72065",
@@ -21741,7 +21876,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72065-hatillo-municipio",
-    "dataPath": "states/NA/counties/72065_hatillo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72065_hatillo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72067",
@@ -21750,7 +21885,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72067-hormigueros-municipio",
-    "dataPath": "states/NA/counties/72067_hormigueros_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72067_hormigueros_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72069",
@@ -21759,7 +21894,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72069-humacao-municipio",
-    "dataPath": "states/NA/counties/72069_humacao_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72069_humacao_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72071",
@@ -21768,7 +21903,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72071-isabela-municipio",
-    "dataPath": "states/NA/counties/72071_isabela_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72071_isabela_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72073",
@@ -21777,7 +21912,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72073-jayuya-municipio",
-    "dataPath": "states/NA/counties/72073_jayuya_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72073_jayuya_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72075",
@@ -21786,7 +21921,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72075-juana-diaz-municipio",
-    "dataPath": "states/NA/counties/72075_juana_diaz_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72075_juana_diaz_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72077",
@@ -21795,7 +21930,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72077-juncos-municipio",
-    "dataPath": "states/NA/counties/72077_juncos_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72077_juncos_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72079",
@@ -21804,7 +21939,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72079-lajas-municipio",
-    "dataPath": "states/NA/counties/72079_lajas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72079_lajas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72081",
@@ -21813,7 +21948,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72081-lares-municipio",
-    "dataPath": "states/NA/counties/72081_lares_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72081_lares_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72083",
@@ -21822,7 +21957,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72083-las-marias-municipio",
-    "dataPath": "states/NA/counties/72083_las_marias_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72083_las_marias_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72085",
@@ -21831,7 +21966,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72085-las-piedras-municipio",
-    "dataPath": "states/NA/counties/72085_las_piedras_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72085_las_piedras_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72087",
@@ -21840,7 +21975,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72087-loiza-municipio",
-    "dataPath": "states/NA/counties/72087_loiza_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72087_loiza_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72089",
@@ -21849,7 +21984,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72089-luquillo-municipio",
-    "dataPath": "states/NA/counties/72089_luquillo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72089_luquillo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72091",
@@ -21858,7 +21993,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72091-manati-municipio",
-    "dataPath": "states/NA/counties/72091_manati_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72091_manati_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72093",
@@ -21867,7 +22002,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72093-maricao-municipio",
-    "dataPath": "states/NA/counties/72093_maricao_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72093_maricao_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72095",
@@ -21876,7 +22011,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72095-maunabo-municipio",
-    "dataPath": "states/NA/counties/72095_maunabo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72095_maunabo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72097",
@@ -21885,7 +22020,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72097-mayaguez-municipio",
-    "dataPath": "states/NA/counties/72097_mayaguez_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72097_mayaguez_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72099",
@@ -21894,7 +22029,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72099-moca-municipio",
-    "dataPath": "states/NA/counties/72099_moca_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72099_moca_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72101",
@@ -21903,7 +22038,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72101-morovis-municipio",
-    "dataPath": "states/NA/counties/72101_morovis_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72101_morovis_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72103",
@@ -21912,7 +22047,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72103-naguabo-municipio",
-    "dataPath": "states/NA/counties/72103_naguabo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72103_naguabo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72105",
@@ -21921,7 +22056,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72105-naranjito-municipio",
-    "dataPath": "states/NA/counties/72105_naranjito_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72105_naranjito_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72107",
@@ -21930,7 +22065,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72107-orocovis-municipio",
-    "dataPath": "states/NA/counties/72107_orocovis_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72107_orocovis_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72109",
@@ -21939,7 +22074,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72109-patillas-municipio",
-    "dataPath": "states/NA/counties/72109_patillas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72109_patillas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72111",
@@ -21948,7 +22083,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72111-penuelas-municipio",
-    "dataPath": "states/NA/counties/72111_penuelas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72111_penuelas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72113",
@@ -21957,7 +22092,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72113-ponce-municipio",
-    "dataPath": "states/NA/counties/72113_ponce_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72113_ponce_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72115",
@@ -21966,7 +22101,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72115-quebradillas-municipio",
-    "dataPath": "states/NA/counties/72115_quebradillas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72115_quebradillas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72117",
@@ -21975,7 +22110,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72117-rincon-municipio",
-    "dataPath": "states/NA/counties/72117_rincon_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72117_rincon_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72119",
@@ -21984,7 +22119,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72119-rio-grande-municipio",
-    "dataPath": "states/NA/counties/72119_rio_grande_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72119_rio_grande_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72121",
@@ -21993,7 +22128,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72121-sabana-grande-municipio",
-    "dataPath": "states/NA/counties/72121_sabana_grande_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72121_sabana_grande_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72123",
@@ -22002,7 +22137,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72123-salinas-municipio",
-    "dataPath": "states/NA/counties/72123_salinas_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72123_salinas_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72125",
@@ -22011,7 +22146,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72125-san-german-municipio",
-    "dataPath": "states/NA/counties/72125_san_german_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72125_san_german_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72127",
@@ -22020,7 +22155,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72127-san-juan-municipio",
-    "dataPath": "states/NA/counties/72127_san_juan_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72127_san_juan_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72129",
@@ -22029,7 +22164,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72129-san-lorenzo-municipio",
-    "dataPath": "states/NA/counties/72129_san_lorenzo_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72129_san_lorenzo_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72131",
@@ -22038,7 +22173,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72131-san-sebastian-municipio",
-    "dataPath": "states/NA/counties/72131_san_sebastian_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72131_san_sebastian_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72133",
@@ -22047,7 +22182,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72133-santa-isabel-municipio",
-    "dataPath": "states/NA/counties/72133_santa_isabel_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72133_santa_isabel_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72135",
@@ -22056,7 +22191,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72135-toa-alta-municipio",
-    "dataPath": "states/NA/counties/72135_toa_alta_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72135_toa_alta_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72137",
@@ -22065,7 +22200,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72137-toa-baja-municipio",
-    "dataPath": "states/NA/counties/72137_toa_baja_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72137_toa_baja_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72139",
@@ -22074,7 +22209,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72139-trujillo-alto-municipio",
-    "dataPath": "states/NA/counties/72139_trujillo_alto_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72139_trujillo_alto_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72141",
@@ -22083,7 +22218,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72141-utuado-municipio",
-    "dataPath": "states/NA/counties/72141_utuado_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72141_utuado_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72143",
@@ -22092,7 +22227,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72143-vega-alta-municipio",
-    "dataPath": "states/NA/counties/72143_vega_alta_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72143_vega_alta_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72145",
@@ -22101,7 +22236,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72145-vega-baja-municipio",
-    "dataPath": "states/NA/counties/72145_vega_baja_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72145_vega_baja_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72147",
@@ -22110,7 +22245,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72147-vieques-municipio",
-    "dataPath": "states/NA/counties/72147_vieques_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72147_vieques_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72149",
@@ -22119,7 +22254,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72149-villalba-municipio",
-    "dataPath": "states/NA/counties/72149_villalba_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72149_villalba_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72151",
@@ -22128,7 +22263,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72151-yabucoa-municipio",
-    "dataPath": "states/NA/counties/72151_yabucoa_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72151_yabucoa_municipio/county_rates.csv.gz"
   },
   {
     "fips": "72153",
@@ -22137,7 +22272,7 @@
     "state": "PR",
     "stateFips": "72",
     "slug": "72153-yauco-municipio",
-    "dataPath": "states/NA/counties/72153_yauco_municipio/county_rates.csv.gz"
+    "dataPath": "territories/puerto_rico/counties/72153_yauco_municipio/county_rates.csv.gz"
   },
   {
     "fips": "44001",
@@ -26341,6 +26476,42 @@
     "stateFips": "48",
     "slug": "48507-zavala",
     "dataPath": "states/texas/counties/48507_zavala/county_rates.csv.gz"
+  },
+  {
+    "fips": "74300",
+    "name": "Midway Islands",
+    "level": "county",
+    "state": "UM",
+    "stateFips": "74",
+    "slug": "74300-midway-islands",
+    "dataPath": "territories/u_s_minor_outlying_islands/counties/74300_midway_islands/county_rates.csv.gz"
+  },
+  {
+    "fips": "78010",
+    "name": "St. Croix Island",
+    "level": "county",
+    "state": "VI",
+    "stateFips": "78",
+    "slug": "78010-st-croix-island",
+    "dataPath": "territories/u_s_virgin_islands/counties/78010_st_croix_island/county_rates.csv.gz"
+  },
+  {
+    "fips": "78020",
+    "name": "St. John Island",
+    "level": "county",
+    "state": "VI",
+    "stateFips": "78",
+    "slug": "78020-st-john-island",
+    "dataPath": "territories/u_s_virgin_islands/counties/78020_st_john_island/county_rates.csv.gz"
+  },
+  {
+    "fips": "78030",
+    "name": "St. Thomas Island",
+    "level": "county",
+    "state": "VI",
+    "stateFips": "78",
+    "slug": "78030-st-thomas-island",
+    "dataPath": "territories/u_s_virgin_islands/counties/78030_st_thomas_island/county_rates.csv.gz"
   },
   {
     "fips": "49001",

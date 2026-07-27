@@ -4,9 +4,10 @@ This repository organizes health measures and disease rates by geographic level,
 
 * United States (national)
 * State
+* U.S. territory
 * County
 
-Each state has its own folder. Within each state folder, each county has its own subfolder named using the 5-digit county FIPS code followed by the county name. All data files use compressed CSV format (`.csv.gz`) and follow PopHIVE's **long format** standard for bundles.
+Each state (and, separately, each U.S. territory — see [U.S. Territories](#us-territories)) has its own folder. Within each, every county (or territory subdivision) has its own subfolder named using the 5-digit FIPS code followed by the name. All data files use compressed CSV format (`.csv.gz`) and follow PopHIVE's **long format** standard for bundles.
 
 ---
 
@@ -21,30 +22,47 @@ us-rates/
 ├── national/
 │   └── national_rates.csv.gz
 │
-└── states/
-    ├── alabama/
+├── states/
+│   ├── alabama/
+│   │   ├── state_rates.csv.gz
+│   │   └── counties/
+│   │       ├── 01001_autauga/
+│   │       │   └── county_rates.csv.gz
+│   │       ├── 01003_baldwin/
+│   │       │   └── county_rates.csv.gz
+│   │       └── ...
+│   │
+│   ├── alaska/
+│   │   ├── state_rates.csv.gz
+│   │   └── counties/
+│   │       └── ...
+│   │
+│   ├── arizona/
+│   └── ...
+│
+└── territories/
+    ├── puerto_rico/
     │   ├── state_rates.csv.gz
     │   └── counties/
-    │       ├── 01001_autauga/
-    │       │   └── county_rates.csv.gz
-    │       ├── 01003_baldwin/
+    │       ├── 72001_adjuntas_municipio/
     │       │   └── county_rates.csv.gz
     │       └── ...
     │
-    ├── alaska/
+    ├── guam/
     │   ├── state_rates.csv.gz
     │   └── counties/
     │       └── ...
     │
-    ├── arizona/
     └── ...
 ```
+
+DC is a state-equivalent for this repo's purposes and lives under `states/district_of_columbia/`, not `territories/`.
 
 ---
 
 ## County Folder Naming Convention
 
-County folders use the 5-digit FIPS code followed by the county name, all lowercase with underscores:
+Applies identically to county-equivalent subdivisions under `territories/` (e.g. Puerto Rico's municipios). Folders use the 5-digit FIPS code followed by the county name, all lowercase with underscores:
 
 ```
 [5-digit FIPS]_[county_name]
@@ -68,13 +86,33 @@ County folders use the 5-digit FIPS code followed by the county name, all lowerc
 
 PopHIVE uses FIPS codes as the standard geography identifier in all data files:
 
-| Level    | FIPS Format    | Example |
-|----------|----------------|---------|
-| National | `"00"`         | `00`    |
-| State    | 2-digit string | `01`    |
-| County   | 5-digit string | `01001` |
+| Level     | FIPS Format    | Example |
+|-----------|----------------|---------|
+| National  | `"00"`         | `00`    |
+| State     | 2-digit string | `01`    |
+| Territory | 2-digit string | `72`    |
+| County    | 5-digit string | `01001` |
 
 FIPS codes must always be stored as zero-padded strings, never as integers.
+
+---
+
+## U.S. Territories
+
+DC and the 50 states aren't the only 2-digit geographies — `tidycensus::fips_codes` also carries 2-digit codes for 6 non-state U.S. territories. DC is treated as a state-equivalent and lives under `states/`; the other 6 live under their own top-level `territories/` folder instead, since they aren't states:
+
+| Territory                   | Abbreviation | FIPS | Folder                          |
+|------------------------------|--------------|------|----------------------------------|
+| American Samoa               | `AS`         | `60` | `territories/american_samoa/`    |
+| Guam                          | `GU`         | `66` | `territories/guam/`               |
+| Northern Mariana Islands      | `MP`         | `69` | `territories/northern_mariana_islands/` |
+| Puerto Rico                   | `PR`         | `72` | `territories/puerto_rico/`        |
+| U.S. Minor Outlying Islands   | `UM`         | `74` | `territories/u_s_minor_outlying_islands/` |
+| U.S. Virgin Islands           | `VI`         | `78` | `territories/u_s_virgin_islands/` |
+
+Each territory folder follows the exact same shape as a state folder (`state_rates.csv.gz` plus a `counties/` subfolder for its FIPS-coded subdivisions — e.g. Puerto Rico's 78 municipios). `code/geography_helpers.R`'s `is_territory()` is the single source of truth for the states/territories split; `scaffold_structure.R`, `populate_state_rates.R`, `populate_county_rates.R`, and `generate_geography_manifest.R` all route on it, so a geography's top-level folder is never hand-picked per script.
+
+Most territories have little to no data across the sources in `measure_info.json` (health-workforce and mortality sources being the most likely to report any territory-level values) — an empty or missing `territories/{name}/` file just means no source reported data for it, not a pipeline bug.
 
 ---
 
@@ -262,10 +300,10 @@ Rscript code/update_all.R
 This runs, in order:
 
 1. **`all_fips.R`** — refreshes `resources/all_fips.csv.gz`, the FIPS-code-to-name reference table (via `tidycensus`).
-2. **`scaffold_structure.R`** — creates any new `states/{state}/counties/{fips}_{name}/` folders (safe to re-run; existing folders are never overwritten). Skip with `--skip-scaffold` once the tree is already up to date.
+2. **`scaffold_structure.R`** — creates any new `states|territories/{name}/counties/{fips}_{name}/` folders (safe to re-run; existing folders are never overwritten). Skip with `--skip-scaffold` once the tree is already up to date.
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
-4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz`.
-5. **`code/populate_county_rates.R`** — writes `states/*/counties/*/county_rates.csv.gz`.
+4. **`code/populate_state_rates.R`** — writes `states|territories/*/state_rates.csv.gz`.
+5. **`code/populate_county_rates.R`** — writes `states|territories/*/counties/*/county_rates.csv.gz`.
 6. **`code/check_ct_geography.R`** — fails the pipeline if any `(measure, time)` pair is reported under both of CT's county/planning-region conventions (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions)).
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:

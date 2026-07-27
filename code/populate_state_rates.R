@@ -248,8 +248,13 @@ for (fips in states) {
     next
   }
 
+  # is_territory() (state abbreviation -> territory?) comes from
+  # geography_helpers.R, sourced above. Territories get their own top-level
+  # territories/ folder instead of states/ -- see scaffold_structure.R.
+  top_level_dir <- if (is_territory(match_row$state[1])) "territories" else "states"
+
   state_folder <- file.path(
-    REPO_ROOT, "states",
+    REPO_ROOT, top_level_dir,
     safe_name(match_row$geography_name[1])
   )
 
@@ -261,4 +266,7 @@ for (fips in states) {
   )
 }
 
-message("\nComplete. State rate files written to states/*/state_rates.csv.gz")
+message(
+  "\nComplete. State rate files written to states/*/state_rates.csv.gz ",
+  "and territories/*/state_rates.csv.gz"
+)
