@@ -42,14 +42,14 @@ us-rates/
 │
 └── territories/
     ├── puerto_rico/
-    │   ├── state_rates.csv.gz
+    │   ├── commonwealth_rates.csv.gz
     │   └── counties/
     │       ├── 72001_adjuntas_municipio/
     │       │   └── county_rates.csv.gz
     │       └── ...
     │
     ├── guam/
-    │   ├── state_rates.csv.gz
+    │   ├── territory_rates.csv.gz
     │   └── counties/
     │       └── ...
     │
@@ -101,16 +101,16 @@ FIPS codes must always be stored as zero-padded strings, never as integers.
 
 DC and the 50 states aren't the only 2-digit geographies — `tidycensus::fips_codes` also carries 2-digit codes for 6 non-state U.S. territories. DC is treated as a state-equivalent and lives under `states/`; the other 6 live under their own top-level `territories/` folder instead, since they aren't states:
 
-| Territory                   | Abbreviation | FIPS | Folder                          |
-|------------------------------|--------------|------|----------------------------------|
-| American Samoa               | `AS`         | `60` | `territories/american_samoa/`    |
-| Guam                          | `GU`         | `66` | `territories/guam/`               |
-| Northern Mariana Islands      | `MP`         | `69` | `territories/northern_mariana_islands/` |
-| Puerto Rico                   | `PR`         | `72` | `territories/puerto_rico/`        |
-| U.S. Minor Outlying Islands   | `UM`         | `74` | `territories/u_s_minor_outlying_islands/` |
-| U.S. Virgin Islands           | `VI`         | `78` | `territories/u_s_virgin_islands/` |
+| Territory                   | Abbreviation | FIPS | Political Status                          | Top-level file            |
+|------------------------------|--------------|------|--------------------------------------------|----------------------------|
+| Puerto Rico                   | `PR`         | `72` | Commonwealth (organized, unincorporated)    | `commonwealth_rates.csv.gz` |
+| Northern Mariana Islands      | `MP`         | `69` | Commonwealth (organized, unincorporated)    | `commonwealth_rates.csv.gz` |
+| Guam                          | `GU`         | `66` | Territory (organized, unincorporated)       | `territory_rates.csv.gz`   |
+| U.S. Virgin Islands           | `VI`         | `78` | Territory (organized, unincorporated)       | `territory_rates.csv.gz`   |
+| American Samoa               | `AS`         | `60` | Territory (unorganized, unincorporated)     | `territory_rates.csv.gz`   |
+| U.S. Minor Outlying Islands   | `UM`         | `74` | No organized government or population       | `territory_rates.csv.gz`   |
 
-Each territory folder follows the exact same shape as a state folder (`state_rates.csv.gz` plus a `counties/` subfolder for its FIPS-coded subdivisions — e.g. Puerto Rico's 78 municipios). `code/geography_helpers.R`'s `is_territory()` is the single source of truth for the states/territories split; `scaffold_structure.R`, `populate_state_rates.R`, `populate_county_rates.R`, and `generate_geography_manifest.R` all route on it, so a geography's top-level folder is never hand-picked per script.
+Each territory's folder (`territories/american_samoa/`, `territories/guam/`, etc.) follows the exact same shape as a state folder — a top-level rates file plus a `counties/` subfolder for its FIPS-coded subdivisions (e.g. Puerto Rico's 78 municipios) — except the top-level file is named for that territory's actual political status rather than reusing `state_rates.csv.gz`, since territories aren't states: `commonwealth_rates.csv.gz` for Puerto Rico and the Northern Mariana Islands (the two organized, unincorporated commonwealths), `territory_rates.csv.gz` for the rest. `code/geography_helpers.R`'s `is_territory()` and `territory_rates_filename()` are the single source of truth for this; `scaffold_structure.R`, `populate_state_rates.R`, `populate_county_rates.R`, and `generate_geography_manifest.R` all route on them, so a geography's folder and filename are never hand-picked per script.
 
 Most territories have little to no data across the sources in `measure_info.json` (health-workforce and mortality sources being the most likely to report any territory-level values) — an empty or missing `territories/{name}/` file just means no source reported data for it, not a pipeline bug.
 
@@ -302,7 +302,7 @@ This runs, in order:
 1. **`all_fips.R`** — refreshes `resources/all_fips.csv.gz`, the FIPS-code-to-name reference table (via `tidycensus`).
 2. **`scaffold_structure.R`** — creates any new `states|territories/{name}/counties/{fips}_{name}/` folders (safe to re-run; existing folders are never overwritten). Skip with `--skip-scaffold` once the tree is already up to date.
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
-4. **`code/populate_state_rates.R`** — writes `states|territories/*/state_rates.csv.gz`.
+4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz` and `territories/*/{commonwealth,territory}_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states|territories/*/counties/*/county_rates.csv.gz`.
 6. **`code/check_ct_geography.R`** — fails the pipeline if any `(measure, time)` pair is reported under both of CT's county/planning-region conventions (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions)).
 

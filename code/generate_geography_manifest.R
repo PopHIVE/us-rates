@@ -36,7 +36,10 @@ all_fips <- vroom(FIPS_FILE, col_types = "ccc", show_col_types = FALSE)
 
 state_fips <- all_fips %>%
   filter(geography != "00", nchar(geography) == 2) %>%
-  mutate(top_level_dir = if_else(is_territory(state), "territories", "states"))
+  mutate(
+    top_level_dir = if_else(is_territory(state), "territories", "states"),
+    rates_filename = if_else(is_territory(state), territory_rates_filename(state), "state_rates.csv.gz")
+  )
 
 county_fips <- all_fips %>%
   filter(nchar(geography) == 5) %>%
@@ -62,7 +65,7 @@ state_rows <- state_fips %>%
     level     = if_else(is_territory(state), "territory", "state"),
     stateFips = geography,
     slug      = slug_name(geography_name),
-    dataPath  = paste0(top_level_dir, "/", safe_name(geography_name), "/state_rates.csv.gz")
+    dataPath  = paste0(top_level_dir, "/", safe_name(geography_name), "/", rates_filename)
   ) %>%
   arrange(geography_name) %>%
   select(fips, name, level, state, stateFips, slug, dataPath)
