@@ -49,7 +49,8 @@ chr_long <- vroom(
     INGEST_PATH,
     "county_health_rankings/standard/data_state.csv.gz"
   ),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  guess_max = Inf
 ) %>%
   filter(geography == "00") %>%
   pivot_longer(

@@ -53,9 +53,13 @@ state_name_lookup <- all_fips %>%
 message("Loading CHR and Census data...")
 
 # Read CHR (wide format: geography, time, measure columns)
+# guess_max = Inf: several measure columns (e.g. WI-only supplemental
+# measures) are sparse enough that vroom's default row sample can guess
+# them as logical instead of numeric, silently corrupting real values.
 chr_wide <- vroom(
   file.path(INGEST_PATH, "county_health_rankings/standard/data_county.csv.gz"),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  guess_max = Inf
 )
 
 # Read Census (wide format)
