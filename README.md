@@ -24,8 +24,10 @@ us-rates/
 │   └── national_rates.csv.gz
 │
 ├── states/
+│   ├── states_latest.csv.gz
 │   ├── alabama/
 │   │   ├── state_rates.csv.gz
+│   │   ├── counties_latest.csv.gz
 │   │   └── counties/
 │   │       ├── 01001_autauga/
 │   │       │   └── county_rates.csv.gz
@@ -35,6 +37,7 @@ us-rates/
 │   │
 │   ├── alaska/
 │   │   ├── state_rates.csv.gz
+│   │   ├── counties_latest.csv.gz
 │   │   └── counties/
 │   │       └── ...
 │   │
@@ -44,6 +47,7 @@ us-rates/
 └── territories/
     ├── puerto_rico/
     │   ├── commonwealth_rates.csv.gz
+    │   ├── counties_latest.csv.gz
     │   └── counties/
     │       ├── 72001_adjuntas_municipio/
     │       │   └── county_rates.csv.gz
@@ -187,6 +191,19 @@ geography,time,measure,value
 
 ---
 
+## Latest-Value Files
+
+Alongside the full time-series files above, two derived files hold a single "latest" cut for charts that compare many places at once rather than one place over time. Same columns and long-format rules as every other file (`geography`, `time`, `measure`, `value`) — just one row per `(geography, measure)` pair, keeping that geography's own most recent `time` for that measure (different geographies and measures update on different schedules, so this is not one global cutoff date):
+
+| File                                     | Contents                                                              |
+|-------------------------------------------|-------------------------------------------------------------------------|
+| `states/states_latest.csv.gz`              | Every state, DC, and territory that reports at least one measure, one row per `(geography, measure)`. No national (`00`) row. |
+| `states/{state}/counties_latest.csv.gz` and `territories/{territory}/counties_latest.csv.gz` | Every county (or territory subdivision) in that place, one row per `(geography, measure)`. Omitted for a place with no county-level data. |
+
+Both are written by `code/populate_latest_rates.R`, which derives them from the already-written `state_rates.csv.gz` / `commonwealth_rates.csv.gz` / `territory_rates.csv.gz` and `county_rates.csv.gz` files rather than re-reading `Ingest` — so it must run after `populate_state_rates.R` and `populate_county_rates.R` (see [Updating the Data](#updating-the-data)). These are chart-only conveniences; use the regular rate files above for a specific place's time series or a US comparison.
+
+---
+
 ## Column Naming Convention
 
 The `measure` column follows the `{prefix}_{measure_name}` pattern:
@@ -235,6 +252,7 @@ Each state folder contains state-level rates and a counties subfolder:
 ```
 alabama/
 ├── state_rates.csv.gz     ← state-level measures for Alabama (geography = "01")
+├── counties_latest.csv.gz ← latest value per county x measure (see Latest-Value Files)
 └── counties/
     ├── 01001_autauga/
     ├── 01003_baldwin/
@@ -327,8 +345,9 @@ This runs, in order:
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
 4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz` and `territories/*/{commonwealth,territory}_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states|territories/*/counties/*/county_rates.csv.gz`.
-6. **`code/check_geography_renaming.R`** — fails the pipeline if any `(measure, time)` pair is reported under both an old and new FIPS convention for a renamed/split/merged geography (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions) and [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes)).
-7. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
+6. **`code/populate_latest_rates.R`** — writes `states/states_latest.csv.gz` and `states|territories/*/counties_latest.csv.gz`, the chart-only "latest value per geography x measure" cuts (see [Latest-Value Files](#latest-value-files)).
+7. **`code/check_geography_renaming.R`** — fails the pipeline if any `(measure, time)` pair is reported under both an old and new FIPS convention for a renamed/split/merged geography (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions) and [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes)).
+8. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:
 
