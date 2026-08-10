@@ -326,10 +326,36 @@ nchs_causes_long <- vroom(
     time    = as.Date(time)
   )
 
+# CDC NSSP emergency-department visit percentage for RSV/COVID-19/flu, from
+# the standalone nssp/standard/data.csv.gz feed -- distinct from the
+# bundle_respiratory county-only cut used at the county level, this file
+# is the raw CDC resource and already carries national and state rows.
+nssp_long <- vroom(
+  file.path(INGEST_PATH, "nssp/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(geography), nchar(geography) == 2, geography != "00") %>%
+  select(geography, time, starts_with("percent_visits_")) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(
+      measure,
+      percent_visits_rsv   = "nssp_pct_ed_visits_rsv",
+      percent_visits_covid = "nssp_pct_ed_visits_covid",
+      percent_visits_flu   = "nssp_pct_ed_visits_flu"
+    ),
+    time = as.Date(time)
+  )
+
 combined <- bind_rows(
   chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
-  nchs_overdose_rate_long, healthmap_long,
+  nchs_overdose_rate_long, healthmap_long, nssp_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
   arrange(geography, time, measure)
