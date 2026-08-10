@@ -357,7 +357,7 @@ Rscript code/update_all.R --skip-scaffold
 
 **Before running:** make sure the `Ingest` repo alongside this one is up to date, since the `populate_*` scripts read directly from `../Ingest/data/`. Any script can also be run individually (see the `Usage` comment at the top of each file) if you only need to refresh one part of the pipeline.
 
-**Adding a new data source:** add a block to the relevant `populate_*_rates.R` script(s) that reads the new Ingest source, reshapes it into long format (`geography`, `time`, `measure`, `value`), and joins it into that script's `combined` bind_rows() call — then add a corresponding entry to `measure_info.json` for every new measure name.
+**Adding a new data source:** add a block to the relevant `populate_*_rates.R` script(s) that reads the new Ingest source, reshapes it into long format (`geography`, `time`, `measure`, `value`), and joins it into that script's `combined` bind_rows() call — then add a corresponding entry to `measure_info.json` for every new measure name. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full step-by-step walkthrough, including which script(s) to touch for a given geography level and the Alaska/Connecticut edge cases to check for.
 
 ---
 
