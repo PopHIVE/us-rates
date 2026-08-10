@@ -145,7 +145,7 @@ svv_exempt_long <- read_parquet(
     "schoolvaxview_exemptions.parquet"
   )
 ) %>%
-  filter(!is.na(value)) %>%
+  filter(!is.na(value), geography != "00") %>%
   mutate(
     measure = paste0("svv_exempt_", str_remove(vax, "_exempt$")),
     time    = as.Date(time)
@@ -160,7 +160,7 @@ exempt_long <- vroom(
   ),
   show_col_types = FALSE
 ) %>%
-  filter(!is.na(geography)) %>%
+  filter(!is.na(geography), geography != "00") %>%
   pivot_longer(
     cols      = c(exemption_rate_mmr_med, exemption_rate_mmr_nonmed),
     names_to  = "measure",
@@ -177,6 +177,26 @@ exempt_long <- vroom(
   ) %>%
   select(geography, time, measure, value)
 
+# CMS Medicare chronic conditions and preventive screenings (under 65). The
+# same file used for county-level cms_* measures also carries state-level
+# rows (geography_level == "s"), just filtered out there.
+cms_long <- vroom(
+  file.path(
+    INGEST_PATH,
+    "cms_mmd/standard/data_state_county_age.csv.gz"
+  ),
+  show_col_types = FALSE
+) %>%
+  filter(geography_level == "s", age == "Total", !is.na(geography)) %>%
+  select(-geography_level, -age, -race_ethnicity, -sex) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(time = year_end(format(as.Date(time), "%Y")))
+
 # MMR coverage modeled by HealthMap.
 healthmap_long <- vroom(
   file.path(INGEST_PATH, "mmr_healthmap/standard/data_state.csv.gz"),
@@ -186,6 +206,56 @@ healthmap_long <- vroom(
   mutate(
     measure = "healthmap_mmr_coverage",
     time    = mdy_to_date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# Epic Cosmos diagnosis-code (CCW), HbA1c, and BMI-based diabetes/obesity
+# prevalence. Sibling file of the county-level
+# epic_chronic/standard/county_year.csv.gz.
+epic_dx_long <- vroom(
+  file.path(INGEST_PATH, "epic_chronic/standard/state_year.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(age == "Total", !is.na(geography), geography != "00") %>%
+  pivot_longer(
+    cols      = c(
+      diabetes_dx_ccw, obesity_dx_ccw, diabetes_a1c_6_5, obesity_bmi
+    ),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(
+      measure,
+      diabetes_dx_ccw  = "epic_diabetes_dx_ccw",
+      obesity_dx_ccw   = "epic_obesity_dx_ccw",
+      diabetes_a1c_6_5 = "epic_diabetes_hba1c",
+      obesity_bmi      = "epic_obesity_bmi"
+    ),
+    time = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# NCHS drug overdose death rate (per capita). State names are joined to
+# FIPS via name_to_fips; the national "United States" row is dropped here
+# and picked up separately by populate_national_rates.R.
+nchs_overdose_rate_long <- read_parquet(
+  file.path(
+    INGEST_PATH, "bundle_injury_overdose/dist", "overdose_deaths_state.parquet"
+  )
+) %>%
+  filter(
+    !is.na(rate_deaths_overdose), !is.na(geography),
+    geography != "United States"
+  ) %>%
+  left_join(name_to_fips, by = c("geography" = "geography_name")) %>%
+  filter(!is.na(state_fips)) %>%
+  mutate(
+    measure   = "nchs_overdose_rate",
+    time      = year_end(format(as.Date(time), "%Y")),
+    value     = rate_deaths_overdose,
+    geography = state_fips
   ) %>%
   select(geography, time, measure, value)
 
@@ -207,6 +277,34 @@ nchs_long <- vroom(
     measure = paste0("nchs_", str_remove(measure, "^n_")),
     time    = month_end(time)
   )
+
+# NOAA/NWS HeatRisk daily forecast score, area-weighted to state. Only
+# forecast_day == 0 (observed) rows are kept -- forecast_day 1-7 are
+# forward-looking predictions for future dates, not observed facts.
+noaa_heat_long <- vroom(
+  file.path(INGEST_PATH, "noaa_heat_risk/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(
+    forecast_day == 0, !is.na(value), !is.na(geography), geography != "00"
+  ) %>%
+  mutate(
+    measure = "noaa_heat_risk_score",
+    time    = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# JHU confirmed measles case counts.
+jhu_measles_long <- vroom(
+  file.path(INGEST_PATH, "measles_jhu/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(value), !is.na(geography), geography != "00") %>%
+  mutate(
+    measure = "jhu_measles_cases",
+    time    = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
 
 # NCHS age-adjusted mortality rates by cause of death.
 nchs_causes_long <- vroom(
@@ -230,8 +328,9 @@ nchs_causes_long <- vroom(
 
 combined <- bind_rows(
   chr_long, census_long, brfss_long,
-  imm_long, svv_exempt_long, exempt_long, healthmap_long,
-  nchs_long, nchs_causes_long
+  imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
+  nchs_overdose_rate_long, healthmap_long,
+  nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
   arrange(geography, time, measure)
 
