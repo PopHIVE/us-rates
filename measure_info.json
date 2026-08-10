@@ -23,13 +23,13 @@
       "date_accessed": 2026
     },
     "census_ua_county": {
-      "name": "2020 Census Urban Area to County Allocation File",
+      "name": "2020 Census Urban Area to County Relationship File",
       "url": "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/urban-rural.html",
       "organization": "U.S. Census Bureau",
       "organization_url": "https://www.census.gov",
-      "location": "2020 Census Urban Area to County Allocation File (XLSX)",
+      "location": "2020 Census Urban Area to County Relationship File (XLSX)",
       "location_url": "https://www2.census.gov/geo/docs/reference/ua/2020_UA_COUNTY.xlsx",
-      "description": "The 2020 Census Urban Area to County Allocation File maps Census-defined urban areas (urbanized areas with population ≥ 50,000 and urban clusters with population 2,500–49,999) to counties. Each row represents a county-urban area intersection and includes the share of county population, land area, and housing units within that urban area. Summing across all urban areas for a county yields total percent urban. Counties not appearing in the file have no urban area and are considered 100% rural. Urban area boundaries are based on the 2020 decennial Census and reflect the updated delineation methodology that increased the minimum population threshold for urbanized areas from 50,000 to 50,000 and revised cluster definitions.",
+      "description": "The 2020 Census Urban Area to County Relationship File maps Census-defined urban areas to counties. For 2020, the Census Bureau eliminated the separate urbanized area (population ≥ 50,000) and urban cluster (population 2,500-49,999) categories used in 2010 and replaced them with a single urban area category, qualified primarily by housing unit density (at least 425 housing units per square mile) rather than population density, with a minimum size of 2,000 housing units or 5,000 population. Each row represents a county-urban area intersection and includes the share of county population, land area, and housing units within that urban area. Summing across all urban areas for a county yields total percent urban. Counties not appearing in the file have no urban area and are considered 100% rural. Urban area boundaries are based on the 2020 decennial Census and reflect this updated delineation methodology.",
       "restrictions": "Public domain. U.S. Census Bureau data are generally not subject to copyright restrictions.",
       "date_accessed": 2026
     },
@@ -160,6 +160,295 @@
       "description": "The National Syndromic Surveillance Program (NSSP) tracks the percentage of emergency department visits associated with respiratory illnesses (RSV, COVID-19, influenza) using near-real-time hospital ED data. Low-volume counties are backfilled with their state-level rate rather than suppressed.",
       "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
       "date_accessed": 2026
+    },
+    "census_decennial": {
+      "name": "Decennial Census",
+      "url": "https://www.census.gov/programs-surveys/decennial-census.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "location": "Demographic and Housing Characteristics File (DHC), 2020",
+      "description": "The Decennial Census is a complete enumeration of the U.S. population conducted every 10 years by the U.S. Census Bureau. The 2020 Demographic and Housing Characteristics File (DHC) provides full-count population and housing data, including urban/rural classification, for all counties. CHR&R's Rural measure is sourced from the 2020 DHC.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "census_pep": {
+      "name": "Population Estimates Program",
+      "url": "https://www.census.gov/programs-surveys/popest.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "The Population Estimates Program (PEP) produces annual county-level population estimates by age, sex, race, and Hispanic origin between decennial censuses. CHR&R uses PEP (2023 vintage) for its demographic composition measures (age, sex, race/ethnicity, and total population).",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "fbi_ucr": {
+      "name": "Uniform Crime Reporting (UCR) Program",
+      "url": "https://cde.ucr.cjis.gov/",
+      "organization": "Federal Bureau of Investigation",
+      "organization_url": "https://www.fbi.gov",
+      "description": "The FBI's Uniform Crime Reporting (UCR) Program collects offense data reported by state and local law enforcement agencies, including county-level violent crime counts. CHR&R last cited this source for its Violent Crime measure in the 2022 edition (citing 2014 & 2016 data); the measure was retired from CHR&R's official tables between 2022 and 2024/2025.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "census_oqm": {
+      "name": "Census Operational Quality Metrics",
+      "url": "https://www2.census.gov/programs-surveys/decennial/2020/data/operational-quality-metrics/",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "Operational quality metrics published alongside the 2020 Decennial Census, including county-level self-response rates. This is a one-time 2020 product rather than an annually refreshed series.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "nces": {
+      "name": "National Center for Education Statistics",
+      "url": "https://nces.ed.gov/",
+      "organization": "National Center for Education Statistics",
+      "organization_url": "https://nces.ed.gov",
+      "description": "NCES, part of the U.S. Department of Education, compiles federal education statistics including the Common Core of Data. CHR&R draws on NCES data for measures including free/reduced-price lunch eligibility, school segregation, and adult literacy; the underlying series and years vary by measure (2022-2024).",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "census_saipe": {
+      "name": "Small Area Income and Poverty Estimates (SAIPE)",
+      "url": "https://www.census.gov/programs-surveys/saipe.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "SAIPE provides model-based annual income and poverty estimates for all U.S. counties. CHR&R uses SAIPE, alongside American Community Survey 5-year estimates, for its child poverty and median household income measures.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "usda_fea": {
+      "name": "USDA Food Environment Atlas",
+      "url": "https://www.ers.usda.gov/data-products/food-environment-atlas/",
+      "organization": "USDA Economic Research Service",
+      "organization_url": "https://www.ers.usda.gov",
+      "description": "The USDA Food Environment Atlas compiles county-level indicators of community food environments. CHR&R's Food Environment Index combines the Atlas with Map the Meal Gap data from Feeding America (2019 & 2022 vintages).",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "edfacts": {
+      "name": "EDFacts",
+      "url": "https://data.ed.gov",
+      "organization": "U.S. Department of Education, with state education agencies",
+      "organization_url": "https://www.ed.gov",
+      "description": "EDFacts is the U.S. Department of Education's K-12 data collection, populated from state education agency reporting. CHR&R's High School Graduation measure combines EDFacts with state-specific sources, so exact methodology varies by state.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "ojjdp": {
+      "name": "Easy Access to Juvenile Court Case Counts",
+      "url": "https://ojjdp.ojp.gov/",
+      "organization": "Office of Juvenile Justice and Delinquency Prevention",
+      "organization_url": "https://ojjdp.ojp.gov",
+      "description": "OJJDP's Easy Access to State and County Juvenile Court Case Counts tool provides county-level juvenile delinquency case rates. CHR&R last confirmed this source in its 2020 edition, citing 2017 data.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "imls": {
+      "name": "Public Libraries Survey",
+      "url": "https://www.imls.gov/research-evaluation/data",
+      "organization": "Institute of Museum and Library Services",
+      "organization_url": "https://www.imls.gov",
+      "description": "The annual Public Libraries Survey, administered by IMLS, collects library visit and service data. CHR&R uses this survey (2022 vintage) for its Library Access measure.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "usda_fara": {
+      "name": "USDA Food Access Research Atlas",
+      "url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/",
+      "organization": "USDA Economic Research Service",
+      "organization_url": "https://www.ers.usda.gov",
+      "description": "The USDA Food Access Research Atlas identifies low-income areas with limited access to grocery stores. CHR&R's own documentation cites this (via the Food Environment Atlas) for its Limited Access to Healthy Foods measure (2019 vintage); there is an unresolved discrepancy between CHR&R's stated source and its historical-sources record for this measure that has not been independently reconciled.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "seda": {
+      "name": "Stanford Education Data Archive (SEDA)",
+      "url": "https://edopportunity.org/opportunity/data/downloads/",
+      "organization": "Stanford University",
+      "organization_url": "https://edopportunity.org",
+      "description": "SEDA provides standardized measures of academic achievement by geography, derived from state standardized test scores. CHR&R uses SEDA (2019 vintage) for its Math Scores and Reading Scores measures.",
+      "restrictions": "Free bulk download for academic/non-commercial use with citation.",
+      "date_accessed": 2026
+    },
+    "hud_chas": {
+      "name": "Comprehensive Housing Affordability Strategy (CHAS) data",
+      "url": "https://www.huduser.gov/portal/datasets/cp.html",
+      "organization": "U.S. Department of Housing and Urban Development",
+      "organization_url": "https://www.hud.gov",
+      "description": "CHAS data, produced by HUD from special ACS tabulations, measures housing problems (cost burden, crowding, substandard facilities) by county. CHR&R uses the 2017-2021 vintage for its Severe Housing Problems measure. Refreshed on the ACS 5-year cycle.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "bls_laus": {
+      "name": "Local Area Unemployment Statistics",
+      "url": "https://www.bls.gov/lau/",
+      "organization": "Bureau of Labor Statistics",
+      "organization_url": "https://www.bls.gov",
+      "description": "BLS Local Area Unemployment Statistics (LAUS) provide monthly and annual county-level labor force and unemployment estimates. CHR&R uses the 2023 vintage for its Unemployment measure.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "census_sahie": {
+      "name": "Small Area Health Insurance Estimates (SAHIE)",
+      "url": "https://www.census.gov/programs-surveys/sahie.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "SAHIE provides modeled annual estimates of health insurance coverage by county, age, sex, income, and race/ethnicity. CHR&R uses SAHIE (2022 vintage) for its uninsured population measures (overall, adults, and children).",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "medsl": {
+      "name": "Election Data and Science Lab",
+      "url": "https://electionlab.mit.edu/data",
+      "organization": "MIT",
+      "organization_url": "https://electionlab.mit.edu",
+      "description": "The MIT Election Data and Science Lab publishes county-level election returns. CHR&R combines this with American Community Survey 5-year citizen voting-age population estimates (2020 & 2016-2020) to compute its Voter Turnout measure.",
+      "restrictions": "Freely available for research use; open CSVs published via Harvard Dataverse.",
+      "date_accessed": 2026
+    },
+    "noaa_fema": {
+      "name": "Weather and disaster-declaration records",
+      "url": "https://www.fema.gov/about/openfema/api",
+      "organization": "NOAA and FEMA",
+      "organization_url": "https://www.fema.gov",
+      "description": "CHR&R's Adverse Climate Events measure combines three federal sources: the CDC Environmental Public Health Tracking Network (heat component), the U.S. Drought Monitor (drought component), and FEMA's OpenFEMA Disaster Declaration Summaries (disaster component), covering thresholds met over a five-year window (2019-2023).",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "census_cbp": {
+      "name": "County Business Patterns",
+      "url": "https://www.census.gov/programs-surveys/cbp.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "County Business Patterns provides annual county-level establishment counts by industry. CHR&R currently uses CBP (2022 vintage) for its Social Associations measure; Access to Healthy Foods, Fast Food Restaurants, Liquor Store Density, and Access to Recreational Facilities were also CBP-sourced but were retired from CHR&R's official tables in earlier editions. Disclosure suppression/noise infusion can affect low-population counties.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "epa_sdwis": {
+      "name": "Safe Drinking Water Information System (SDWIS)",
+      "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+      "organization": "Environmental Protection Agency",
+      "organization_url": "https://www.epa.gov",
+      "description": "SDWIS tracks compliance and violations for U.S. public water systems. CHR&R's Drinking Water Violations measure (2023 vintage) reflects the presence of health-related violations; state reporting completeness and timeliness vary.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "cdc_nchhstp": {
+      "name": "HIV/STD/TB surveillance data",
+      "url": "https://gis.cdc.gov/grasp/nchhstpatlas/main.html",
+      "organization": "CDC National Center for HIV/AIDS, Viral Hepatitis, STD, and TB Prevention",
+      "organization_url": "https://www.cdc.gov/nchhstp",
+      "description": "NCHHSTP's AtlasPlus tool publishes county-level HIV and STI surveillance data (2022 vintage). CHR&R uses this for its HIV Prevalence and Sexually Transmitted Infections measures. Estimates are suppressed for populations under approximately 100 or fewer than 5 cases.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "sfid": {
+      "name": "School Finance Indicators Database",
+      "url": "https://www.schoolfinancedata.org/",
+      "organization": "School Finance Indicators DB project",
+      "organization_url": "https://www.schoolfinancedata.org",
+      "description": "The School Finance Indicators Database estimates the gap between actual and required per-pupil spending in public school districts (2022 vintage). CHR&R switched to this source starting with its 2021 edition, having previously used EdBuild (closed 2020) for its School Funding Adequacy measure.",
+      "restrictions": "Freely available bulk download; published at the school-district level, requiring a district-to-county crosswalk.",
+      "date_accessed": 2026
+    },
+    "living_wage_institute": {
+      "name": "Living Wage Calculator",
+      "url": "https://livingwage.institute/",
+      "organization": "The Living Wage Institute",
+      "organization_url": "https://livingwage.institute",
+      "description": "The Living Wage Institute (formerly the MIT Living Wage Calculator) publishes estimated hourly wages needed to cover basic expenses by locality (2024 vintage). CHR&R's Child Care Cost Burden measure combines this with Small Area Income and Poverty Estimates (2024 & 2023).",
+      "restrictions": "Free for single-location web lookups; bulk non-commercial use terms are not publicly documented and require contacting the Institute directly.",
+      "date_accessed": 2026
+    },
+    "feeding_america": {
+      "name": "Map the Meal Gap",
+      "url": "https://map.feedingamerica.org/",
+      "organization": "Feeding America",
+      "organization_url": "https://www.feedingamerica.org",
+      "description": "Feeding America's Map the Meal Gap study estimates county-level food insecurity rates (2022 vintage), used for CHR&R's Food Insecurity measure.",
+      "restrictions": "Full county-level dataset requires a data-request form to Feeding America; approval terms and any fees are not publicly published.",
+      "date_accessed": 2026
+    },
+    "hifld": {
+      "name": "Homeland Infrastructure Foundation-Level Data (HIFLD)",
+      "url": "https://catalog.data.gov/dataset/child-care-centers",
+      "organization": "U.S. Department of Homeland Security",
+      "organization_url": "https://www.dhs.gov",
+      "description": "HIFLD published open geospatial infrastructure datasets, including child care center locations (2010-2022 vintage; formerly sourced from the National Center on Early Childhood Quality Assurance), used for CHR&R's Child Care Centers measure.",
+      "restrictions": "Public domain (U.S. federal data); however, the public HIFLD Open download portal was discontinued in August 2025, with no active public download channel as of this writing.",
+      "date_accessed": 2026
+    },
+    "epa_ejscreen": {
+      "name": "EJSCREEN (Environmental Justice Screening and Mapping Tool)",
+      "url": "https://www.epa.gov/ejscreen",
+      "organization": "Environmental Protection Agency",
+      "organization_url": "https://www.epa.gov",
+      "description": "EJSCREEN combined environmental and demographic indicators, including traffic volume near major roadways (2020 vintage), used for CHR&R's Traffic Volume measure (formerly sourced from the FHWA).",
+      "restrictions": "Public domain (U.S. federal data); however, EPA removed public access to EJSCREEN in February 2025, and only unofficial third-party mirrors of uncertain stability remain.",
+      "date_accessed": 2026
+    },
+    "esri_tiger_ymca": {
+      "name": "ArcGIS Business Analyst/Online & TIGER/Line Shapefiles",
+      "url": "https://www.esri.com/en-us/arcgis/products/arcgis-business-analyst/overview",
+      "organization": "Esri, U.S. Census Bureau, and the YMCA",
+      "organization_url": "https://www.esri.com",
+      "description": "CHR&R's Access to Exercise Opportunities measure is built from Esri ArcGIS Business Analyst/Online point-of-interest data, YMCA facility locations, and US Census TIGER/Line Shapefiles (2024, 2022 & 2020 vintages). Access to Parks uses ArcGIS Online and TIGER/Line Shapefiles (2024 & 2020 vintages) without the YMCA component.",
+      "restrictions": "Esri Business Analyst requires a paid commercial license; underlying point-of-interest data is licensed by Esri from third-party vendors.",
+      "date_accessed": 2026
+    },
+    "ama_physician_masterfile": {
+      "name": "AMA (Year-End) Physician Professional Data",
+      "url": "https://www.ama-assn.org/about/masterfile/ama-physician-masterfile",
+      "organization": "American Medical Association",
+      "organization_url": "https://www.ama-assn.org",
+      "description": "The AMA Physician Masterfile (now the AMA Physician Professional Data product) is a proprietary, licensed roster of U.S. physicians. CHR&R's Primary Care Physicians measure is sourced from this file, most recently via the Area Health Resource File (2021 vintage).",
+      "restrictions": "Proprietary, licensed product. HRSA licenses it for redistribution via the Area Health Resource File; no free equivalent exists for physician-specialty rosters at this granularity.",
+      "date_accessed": 2026
+    },
+    "acs": {
+      "name": "American Community Survey (ACS)",
+      "url": "https://www.census.gov/programs-surveys/acs/data.html",
+      "organization": "U.S. Census Bureau",
+      "organization_url": "https://www.census.gov",
+      "description": "The American Community Survey is an ongoing Census Bureau survey providing demographic, social, economic, and housing data. CHR&R draws on ACS 5-year estimates (vintages vary by measure and edition, generally 2019-2023 for currently active measures) for measures including broadband access, educational attainment, housing cost burden, income inequality, commuting patterns, and residential segregation.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "cdc_epht": {
+      "name": "CDC National Environmental Public Health Tracking (EPHT) Network",
+      "url": "https://ephtracking.cdc.gov/",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "The EPHT Network publishes modeled air quality surfaces, including fine particulate matter (PM2.5) concentrations (2020 vintage), used for CHR&R's air pollution measures. CHR&R's citations for these measures have been inconsistent across editions (variously naming EPHT, EPA, or CDC WONDER); the Particulate Matter measure has been consistently cited to EPHT through 2025, while the Ozone Days and Particulate Matter Days count measures were retired after the 2011-2012 editions.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "nhtsa_fars": {
+      "name": "Fatality Analysis Reporting System (FARS)",
+      "url": "https://www.nhtsa.gov/file-downloads?p=nhtsa/downloads/FARS/",
+      "organization": "National Highway Traffic Safety Administration",
+      "organization_url": "https://www.nhtsa.gov",
+      "description": "FARS is NHTSA's census of fatal motor vehicle crashes (2018-2022 vintage), used by CHR&R for its Alcohol-Impaired Driving Deaths measure.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "cms_nppes": {
+      "name": "National Provider Identifier registry (NPPES)",
+      "url": "https://download.cms.gov/nppes/NPI_Files.html",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "organization_url": "https://www.cms.gov",
+      "description": "NPPES is CMS's registry of the National Provider Identifier for U.S. health care providers, including taxonomy (specialty) and practice-location detail. CHR&R uses NPPES (2024/2023 vintage) for its Mental Health Providers and Other Primary Care Providers measures, and (via the AHRF's National Provider Identifier Downloadable File, 2022 vintage) for its Dentists measure.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "dartmouth_atlas": {
+      "name": "Dartmouth Atlas of Health Care",
+      "url": "https://www.dartmouthatlas.org/",
+      "organization": "The Dartmouth Institute",
+      "organization_url": "https://www.dartmouthatlas.org",
+      "description": "The Dartmouth Atlas of Health Care documented regional variation in Medicare spending and utilization. CHR&R's Diabetes Monitoring, Health Care Costs, and Hospice Use measures were last sourced from the Dartmouth Atlas in the edition confirmed through 2017; CHR&R has since dropped all three measures from its official tables rather than migrating them to a new source. Retained here for historical documentation even though it is no longer a current CHR&R measure.",
+      "restrictions": "Historically available for research use; the Dartmouth Atlas project is no longer actively maintained for this data.",
+      "date_accessed": 2026
     }
   },
   "chr_premature_death": {
@@ -176,7 +465,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -194,7 +483,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -212,7 +501,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_sahie"
       }
     ]
   },
@@ -230,7 +519,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "ama_physician_masterfile"
       }
     ]
   },
@@ -248,7 +537,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms"
       }
     ]
   },
@@ -266,7 +555,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -284,7 +573,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -302,7 +591,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -320,7 +609,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -338,7 +627,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "edfacts"
       }
     ]
   },
@@ -356,7 +645,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "bls_laus"
       }
     ]
   },
@@ -374,7 +663,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_saipe"
       }
     ]
   },
@@ -392,7 +681,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -410,7 +699,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -428,7 +717,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -446,7 +735,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -464,7 +753,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -482,7 +771,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cdc_nchhstp"
       }
     ]
   },
@@ -500,7 +789,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -518,7 +807,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms"
       }
     ]
   },
@@ -536,7 +825,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -554,7 +843,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -572,7 +861,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -590,7 +879,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -608,7 +897,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -626,7 +915,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -644,7 +933,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -662,7 +951,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_decennial"
       }
     ]
   },
@@ -680,7 +969,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -698,7 +987,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -716,7 +1005,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cdc_nchhstp"
       }
     ]
   },
@@ -734,7 +1023,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms_nppes"
       }
     ]
   },
@@ -751,7 +1040,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_saipe"
       }
     ]
   },
@@ -769,7 +1058,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nces"
       }
     ]
   },
@@ -787,7 +1076,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -805,7 +1094,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -823,7 +1112,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -841,7 +1130,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -859,7 +1148,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -877,7 +1166,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -895,7 +1184,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "usda_fara"
       }
     ]
   },
@@ -913,7 +1202,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_sahie"
       }
     ]
   },
@@ -931,7 +1220,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms_nppes"
       }
     ]
   },
@@ -949,7 +1238,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_sahie"
       }
     ]
   },
@@ -966,7 +1255,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "epa_sdwis"
       }
     ]
   },
@@ -984,7 +1273,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cdc_epht"
       }
     ]
   },
@@ -1002,7 +1291,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_pep"
       }
     ]
   },
@@ -1020,7 +1309,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1038,7 +1327,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1056,7 +1345,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1074,7 +1363,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms_nppes"
       }
     ]
   },
@@ -1092,7 +1381,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "esri_tiger_ymca"
       }
     ]
   },
@@ -1110,7 +1399,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "usda_fea"
       }
     ]
   },
@@ -1128,7 +1417,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nhtsa_fars"
       }
     ]
   },
@@ -1146,7 +1435,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1164,7 +1453,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "hud_chas"
       }
     ]
   },
@@ -1182,7 +1471,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1200,7 +1489,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1218,7 +1507,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "feeding_america"
       }
     ]
   },
@@ -1236,7 +1525,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_cbp"
       }
     ]
   },
@@ -1254,7 +1543,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1272,7 +1561,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -1290,7 +1579,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -1308,7 +1597,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -1326,7 +1615,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1344,7 +1633,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1362,7 +1651,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1380,7 +1669,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1398,7 +1687,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1416,7 +1705,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1434,7 +1723,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cms"
       }
     ]
   },
@@ -1452,7 +1741,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "epa_ejscreen"
       }
     ]
   },
@@ -1470,7 +1759,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "seda"
       }
     ]
   },
@@ -1488,7 +1777,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "seda"
       }
     ]
   },
@@ -1506,7 +1795,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -1524,7 +1813,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1542,7 +1831,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nces"
       }
     ]
   },
@@ -1560,7 +1849,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -1578,7 +1867,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "sfid"
       }
     ]
   },
@@ -1596,7 +1885,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "living_wage_institute"
       }
     ]
   },
@@ -1614,7 +1903,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "living_wage_institute"
       }
     ]
   },
@@ -1632,7 +1921,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "hifld"
       }
     ]
   },
@@ -1650,7 +1939,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "medsl"
       }
     ]
   },
@@ -1668,7 +1957,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_oqm"
       }
     ]
   },
@@ -1686,7 +1975,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "esri_tiger_ymca"
       }
     ]
   },
@@ -1704,7 +1993,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -1722,7 +2011,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "imls"
       }
     ]
   },
@@ -1740,7 +2029,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "noaa_fema"
       }
     ]
   },
@@ -1758,7 +2047,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -1776,7 +2065,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5275,7 +5564,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_cbp"
       }
     ]
   },
@@ -5293,7 +5582,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_cbp"
       }
     ]
   },
@@ -5311,7 +5600,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cdc_epht"
       }
     ]
   },
@@ -5329,7 +5618,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "cdc_epht"
       }
     ]
   },
@@ -5365,7 +5654,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5401,7 +5690,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -5437,7 +5726,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5455,7 +5744,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -5473,7 +5762,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "dartmouth_atlas"
       }
     ]
   },
@@ -5526,7 +5815,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "nchs"
       }
     ]
   },
@@ -5544,7 +5833,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_cbp"
       }
     ]
   },
@@ -5579,7 +5868,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "dartmouth_atlas"
       }
     ]
   },
@@ -5597,7 +5886,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -5615,7 +5904,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "dartmouth_atlas"
       }
     ]
   },
@@ -5651,7 +5940,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5669,7 +5958,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "ojjdp"
       }
     ]
   },
@@ -5705,7 +5994,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "census_cbp"
       }
     ]
   },
@@ -5777,7 +6066,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -5795,7 +6084,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "acs"
       }
     ]
   },
@@ -5813,7 +6102,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "fbi_ucr"
       }
     ]
   },
@@ -5848,7 +6137,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5866,7 +6155,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5884,7 +6173,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5902,7 +6191,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5920,7 +6209,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5938,7 +6227,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5956,7 +6245,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5974,7 +6263,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -5992,7 +6281,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6010,7 +6299,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6028,7 +6317,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6046,7 +6335,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6064,7 +6353,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6082,7 +6371,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
@@ -6100,7 +6389,7 @@
     "time_resolution": "Year",
     "sources": [
       {
-        "id": "chr"
+        "id": "brfss"
       }
     ]
   },
