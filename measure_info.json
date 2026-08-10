@@ -125,6 +125,42 @@
       "restrictions": "Public domain. HRSA data is produced by a U.S. federal agency and is generally not subject to copyright restrictions.",
       "date_accessed": 2025
     },
+    "noaa_wpc_heatrisk": {
+      "name": "NOAA/NWS Weather Prediction Center HeatRisk",
+      "url": "https://www.wpc.ncep.noaa.gov/heatrisk/",
+      "organization": "National Oceanic and Atmospheric Administration (NOAA)",
+      "organization_url": "https://www.noaa.gov",
+      "description": "The NOAA Weather Prediction Center's HeatRisk product provides a daily heat risk forecast across the contiguous United States on a 0-4 scale, combining temperature, humidity, duration, and local climatology. County- and state-level values are area-weighted means of the underlying ~2.5km forecast grid.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
+    "jhu_measles": {
+      "name": "Johns Hopkins University Measles Tracker",
+      "url": "https://github.com/CSSEGISandData",
+      "organization": "Johns Hopkins University Center for Systems Science and Engineering",
+      "organization_url": "https://systems.jhu.edu",
+      "description": "County- and state-level confirmed measles case counts compiled by Johns Hopkins University from state and local health department reports.",
+      "restrictions": "Attribution required.",
+      "date_accessed": 2026
+    },
+    "wastewater_measles": {
+      "name": "Measles Wastewater Surveillance",
+      "url": "https://www.pophive.org",
+      "organization": "PopHIVE, Yale School of Public Health",
+      "organization_url": "https://www.pophive.org",
+      "description": "County-level measles detection rates from wastewater surveillance samples. Coverage is limited to counties with participating wastewater monitoring sites, so absence of data does not imply absence of virus.",
+      "restrictions": "Attribution required.",
+      "date_accessed": 2026
+    },
+    "cdc_nssp": {
+      "name": "CDC National Syndromic Surveillance Program (NSSP)",
+      "url": "https://www.cdc.gov/nssp",
+      "organization": "Centers for Disease Control and Prevention",
+      "organization_url": "https://www.cdc.gov",
+      "description": "The National Syndromic Surveillance Program (NSSP) tracks the percentage of emergency department visits associated with respiratory illnesses (RSV, COVID-19, influenza) using near-real-time hospital ED data. Low-volume counties are backfilled with their state-level rate rather than suppressed.",
+      "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
+      "date_accessed": 2026
+    },
     "census_decennial": {
       "name": "Decennial Census",
       "url": "https://www.census.gov/programs-surveys/decennial-census.html",
@@ -6642,6 +6678,221 @@
     "sources": [
       {
         "id": "ahrf"
+      }
+    ]
+  },
+  "noaa_heat_risk_score": {
+    "id": "noaa_heat_risk_score",
+    "short_name": "Heat Risk Score",
+    "long_name": "NOAA HeatRisk Score",
+    "category": "environmental_health",
+    "subcategory": "other_environmental_hazards",
+    "short_description": "Mean daily heat risk score on a 0-4 scale.",
+    "long_description": "Mean daily heat risk score (0 = No Risk, 1 = Minor, 2 = Moderate, 3 = Major, 4 = Extreme) from NOAA/NWS Weather Prediction Center's HeatRisk product, area-weighted to the county. Only observed (non-forecast) daily values are included; forward-looking forecast days are excluded.",
+    "statement": "In {location}, the mean daily heat risk score was {value} (0-4 scale).",
+    "measure_type": "number",
+    "unit": "Score (0-4)",
+    "time_resolution": "Day",
+    "sources": [
+      {
+        "id": "noaa_wpc_heatrisk"
+      }
+    ]
+  },
+  "jhu_measles_cases": {
+    "id": "jhu_measles_cases",
+    "short_name": "Measles Cases",
+    "long_name": "Confirmed Measles Cases (JHU)",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Confirmed measles case count.",
+    "long_description": "Weekly count of confirmed measles cases compiled by Johns Hopkins University from state and local health department reports.",
+    "statement": "In {location}, there were {value} confirmed measles cases.",
+    "measure_type": "number",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "jhu_measles"
+      }
+    ]
+  },
+  "ww_measles_detection_rate": {
+    "id": "ww_measles_detection_rate",
+    "short_name": "Measles Wastewater Detection Rate",
+    "long_name": "Measles Detection Rate in Wastewater",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Percentage of wastewater samples testing positive for measles virus.",
+    "long_description": "Percentage of wastewater surveillance samples testing positive for measles virus among counties with participating monitoring sites. Absence of a value does not imply absence of virus -- it means the county has no participating wastewater site for that period.",
+    "statement": "In {location}, {value} of wastewater samples tested positive for measles.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "wastewater_measles"
+      }
+    ]
+  },
+  "epic_heat_ed_rate": {
+    "id": "epic_heat_ed_rate",
+    "short_name": "Heat-Related ED Visits (Epic)",
+    "long_name": "Heat-Related Emergency Department Visit Rate (Epic Cosmos)",
+    "category": "environmental_health",
+    "subcategory": "other_environmental_hazards",
+    "short_description": "Heat-related emergency department visits per 100,000 total ED visits.",
+    "long_description": "Rate of emergency department visits with a heat-related diagnosis, per 100,000 total ED visits, among patients seen within Epic Cosmos-participating health systems. The share of each county's population captured by Epic Cosmos varies, so counties with low capture may be unrepresentative.",
+    "statement": "In {location}, there were {value} heat-related ED visits per 100,000 ED visits.",
+    "measure_type": "number",
+    "unit": "Per 100,000 ED visits",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "epic"
+      }
+    ]
+  },
+  "nssp_pct_ed_visits_rsv": {
+    "id": "nssp_pct_ed_visits_rsv",
+    "short_name": "RSV ED Visits",
+    "long_name": "Percentage of ED Visits Associated with RSV",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Percentage of emergency department visits associated with RSV.",
+    "long_description": "Percentage of emergency department visits associated with respiratory syncytial virus (RSV), from CDC's National Syndromic Surveillance Program (NSSP). Low-volume counties are backfilled with their state-level rate rather than suppressed.",
+    "statement": "In {location}, {value} of ED visits were associated with RSV.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "cdc_nssp"
+      }
+    ]
+  },
+  "nssp_pct_ed_visits_covid": {
+    "id": "nssp_pct_ed_visits_covid",
+    "short_name": "COVID-19 ED Visits",
+    "long_name": "Percentage of ED Visits Associated with COVID-19",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Percentage of emergency department visits associated with COVID-19.",
+    "long_description": "Percentage of emergency department visits associated with COVID-19, from CDC's National Syndromic Surveillance Program (NSSP). Low-volume counties are backfilled with their state-level rate rather than suppressed.",
+    "statement": "In {location}, {value} of ED visits were associated with COVID-19.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "cdc_nssp"
+      }
+    ]
+  },
+  "nssp_pct_ed_visits_flu": {
+    "id": "nssp_pct_ed_visits_flu",
+    "short_name": "Flu ED Visits",
+    "long_name": "Percentage of ED Visits Associated with Influenza",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Percentage of emergency department visits associated with influenza.",
+    "long_description": "Percentage of emergency department visits associated with influenza, from CDC's National Syndromic Surveillance Program (NSSP). Low-volume counties are backfilled with their state-level rate rather than suppressed.",
+    "statement": "In {location}, {value} of ED visits were associated with influenza.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "cdc_nssp"
+      }
+    ]
+  },
+  "wapo_met_herd_immunity_prepandemic": {
+    "id": "wapo_met_herd_immunity_prepandemic",
+    "short_name": "Pre-Pandemic Herd Immunity",
+    "long_name": "Met Measles Herd Immunity Threshold, Pre-Pandemic",
+    "category": "preventive_care",
+    "subcategory": "immunizations",
+    "short_description": "Whether the county's kindergartners met the measles herd-immunity threshold in 2018-2020.",
+    "long_description": "Binary indicator (1 = met, 0 = did not meet) of whether a county's kindergarten MMR vaccination rate met the herd-immunity threshold in the pre-pandemic years 2018-2020, per Washington Post analysis of state health department data.",
+    "statement": "In {location}, the pre-pandemic herd immunity threshold for measles was met: {value}.",
+    "measure_type": "number",
+    "unit": "1 = met threshold, 0 = did not",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "wapo"
+      }
+    ]
+  },
+  "wapo_met_herd_immunity_postpandemic": {
+    "id": "wapo_met_herd_immunity_postpandemic",
+    "short_name": "Post-Pandemic Herd Immunity",
+    "long_name": "Met Measles Herd Immunity Threshold, Post-Pandemic",
+    "category": "preventive_care",
+    "subcategory": "immunizations",
+    "short_description": "Whether the county's kindergartners met the measles herd-immunity threshold in 2023-2025.",
+    "long_description": "Binary indicator (1 = met, 0 = did not meet) of whether a county's kindergarten MMR vaccination rate met the herd-immunity threshold in the post-pandemic years 2023-2025, per Washington Post analysis of state health department data.",
+    "statement": "In {location}, the post-pandemic herd immunity threshold for measles was met: {value}.",
+    "measure_type": "number",
+    "unit": "1 = met threshold, 0 = did not",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "wapo"
+      }
+    ]
+  },
+  "nchs_overdose_rate": {
+    "id": "nchs_overdose_rate",
+    "short_name": "Overdose Death Rate",
+    "long_name": "Drug Overdose Death Rate (NCHS, provisional)",
+    "category": "substance_abuse",
+    "subcategory": "drug_use_and_overdose",
+    "short_description": "Annual drug overdose deaths per 100,000 population.",
+    "long_description": "Annual provisional drug overdose death rate per 100,000 population, from CDC's National Vital Statistics Rapid Release (VSRR) program, National Center for Health Statistics. Distinct from nchs_overdose_deaths, which is the monthly raw count rather than a population-adjusted annual rate.",
+    "statement": "In {location}, there were {value} drug overdose deaths per 100,000 population.",
+    "measure_type": "number",
+    "unit": "Deaths per 100,000 population",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nchs"
+      }
+    ]
+  },
+  "epic_diabetes_dx_ccw": {
+    "id": "epic_diabetes_dx_ccw",
+    "short_name": "Diabetes (Epic, Diagnosis-Based)",
+    "long_name": "Diabetes Prevalence (Epic Cosmos, Diagnosis-Code-Based)",
+    "category": "chronic_disease",
+    "subcategory": "cardiovascular_metabolic",
+    "short_description": "Percentage of patients with a diabetes diagnosis code, in Epic Cosmos health systems.",
+    "long_description": "Percentage of patients with diabetes identified via Chronic Conditions Warehouse (CCW) diagnosis codes among patients seen within Epic Cosmos-participating health systems. Distinct from epic_diabetes_hba1c, which identifies diabetes from lab results rather than diagnosis codes. The share of each county's population captured by Epic Cosmos varies, so counties with low capture may be unrepresentative.",
+    "statement": "In {location}, {value} of patients in Epic Cosmos health systems had a diabetes diagnosis.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "epic"
+      }
+    ]
+  },
+  "epic_obesity_dx_ccw": {
+    "id": "epic_obesity_dx_ccw",
+    "short_name": "Obesity (Epic, Diagnosis-Based)",
+    "long_name": "Obesity Prevalence (Epic Cosmos, Diagnosis-Code-Based)",
+    "category": "chronic_disease",
+    "subcategory": "cardiovascular_metabolic",
+    "short_description": "Percentage of patients with an obesity diagnosis code, in Epic Cosmos health systems.",
+    "long_description": "Percentage of patients with obesity identified via Chronic Conditions Warehouse (CCW) diagnosis codes among patients seen within Epic Cosmos-participating health systems. Distinct from epic_obesity_bmi, which identifies obesity from recorded BMI rather than diagnosis codes. The share of each county's population captured by Epic Cosmos varies, so counties with low capture may be unrepresentative.",
+    "statement": "In {location}, {value} of patients in Epic Cosmos health systems had an obesity diagnosis.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "epic"
       }
     ]
   }
