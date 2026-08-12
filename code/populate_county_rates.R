@@ -81,6 +81,55 @@ census_long <- census_wide %>%
   ) %>%
   filter(!is.na(value))
 
+# Census-native replacements for 17 measures historically sourced only from
+# CHR's own redistribution (chr_population, chr_rural, etc.). Each of these
+# Ingest files covers a single current vintage, so this only patches the
+# latest data point per measure -- older CHR-sourced years for these same
+# measure names are left untouched in chr_long below.
+pep_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE)
+saipe_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE)
+oqm_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
+sahie_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE)
+
+census_direct_long <- bind_rows(
+  pep_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      pep_population   = "chr_population",
+      pep_pct_65_older = "chr_65_and_older",
+      pep_pct_under_18 = "chr_below_18_years_of_age",
+      pep_pct_female   = "chr_female",
+      pep_pct_aian     = "chr_american_indian_or_alaska_native",
+      pep_pct_asian    = "chr_asian",
+      pep_pct_nhpi     = "chr_native_hawaiian_or_other_pacific_islander",
+      pep_pct_nh_black = "chr_non_hispanic_black",
+      pep_pct_nh_white = "chr_non_hispanic_white",
+      pep_pct_hispanic = "chr_hispanic"
+    )),
+  saipe_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      saipe_pct_children_poverty    = "chr_children_in_poverty",
+      saipe_median_household_income = "chr_median_household_income"
+    )),
+  oqm_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = "chr_census_participation"),
+  sahie_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      sahie_pct_uninsured          = "chr_uninsured",
+      sahie_pct_uninsured_adults   = "chr_uninsured_adults",
+      sahie_pct_uninsured_children = "chr_uninsured_children"
+    )),
+  # census_ur_pct_urban_pop is a static 2020-decennial value repeated across
+  # every ACS vintage year in census_wide; take the latest one point only.
+  census_wide %>%
+    filter(time == max(time)) %>%
+    transmute(geography, time, measure = "chr_rural", value = 1 - census_ur_pct_urban_pop)
+) %>%
+  filter(!is.na(value))
+
 # Retired Alaska borough/census-area FIPS codes still written to by some
 # sources alongside their current successor(s) (see check_geography_renaming.R).
 ALASKA_DEFUNCT_CODES <- c("02201", "02231", "02232", "02261", "02270", "02280")
@@ -314,13 +363,15 @@ ahrf_long <- vroom(
   anti_join(ahrf_alaska_overrides, by = c("geography", "measure", "time"))
 
 combined <- bind_rows(
-  chr_long, census_long, epic_long,
+  census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
   cms_long, nchs_long, ahrf_long
 ) %>%
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
   # (51005), VA, once per pre/post-2013 independent-city-merger FIPS mapping.
+  # census_direct_long is listed first so it wins any exact match against
+  # chr_long for the same (geography, time, measure) -- see above.
   distinct(geography, time, measure, .keep_all = TRUE) %>%
   arrange(geography, time, measure)
 
