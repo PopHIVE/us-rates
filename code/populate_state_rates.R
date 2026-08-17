@@ -371,6 +371,27 @@ nhtsa_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# NHTSA FARS fatalities by crash type (single-vehicle, rural/urban,
+# pedestrian- or cyclist-involved). This file also repeats nhtsa_fatalities/
+# nhtsa_fatal_crashes at the Overall/Overall row (99.99% identical to
+# nhtsa_long above, matching to floating-point rounding) -- only the 5
+# crash-type-specific columns are pulled here to avoid re-deriving those.
+nhtsa_crash_type_long <- vroom(
+  file.path(INGEST_PATH, "nhtsa_crash/standard/data_crash_type.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 2, age == "Overall", sex == "Overall") %>%
+  pivot_longer(
+    cols      = c(
+      nhtsa_single_vehicle, nhtsa_rural, nhtsa_urban,
+      nhtsa_pedestrian_involved, nhtsa_cyclist_involved
+    ),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  select(geography, time, measure, value)
+
 # CMU Delphi COVIDcast doctor-visit percentage for COVID-related symptoms.
 # DC/PR/VI ship as lowercase postal abbreviations ("dc"/"pr"/"vi") rather
 # than FIPS codes in this feed; recode them before the geography-level filter.
@@ -406,7 +427,7 @@ combined <- bind_rows(
   chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
-  nhtsa_long, delphi_doc_long, delphi_hosp_long,
+  nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
   arrange(geography, time, measure)

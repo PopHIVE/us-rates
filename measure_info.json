@@ -811,6 +811,96 @@
       }
     ]
   },
+  "nhtsa_single_vehicle": {
+    "id": "nhtsa_single_vehicle",
+    "short_name": "Single-Vehicle Crash Fatalities",
+    "long_name": "Fatalities in Single-Vehicle Crashes",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual fatalities in crashes involving only one vehicle.",
+    "long_description": "Total fatalities in crashes involving exactly one motor vehicle, from NHTSA FARS. Single-vehicle crashes include run-off-road events, rollovers, and collisions with fixed objects or pedestrians.",
+    "statement": "In {location}, {value} people were killed in single-vehicle crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_rural": {
+    "id": "nhtsa_rural",
+    "short_name": "Rural Crash Fatalities",
+    "long_name": "Fatalities in Rural-Area Crashes",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual fatalities in crashes occurring on rural roadways.",
+    "long_description": "Total fatalities in crashes classified as occurring in a rural land use area, from NHTSA FARS. Rural crashes tend to have higher fatality rates per crash due to higher speeds, longer emergency response times, and less infrastructure.",
+    "statement": "In {location}, {value} people were killed in rural-area crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_urban": {
+    "id": "nhtsa_urban",
+    "short_name": "Urban Crash Fatalities",
+    "long_name": "Fatalities in Urban-Area Crashes",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual fatalities in crashes occurring on urban roadways.",
+    "long_description": "Total fatalities in crashes classified as occurring in an urban land use area, from NHTSA FARS.",
+    "statement": "In {location}, {value} people were killed in urban-area crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_pedestrian_involved": {
+    "id": "nhtsa_pedestrian_involved",
+    "short_name": "Pedestrian-Involved Crash Fatalities",
+    "long_name": "Fatalities in Crashes Involving a Pedestrian",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual fatalities in crashes where at least one pedestrian was killed.",
+    "long_description": "Total fatalities in crashes where at least one pedestrian was killed, from NHTSA FARS. Counts all persons who died in such crashes, not only the pedestrian victims.",
+    "statement": "In {location}, {value} people were killed in pedestrian-involved crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_cyclist_involved": {
+    "id": "nhtsa_cyclist_involved",
+    "short_name": "Cyclist-Involved Crash Fatalities",
+    "long_name": "Fatalities in Crashes Involving a Pedalcyclist",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual fatalities in crashes where at least one cyclist was killed.",
+    "long_description": "Total fatalities in crashes where at least one pedalcyclist was killed, from NHTSA FARS. Counts all persons who died in such crashes.",
+    "statement": "In {location}, {value} people were killed in cyclist-involved crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
   "chr_poor_mental_health_days": {
     "id": "chr_poor_mental_health_days",
     "short_name": "Poor Mental Health Days",

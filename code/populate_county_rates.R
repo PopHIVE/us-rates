@@ -593,6 +593,31 @@ nhtsa_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# NHTSA FARS fatalities by crash type (single-vehicle, rural/urban,
+# pedestrian- or cyclist-involved). This file also repeats nhtsa_fatalities/
+# nhtsa_fatal_crashes at the Overall/Overall row (99.99% identical to
+# nhtsa_long above, matching to floating-point rounding) -- only the 5
+# crash-type-specific columns are pulled here to avoid re-deriving those.
+# Also carries Valdez-Cordova (02261) through 2023 alongside its successors
+# Chugach/Copper River (02063/02066) starting 2023 -- drop the retired code
+# like the other Alaska-defunct sources above.
+nhtsa_crash_type_long <- vroom(
+  file.path(INGEST_PATH, "nhtsa_crash/standard/data_crash_type.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 5, age == "Overall", sex == "Overall") %>%
+  pivot_longer(
+    cols      = c(
+      nhtsa_single_vehicle, nhtsa_rural, nhtsa_urban,
+      nhtsa_pedestrian_involved, nhtsa_cyclist_involved
+    ),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  select(geography, time, measure, value) %>%
+  drop_alaska_defunct_duplicates()
+
 # CMU Delphi COVIDcast doctor-visit percentage for COVID-related symptoms.
 # This feed also mixes in state-total rows disguised as county FIPS (state
 # code + "000", e.g. "56000" for Wyoming) -- no real county FIPS ends in
@@ -627,7 +652,7 @@ combined <- bind_rows(
   census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
   cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
-  nhtsa_long, delphi_doc_long, delphi_hosp_long,
+  nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
   epic_dx_long, noaa_heat_long, jhu_measles_long,
   ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
 ) %>%
