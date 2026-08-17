@@ -331,9 +331,36 @@ nssp_long <- vroom(
     time = as.Date(time)
   )
 
+# CMU Delphi COVIDcast doctor-visit percentage for COVID-related symptoms.
+delphi_doc_long <- vroom(
+  file.path(INGEST_PATH, "delphi_doctors_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(geography == "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# CMU Delphi COVIDcast hospital-admission percentage for COVID/flu.
+delphi_hosp_long <- vroom(
+  file.path(INGEST_PATH, "delphi_hospital_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(geography == "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 combined <- bind_rows(
   chr_long, brfss_long, imm_long, svv_exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
+  delphi_doc_long, delphi_hosp_long,
   nchs_causes_long, nchs_long, exempt_long, jhu_measles_long,
   ww_measles_long, noaa_heat_long
 ) %>%

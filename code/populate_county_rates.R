@@ -580,10 +580,54 @@ nchs_overdose_rate_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
+# NHTSA FARS motor vehicle crash fatalities and fatality rate.
+nhtsa_long <- vroom(
+  file.path(INGEST_PATH, "nhtsa_crash/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 5) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# CMU Delphi COVIDcast doctor-visit percentage for COVID-related symptoms.
+# This feed also mixes in state-total rows disguised as county FIPS (state
+# code + "000", e.g. "56000" for Wyoming) -- no real county FIPS ends in
+# "000", so exclude those rather than misrepresent them as county data.
+delphi_doc_long <- vroom(
+  file.path(INGEST_PATH, "delphi_doctors_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 5, !str_detect(geography, "000$")) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# CMU Delphi COVIDcast hospital-admission percentage for COVID/flu. Same
+# state-total-disguised-as-county-FIPS quirk as delphi_doc_long above.
+delphi_hosp_long <- vroom(
+  file.path(INGEST_PATH, "delphi_hospital_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 5, !str_detect(geography, "000$")) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 combined <- bind_rows(
   census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
   cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
+  nhtsa_long, delphi_doc_long, delphi_hosp_long,
   epic_dx_long, noaa_heat_long, jhu_measles_long,
   ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
 ) %>%

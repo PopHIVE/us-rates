@@ -358,10 +358,55 @@ nssp_long <- vroom(
     time = as.Date(time)
   )
 
+# NHTSA FARS motor vehicle crash fatalities and fatality rate.
+nhtsa_long <- vroom(
+  file.path(INGEST_PATH, "nhtsa_crash/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(nchar(geography) == 2) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# CMU Delphi COVIDcast doctor-visit percentage for COVID-related symptoms.
+# DC/PR/VI ship as lowercase postal abbreviations ("dc"/"pr"/"vi") rather
+# than FIPS codes in this feed; recode them before the geography-level filter.
+delphi_doc_long <- vroom(
+  file.path(INGEST_PATH, "delphi_doctors_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  mutate(geography = recode(geography, dc = "11", pr = "72", vi = "78")) %>%
+  filter(nchar(geography) == 2, geography != "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# CMU Delphi COVIDcast hospital-admission percentage for COVID/flu. Same
+# lowercase postal-abbreviation quirk as delphi_doc_long above.
+delphi_hosp_long <- vroom(
+  file.path(INGEST_PATH, "delphi_hospital_claims/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  mutate(geography = recode(geography, dc = "11", pr = "72", vi = "78")) %>%
+  filter(nchar(geography) == 2, geography != "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 combined <- bind_rows(
   chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
+  nhtsa_long, delphi_doc_long, delphi_hosp_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
   arrange(geography, time, measure)
