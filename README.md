@@ -24,8 +24,10 @@ us-rates/
 │   └── national_rates.csv.gz
 │
 ├── states/
+│   ├── states_latest.csv.gz
 │   ├── alabama/
 │   │   ├── state_rates.csv.gz
+│   │   ├── counties_latest.csv.gz
 │   │   └── counties/
 │   │       ├── 01001_autauga/
 │   │       │   └── county_rates.csv.gz
@@ -35,6 +37,7 @@ us-rates/
 │   │
 │   ├── alaska/
 │   │   ├── state_rates.csv.gz
+│   │   ├── counties_latest.csv.gz
 │   │   └── counties/
 │   │       └── ...
 │   │
@@ -43,14 +46,15 @@ us-rates/
 │
 └── territories/
     ├── puerto_rico/
-    │   ├── state_rates.csv.gz
+    │   ├── commonwealth_rates.csv.gz
+    │   ├── counties_latest.csv.gz
     │   └── counties/
     │       ├── 72001_adjuntas_municipio/
     │       │   └── county_rates.csv.gz
     │       └── ...
     │
     ├── guam/
-    │   ├── state_rates.csv.gz
+    │   ├── territory_rates.csv.gz
     │   └── counties/
     │       └── ...
     │
@@ -102,16 +106,16 @@ FIPS codes must always be stored as zero-padded strings, never as integers.
 
 DC and the 50 states aren't the only 2-digit geographies — `tidycensus::fips_codes` also carries 2-digit codes for 6 non-state U.S. territories. DC is treated as a state-equivalent and lives under `states/`; the other 6 live under their own top-level `territories/` folder instead, since they aren't states:
 
-| Territory                   | Abbreviation | FIPS | Folder                          |
-|------------------------------|--------------|------|----------------------------------|
-| American Samoa               | `AS`         | `60` | `territories/american_samoa/`    |
-| Guam                          | `GU`         | `66` | `territories/guam/`               |
-| Northern Mariana Islands      | `MP`         | `69` | `territories/northern_mariana_islands/` |
-| Puerto Rico                   | `PR`         | `72` | `territories/puerto_rico/`        |
-| U.S. Minor Outlying Islands   | `UM`         | `74` | `territories/u_s_minor_outlying_islands/` |
-| U.S. Virgin Islands           | `VI`         | `78` | `territories/u_s_virgin_islands/` |
+| Territory                   | Abbreviation | FIPS | Political Status                          | Top-level file            |
+|------------------------------|--------------|------|--------------------------------------------|----------------------------|
+| Puerto Rico                   | `PR`         | `72` | Commonwealth (organized, unincorporated)    | `commonwealth_rates.csv.gz` |
+| Northern Mariana Islands      | `MP`         | `69` | Commonwealth (organized, unincorporated)    | `commonwealth_rates.csv.gz` |
+| Guam                          | `GU`         | `66` | Territory (organized, unincorporated)       | `territory_rates.csv.gz`   |
+| U.S. Virgin Islands           | `VI`         | `78` | Territory (organized, unincorporated)       | `territory_rates.csv.gz`   |
+| American Samoa               | `AS`         | `60` | Territory (unorganized, unincorporated)     | `territory_rates.csv.gz`   |
+| U.S. Minor Outlying Islands   | `UM`         | `74` | No organized government or population       | `territory_rates.csv.gz`   |
 
-Each territory folder follows the exact same shape as a state folder (`state_rates.csv.gz` plus a `counties/` subfolder for its FIPS-coded subdivisions — e.g. Puerto Rico's 78 municipios). `code/geography_helpers.R`'s `is_territory()` is the single source of truth for the states/territories split; `scaffold_structure.R`, `populate_state_rates.R`, `populate_county_rates.R`, and `generate_geography_manifest.R` all route on it, so a geography's top-level folder is never hand-picked per script.
+Each territory's folder (`territories/american_samoa/`, `territories/guam/`, etc.) follows the exact same shape as a state folder — a top-level rates file plus a `counties/` subfolder for its FIPS-coded subdivisions (e.g. Puerto Rico's 78 municipios) — except the top-level file is named for that territory's actual political status rather than reusing `state_rates.csv.gz`, since territories aren't states: `commonwealth_rates.csv.gz` for Puerto Rico and the Northern Mariana Islands (the two organized, unincorporated commonwealths), `territory_rates.csv.gz` for the rest. `code/geography_helpers.R`'s `is_territory()` and `territory_rates_filename()` are the single source of truth for this; `scaffold_structure.R`, `populate_state_rates.R`, `populate_county_rates.R`, and `generate_geography_manifest.R` all route on them, so a geography's folder and filename are never hand-picked per script.
 
 Most territories have little to no data across the sources in `measure_info.json` (health-workforce and mortality sources being the most likely to report any territory-level values) — an empty or missing `territories/{name}/` file just means no source reported data for it, not a pipeline bug.
 
@@ -187,6 +191,19 @@ geography,time,measure,value
 
 ---
 
+## Latest-Value Files
+
+Alongside the full time-series files above, two derived files hold a single "latest" cut for charts that compare many places at once rather than one place over time. Same columns and long-format rules as every other file (`geography`, `time`, `measure`, `value`) — just one row per `(geography, measure)` pair, keeping that geography's own most recent `time` for that measure (different geographies and measures update on different schedules, so this is not one global cutoff date):
+
+| File                                     | Contents                                                              |
+|-------------------------------------------|-------------------------------------------------------------------------|
+| `states/states_latest.csv.gz`              | Every state, DC, and territory that reports at least one measure, one row per `(geography, measure)`. No national (`00`) row. |
+| `states/{state}/counties_latest.csv.gz` and `territories/{territory}/counties_latest.csv.gz` | Every county (or territory subdivision) in that place, one row per `(geography, measure)`. Omitted for a place with no county-level data. |
+
+Both are written by `code/populate_latest_rates.R`, which derives them from the already-written `state_rates.csv.gz` / `commonwealth_rates.csv.gz` / `territory_rates.csv.gz` and `county_rates.csv.gz` files rather than re-reading `Ingest` — so it must run after `populate_state_rates.R` and `populate_county_rates.R` (see [Updating the Data](#updating-the-data)). These are chart-only conveniences; use the regular rate files above for a specific place's time series or a US comparison.
+
+---
+
 ## Column Naming Convention
 
 The `measure` column follows the `{prefix}_{measure_name}` pattern:
@@ -235,6 +252,7 @@ Each state folder contains state-level rates and a counties subfolder:
 ```
 alabama/
 ├── state_rates.csv.gz     ← state-level measures for Alabama (geography = "01")
+├── counties_latest.csv.gz ← latest value per county x measure (see Latest-Value Files)
 └── counties/
     ├── 01001_autauga/
     ├── 01003_baldwin/
@@ -325,10 +343,11 @@ This runs, in order:
 1. **`all_fips.R`** — refreshes `resources/all_fips.csv.gz`, the FIPS-code-to-name reference table (via `tidycensus`).
 2. **`scaffold_structure.R`** — creates any new `states|territories/{name}/counties/{fips}_{name}/` folders (safe to re-run; existing folders are never overwritten). Skip with `--skip-scaffold` once the tree is already up to date.
 3. **`code/populate_national_rates.R`** — writes `national/national_rates.csv.gz`.
-4. **`code/populate_state_rates.R`** — writes `states|territories/*/state_rates.csv.gz`.
+4. **`code/populate_state_rates.R`** — writes `states/*/state_rates.csv.gz` and `territories/*/{commonwealth,territory}_rates.csv.gz`.
 5. **`code/populate_county_rates.R`** — writes `states|territories/*/counties/*/county_rates.csv.gz`.
-6. **`code/check_geography_renaming.R`** — fails the pipeline if any `(measure, time)` pair is reported under both an old and new FIPS convention for a renamed/split/merged geography (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions) and [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes)).
-7. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
+6. **`code/populate_latest_rates.R`** — writes `states/states_latest.csv.gz` and `states|territories/*/counties_latest.csv.gz`, the chart-only "latest value per geography x measure" cuts (see [Latest-Value Files](#latest-value-files)).
+7. **`code/check_geography_renaming.R`** — fails the pipeline if any `(measure, time)` pair is reported under both an old and new FIPS convention for a renamed/split/merged geography (see [Connecticut: Counties vs. Planning Regions](#connecticut-counties-vs-planning-regions) and [Alaska: Historical Borough and Census Area Changes](#alaska-historical-borough-and-census-area-changes)).
+8. **`code/generate_geography_manifest.R`** — refreshes `us-rates-geographies.json`, a flat manifest of every geography (national/state/county) with its display name, slug, and the relative path to its rate file, for front-end/site consumption.
 
 To skip the (usually unnecessary) scaffolding step on a routine data refresh:
 
@@ -338,7 +357,7 @@ Rscript code/update_all.R --skip-scaffold
 
 **Before running:** make sure the `Ingest` repo alongside this one is up to date, since the `populate_*` scripts read directly from `../Ingest/data/`. Any script can also be run individually (see the `Usage` comment at the top of each file) if you only need to refresh one part of the pipeline.
 
-**Adding a new data source:** add a block to the relevant `populate_*_rates.R` script(s) that reads the new Ingest source, reshapes it into long format (`geography`, `time`, `measure`, `value`), and joins it into that script's `combined` bind_rows() call — then add a corresponding entry to `measure_info.json` for every new measure name.
+**Adding a new data source:** add a block to the relevant `populate_*_rates.R` script(s) that reads the new Ingest source, reshapes it into long format (`geography`, `time`, `measure`, `value`), and joins it into that script's `combined` bind_rows() call — then add a corresponding entry to `measure_info.json` for every new measure name. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full step-by-step walkthrough, including which script(s) to touch for a given geography level and the Alaska/Connecticut edge cases to check for.
 
 ---
 

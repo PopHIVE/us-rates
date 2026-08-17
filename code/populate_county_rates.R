@@ -53,9 +53,13 @@ state_name_lookup <- all_fips %>%
 message("Loading CHR and Census data...")
 
 # Read CHR (wide format: geography, time, measure columns)
+# guess_max = Inf: several measure columns (e.g. WI-only supplemental
+# measures) are sparse enough that vroom's default row sample can guess
+# them as logical instead of numeric, silently corrupting real values.
 chr_wide <- vroom(
   file.path(INGEST_PATH, "county_health_rankings/standard/data_county.csv.gz"),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  guess_max = Inf
 )
 
 # Read Census (wide format)
@@ -285,7 +289,8 @@ epic_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
-# MMR kindergarten coverage (Washington Post / state health departments).
+# MMR kindergarten coverage and herd-immunity threshold status
+# (Washington Post / state health departments).
 wapo_long <- read_parquet(
   file.path(
     INGEST_PATH,
@@ -293,11 +298,23 @@ wapo_long <- read_parquet(
     "wapo_vax_counties.parquet"
   )
 ) %>%
-  filter(!is.na(wapo_county_vax_rate), !is.na(geography)) %>%
+  filter(!is.na(geography)) %>%
   mutate(
-    measure = "wapo_mmr_coverage",
-    time    = mdy_to_date(time),
-    value   = wapo_county_vax_rate
+    wapo_met_herd_immunity_prepandemic  = recode(wapo_prepand_herd, y = 1, n = 0, .default = NA_real_),
+    wapo_met_herd_immunity_postpandemic = recode(wapo_postpand_herd, y = 1, n = 0, .default = NA_real_)
+  ) %>%
+  pivot_longer(
+    cols = c(
+      wapo_county_vax_rate, wapo_met_herd_immunity_prepandemic,
+      wapo_met_herd_immunity_postpandemic
+    ),
+    names_to = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(measure, wapo_county_vax_rate = "wapo_mmr_coverage"),
+    time    = mdy_to_date(time)
   ) %>%
   select(geography, time, measure, value)
 
@@ -436,10 +453,133 @@ hud_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+message("Loading environmental, syndromic, and diagnosis-based measures...")
+
+# Epic Cosmos diabetes/obesity prevalence via diagnosis code (CCW), distinct
+# from the HbA1c/BMI clinical-measurement version in epic_long above.
+epic_dx_long <- vroom(
+  file.path(INGEST_PATH, "epic_chronic/standard/county_year.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(age == "Total", !is.na(geography)) %>%
+  pivot_longer(
+    cols      = c(diabetes_dx_ccw, obesity_dx_ccw),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(
+      measure,
+      diabetes_dx_ccw = "epic_diabetes_dx_ccw",
+      obesity_dx_ccw  = "epic_obesity_dx_ccw"
+    ),
+    time = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# NOAA/NWS HeatRisk daily forecast score, area-weighted to county. Only
+# forecast_day == 0 (observed) rows are kept -- forecast_day 1-7 are
+# forward-looking predictions for future dates, not observed facts.
+noaa_heat_long <- vroom(
+  file.path(INGEST_PATH, "noaa_heat_risk/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(forecast_day == 0, !is.na(value), !is.na(geography)) %>%
+  mutate(
+    measure = "noaa_heat_risk_score",
+    time    = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# JHU confirmed measles case counts. This file mixes in state-level and a
+# handful of non-FIPS placeholder rows (e.g. "00024") alongside true county
+# rows -- restrict to 5-digit county FIPS.
+jhu_measles_long <- vroom(
+  file.path(INGEST_PATH, "measles_jhu/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(value), !is.na(geography), nchar(geography) == 5) %>%
+  mutate(
+    measure = "jhu_measles_cases",
+    time    = as.Date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# Measles wastewater surveillance detection rate. Only the detection-rate
+# column is kept as a measure; sample_count/detection_count/population_served
+# are denominators, not independently reported measures elsewhere in this repo.
+ww_measles_long <- vroom(
+  file.path(INGEST_PATH, "wastewater_measles/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(ww_detection_rate), !is.na(geography)) %>%
+  mutate(
+    measure = "ww_measles_detection_rate",
+    time    = mdy_to_date(time),
+    value   = ww_detection_rate
+  ) %>%
+  select(geography, time, measure, value)
+
+# Epic Cosmos heat-related ED visit rate (per 100,000 total ED visits).
+# This file is tab-delimited, unlike the rest of the Ingest sources read here.
+epic_heat_long <- vroom(
+  file.path(INGEST_PATH, "epic_injury/standard/heat_year_county.csv.gz"),
+  delim = "\t",
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(heat_ed_incidence), !is.na(geography)) %>%
+  mutate(
+    measure = "epic_heat_ed_rate",
+    time    = as.Date(time),
+    value   = heat_ed_incidence
+  ) %>%
+  select(geography, time, measure, value)
+
+# CDC NSSP emergency-department visit percentage for RSV/COVID-19/flu.
+# `fips` ships as a bare number (leading zeros stripped) and roughly a
+# quarter of rows are a state's rate back-filled onto every one of its
+# counties for low-volume privacy suppression (is_state_estimate == TRUE) --
+# those are dropped rather than misrepresented as county-level observations.
+read_nssp_county <- function(file, measure_name) {
+  read_parquet(file.path(INGEST_PATH, "bundle_respiratory/dist", file)) %>%
+    filter(!is_state_estimate, !is.na(fips)) %>%
+    mutate(
+      geography = str_pad(as.character(fips), 5, pad = "0"),
+      measure   = measure_name,
+      time      = as.Date(week_end)
+    ) %>%
+    rename(value = starts_with("percent_visits_")) %>%
+    filter(!is.na(value)) %>%
+    select(geography, time, measure, value)
+}
+
+nssp_long <- bind_rows(
+  read_nssp_county("rsv_ed_visits_by_county.parquet", "nssp_pct_ed_visits_rsv"),
+  read_nssp_county("covid_ed_visits_by_county.parquet", "nssp_pct_ed_visits_covid"),
+  read_nssp_county("flu_ed_visits_by_county.parquet", "nssp_pct_ed_visits_flu")
+)
+
+# NCHS drug overdose death rate (per capita), distinct from the raw monthly
+# count in nchs_long above, which comes from a different upstream file that
+# has no rate column.
+nchs_overdose_rate_long <- read_parquet(
+  file.path(INGEST_PATH, "bundle_injury_overdose/dist", "overdose_deaths_county.parquet")
+) %>%
+  filter(!is.na(rate_deaths_overdose), !is.na(geography)) %>%
+  mutate(
+    measure = "nchs_overdose_rate",
+    time    = year_end(format(as.Date(time), "%Y")),
+    value   = rate_deaths_overdose
+  ) %>%
+  select(geography, time, measure, value)
+
 combined <- bind_rows(
   census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
-  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long
+  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
+  epic_dx_long, noaa_heat_long, jhu_measles_long,
+  ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
 ) %>%
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
