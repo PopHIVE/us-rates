@@ -432,6 +432,24 @@
       "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
       "date_accessed": 2026
     },
+    "delphi_doctor_visits": {
+      "name": "CMU Delphi COVIDcast - Doctor Visits",
+      "url": "https://cmu-delphi.github.io/delphi-epidata/api/covidcast-signals/doctor-visits.html",
+      "organization": "Carnegie Mellon University Delphi Research Group",
+      "organization_url": "https://delphi.cmu.edu/",
+      "description": "Estimates the percentage of outpatient doctor visits with COVID-related diagnoses based on de-identified medical claims data covering a significant fraction of U.S. healthcare visits. Smoothed with a Gaussian linear smoother to reduce day-to-day noise; available at state and county level with a roughly 3-4 day reporting lag.",
+      "restrictions": "CC-BY Attribution license. Data may be used with attribution to the CMU Delphi Group.",
+      "date_accessed": 2026
+    },
+    "delphi_hospital_admissions": {
+      "name": "CMU Delphi COVIDcast - Hospital Admissions",
+      "url": "https://cmu-delphi.github.io/delphi-epidata/api/covidcast-signals/hospital-admissions.html",
+      "organization": "Carnegie Mellon University Delphi Research Group",
+      "organization_url": "https://delphi.cmu.edu/",
+      "description": "Estimates the percentage of new hospital admissions with COVID-19 or influenza diagnosis codes, based on electronic medical records and claims data from health system partners. Smoothed with a Gaussian linear smoother to reduce day-to-day noise.",
+      "restrictions": "CC-BY Attribution license. Data may be used with attribution to the CMU Delphi Group.",
+      "date_accessed": 2026
+    },
     "cms_nppes": {
       "name": "National Provider Identifier registry (NPPES)",
       "url": "https://download.cms.gov/nppes/NPI_Files.html",
@@ -736,6 +754,60 @@
     "sources": [
       {
         "id": "nchs"
+      }
+    ]
+  },
+  "nhtsa_fatalities": {
+    "id": "nhtsa_fatalities",
+    "short_name": "Motor Vehicle Fatalities",
+    "long_name": "Motor Vehicle Crash Fatalities",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual count of persons killed in motor vehicle traffic crashes.",
+    "long_description": "Total number of persons killed in fatal motor vehicle traffic crashes, from NHTSA's Fatality Analysis Reporting System (FARS), a census of all fatal crashes on public roads in which a motor vehicle was involved and at least one person died within 30 days.",
+    "statement": "In {location}, {value} people were killed in motor vehicle crashes.",
+    "measure_type": "number",
+    "unit": "Deaths",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_fatal_crashes": {
+    "id": "nhtsa_fatal_crashes",
+    "short_name": "Fatal Crashes",
+    "long_name": "Fatal Motor Vehicle Crashes",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual count of motor vehicle crashes resulting in at least one fatality.",
+    "long_description": "Number of motor vehicle traffic crashes in which at least one person died within 30 days of the crash, from NHTSA FARS. A single crash may result in multiple fatalities; this measure counts the crash event rather than individual deaths.",
+    "statement": "In {location}, there were {value} fatal motor vehicle crashes.",
+    "measure_type": "number",
+    "unit": "Crashes",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
+      }
+    ]
+  },
+  "nhtsa_fatality_rate": {
+    "id": "nhtsa_fatality_rate",
+    "short_name": "Fatality Rate (Direct)",
+    "long_name": "Motor Vehicle Fatality Rate per 100,000 Population (NHTSA FARS)",
+    "category": "injury_and_violence",
+    "subcategory": null,
+    "short_description": "Annual motor vehicle fatalities per 100,000 residents.",
+    "long_description": "Rate of motor vehicle crash fatalities per 100,000 resident population, from NHTSA FARS death counts using a single 2021 Census Bureau population estimate as the denominator across all years -- this reflects changes in crash fatalities more than changes in population size. Direct-source companion to chr_motor_vehicle_crash_deaths, which uses NCHS mortality data instead.",
+    "statement": "In {location}, the motor vehicle fatality rate was {value} per 100,000 people.",
+    "measure_type": "number",
+    "unit": "Deaths per 100,000",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "nhtsa_fars"
       }
     ]
   },
@@ -6857,6 +6929,60 @@
     "sources": [
       {
         "id": "cdc_nssp"
+      }
+    ]
+  },
+  "delphi_doc_covid_smooth": {
+    "id": "delphi_doc_covid_smooth",
+    "short_name": "COVID Doctor Visits",
+    "long_name": "Percentage of Outpatient Visits for COVID-Related Symptoms",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Estimated percentage of outpatient doctor visits primarily about COVID-related symptoms.",
+    "long_description": "Estimated percentage of outpatient doctor visits with a primary COVID-related ICD-10 diagnosis code, from CMU Delphi's COVIDcast Doctor Visits signal (de-identified medical claims from health system partners), smoothed in time with a Gaussian linear smoother. Available at state and county level with a roughly 3-4 day reporting lag.",
+    "statement": "In {location}, {value} of outpatient doctor visits were for COVID-related symptoms.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "delphi_doctor_visits"
+      }
+    ]
+  },
+  "delphi_hospital_covid_smooth": {
+    "id": "delphi_hospital_covid_smooth",
+    "short_name": "COVID Hospital Admissions",
+    "long_name": "Percentage of Hospital Admissions with COVID-19 Diagnosis",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Estimated percentage of new hospital admissions with a COVID-associated diagnosis.",
+    "long_description": "Estimated percentage of new hospital admissions with a COVID-associated diagnosis code, from CMU Delphi's COVIDcast Hospital Admissions signal (electronic medical records and claims data from health system partners), smoothed in time with a Gaussian linear smoother.",
+    "statement": "In {location}, {value} of new hospital admissions had a COVID-19 diagnosis.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "delphi_hospital_admissions"
+      }
+    ]
+  },
+  "delphi_hospital_flu_smooth": {
+    "id": "delphi_hospital_flu_smooth",
+    "short_name": "Influenza Hospital Admissions",
+    "long_name": "Percentage of Hospital Admissions with Influenza Diagnosis",
+    "category": "infectious_disease",
+    "subcategory": null,
+    "short_description": "Estimated percentage of new hospital admissions with an influenza-associated diagnosis.",
+    "long_description": "Estimated percentage of new hospital admissions with an influenza-associated diagnosis code, from CMU Delphi's COVIDcast Hospital Admissions signal (electronic medical records and claims data from health system partners), smoothed in time with a Gaussian linear smoother.",
+    "statement": "In {location}, {value} of new hospital admissions had an influenza diagnosis.",
+    "measure_type": "percent",
+    "scale": "0-100",
+    "time_resolution": "Week",
+    "sources": [
+      {
+        "id": "delphi_hospital_admissions"
       }
     ]
   },
