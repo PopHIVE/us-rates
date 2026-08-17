@@ -81,6 +81,32 @@ census_long <- census_wide %>%
   ) %>%
   filter(!is.na(value))
 
+# Retired Alaska borough/census-area FIPS codes still written to by some
+# sources alongside their current successor(s) (see check_geography_renaming.R).
+ALASKA_DEFUNCT_CODES <- c("02201", "02231", "02232", "02261", "02270", "02280")
+
+# vaccine_exemptions_fattah always duplicates its value onto the retired code;
+# census's PEP-derived county estimates sometimes carry a row for a retired
+# code (e.g. Valdez-Cordova, 02261) alongside its current successor(s) even
+# in an otherwise-current vintage -- drop it unconditionally rather than try
+# to reconcile which value is "right".
+drop_alaska_defunct_duplicates <- function(df) {
+  df %>% filter(!(geography %in% ALASKA_DEFUNCT_CODES))
+}
+
+# Legacy Connecticut county codes, retired as of the 2022 planning-region
+# cutover (see README). census's PEP/SAIPE/OQM/SAHIE feeds below are single-
+# current-vintage patches, so any row still tagged with a legacy code is
+# stale by definition once the vintage is 2022+ -- drop it rather than
+# double-report the same year under both conventions.
+CT_LEGACY_COUNTY_CODES <- c(
+  "09001", "09003", "09005", "09007", "09009", "09011", "09013", "09015"
+)
+
+drop_ct_legacy_duplicates <- function(df) {
+  df %>% filter(!(geography %in% CT_LEGACY_COUNTY_CODES))
+}
+
 # Census-native replacements for 17 measures historically sourced only from
 # CHR's own redistribution (chr_population, chr_rural, etc.). Each of these
 # Ingest files covers a single current vintage, so this only patches the
@@ -128,16 +154,25 @@ census_direct_long <- bind_rows(
     filter(time == max(time)) %>%
     transmute(geography, time, measure = "chr_rural", value = 1 - census_ur_pct_urban_pop)
 ) %>%
-  filter(!is.na(value))
+  filter(!is.na(value)) %>%
+  drop_alaska_defunct_duplicates() %>%
+  drop_ct_legacy_duplicates()
 
-# Retired Alaska borough/census-area FIPS codes still written to by some
-# sources alongside their current successor(s) (see check_geography_renaming.R).
-ALASKA_DEFUNCT_CODES <- c("02201", "02231", "02232", "02261", "02270", "02280")
+# chr_long (below) is CHR&R's own redistribution, which cuts over to a
+# renamed/split/merged geography on its own schedule -- often later than the
+# actual FIPS change (e.g. it still reports Valdez-Cordova, 02261, through
+# 2023, and legacy CT counties through 2023, despite both changes taking
+# effect earlier). For any date where census_direct_long already reports the
+# current-generation code, drop chr_long's competing legacy/defunct-code row
+# for that same date rather than double-report the year across generations --
+# distinct() further down can't catch this since the geography keys differ.
+census_direct_dates <- unique(census_direct_long$time)
 
-# vaccine_exemptions_fattah always duplicates its value onto the retired code.
-drop_alaska_defunct_duplicates <- function(df) {
-  df %>% filter(!(geography %in% ALASKA_DEFUNCT_CODES))
-}
+chr_long <- chr_long %>%
+  filter(!(
+    (geography %in% ALASKA_DEFUNCT_CODES | geography %in% CT_LEGACY_COUNTY_CODES) &
+      time %in% census_direct_dates
+  ))
 
 # area_health_resource_file sometimes duplicates and sometimes disagrees; see
 # git history for how each row below was resolved.
@@ -362,10 +397,49 @@ ahrf_long <- vroom(
   select(geography, time, measure, value) %>%
   anti_join(ahrf_alaska_overrides, by = c("geography", "measure", "time"))
 
+# USDA low-income/low-access food environment (direct-source companion to
+# chr_limited_access_to_healthy_foods).
+usda_long <- vroom(
+  file.path(INGEST_PATH, "usda_food_access/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# BLS LAUS county unemployment rate (direct-source companion to
+# chr_unemployment).
+bls_long <- vroom(
+  file.path(INGEST_PATH, "bls_laus/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# HUD CHAS severe housing problems (direct-source companion to
+# chr_severe_housing_problems).
+hud_long <- vroom(
+  file.path(INGEST_PATH, "hud_chas/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 combined <- bind_rows(
   census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
-  cms_long, nchs_long, ahrf_long
+  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long
 ) %>%
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany

@@ -114,6 +114,31 @@ brfss_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
+# Epic Cosmos diabetes (HbA1c) and obesity (BMI) prevalence.
+epic_long <- read_parquet(
+  file.path(
+    INGEST_PATH,
+    "bundle_chronic_diseases/dist",
+    "epic_prevalence_by_geography_year.parquet"
+  )
+) %>%
+  filter(
+    age == "Total",
+    source %in% c("Epic Cosmos: HbA1c", "Epic Cosmos: BMI"),
+    !is.na(value)
+  ) %>%
+  left_join(name_to_fips, by = c("geography" = "geography_name")) %>%
+  filter(!is.na(state_fips)) %>%
+  mutate(
+    measure = paste0(
+      "epic_", str_to_lower(outcome_name), "_",
+      if_else(str_detect(source, "HbA1c"), "hba1c", "bmi")
+    ),
+    time      = year_end(year),
+    geography = state_fips
+  ) %>%
+  select(geography, time, measure, value)
+
 # Childhood vaccination coverage from NIS (nis_) and SchoolVaxView (svv_).
 imm_long <- read_parquet(
   file.path(
@@ -204,6 +229,12 @@ nchs_long <- vroom(
   filter(!is.na(value)) %>%
   mutate(
     measure = paste0("nchs_", str_remove(measure, "^n_")),
+    # Align names with populate_county_rates.R's nchs_overdose_deaths /
+    # nchs_overdose_pct_pending for the two measures counties also report.
+    measure = recode(measure,
+      nchs_deaths_overdose    = "nchs_overdose_deaths",
+      nchs_pct_pending_invest = "nchs_overdose_pct_pending"
+    ),
     time    = month_end(time)
   )
 
@@ -227,10 +258,28 @@ nchs_causes_long <- vroom(
     time    = as.Date(time)
   )
 
+# CMS Medicare chronic conditions and preventive screenings (under 65).
+cms_long <- vroom(
+  file.path(
+    INGEST_PATH,
+    "cms_mmd/standard/data_state_county_age.csv.gz"
+  ),
+  show_col_types = FALSE
+) %>%
+  filter(geography_level == "s", age == "Total", !is.na(geography)) %>%
+  select(-geography_level, -age, -race_ethnicity, -sex) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(time = year_end(format(as.Date(time), "%Y")))
+
 combined <- bind_rows(
-  chr_long, census_long, brfss_long,
+  chr_long, census_long, brfss_long, epic_long,
   imm_long, svv_exempt_long, exempt_long, healthmap_long,
-  nchs_long, nchs_causes_long
+  nchs_long, nchs_causes_long, cms_long
 ) %>%
   arrange(geography, time, measure)
 
@@ -248,10 +297,14 @@ for (fips in states) {
     next
   }
 
-  # is_territory() (state abbreviation -> territory?) comes from
-  # geography_helpers.R, sourced above. Territories get their own top-level
-  # territories/ folder instead of states/ -- see scaffold_structure.R.
-  top_level_dir <- if (is_territory(match_row$state[1])) "territories" else "states"
+  # is_territory() (state abbreviation -> territory?) and
+  # territory_rates_filename() come from geography_helpers.R, sourced above.
+  # Territories get their own top-level territories/ folder instead of
+  # states/ -- see scaffold_structure.R -- and a filename matching their
+  # actual political status rather than reusing state_rates.csv.gz.
+  is_terr        <- is_territory(match_row$state[1])
+  top_level_dir  <- if (is_terr) "territories" else "states"
+  rates_filename <- if (is_terr) territory_rates_filename(match_row$state[1]) else "state_rates.csv.gz"
 
   state_folder <- file.path(
     REPO_ROOT, top_level_dir,
@@ -261,12 +314,12 @@ for (fips in states) {
   dir.create(state_folder, recursive = TRUE, showWarnings = FALSE)
   vroom_write(
     state_data,
-    file.path(state_folder, "state_rates.csv.gz"),
+    file.path(state_folder, rates_filename),
     delim = ","
   )
 }
 
 message(
   "\nComplete. State rate files written to states/*/state_rates.csv.gz ",
-  "and territories/*/state_rates.csv.gz"
+  "and territories/*/{commonwealth,territory}_rates.csv.gz"
 )
