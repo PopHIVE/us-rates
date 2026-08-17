@@ -613,6 +613,24 @@
       }
     ]
   },
+  "bls_pct_unemployment": {
+    "id": "bls_pct_unemployment",
+    "short_name": "Unemployment (Direct)",
+    "long_name": "Unemployment Rate, Ages 16 and Older (BLS LAUS)",
+    "category": "social_determinants_of_health",
+    "subcategory": "economic_stability",
+    "short_description": "Share of the civilian labor force ages 16+ that is unemployed but seeking work.",
+    "long_description": "Annual average county unemployment rate pulled directly from the Bureau of Labor Statistics' Local Area Unemployment Statistics (LAUS) program (not seasonally adjusted -- county series never are). Direct-source companion to chr_unemployment, which uses the same LAUS rate series with no further CHR&R-side adjustment. LAUS estimates are re-benchmarked in later years against updated QCEW/population controls, so a value captured today will not always exactly match one captured earlier for the same reference year.",
+    "statement": "In {location}, {value} of the labor force is unemployed.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "bls_laus"
+      }
+    ]
+  },
   "chr_children_in_poverty": {
     "id": "chr_children_in_poverty",
     "short_name": "Children in Poverty",
@@ -1152,6 +1170,24 @@
       }
     ]
   },
+  "usda_pct_limited_access_low_income": {
+    "id": "usda_pct_limited_access_low_income",
+    "short_name": "Low-Income, Low Food Access",
+    "long_name": "Low-Income and Low Food-Access Population (USDA Food Environment Atlas)",
+    "category": "preventive_care",
+    "subcategory": "nutrition_and_exercise",
+    "short_description": "Share of the population that is low-income and lives more than 1 mile (urban) or 10 miles (rural) from a grocery store.",
+    "long_description": "Percentage of the county population that is both low-income (at or below 200% of the federal poverty line) and has limited access to a grocery store, pulled directly from the USDA Economic Research Service's Food Environment Atlas (variable PCT_LACCESS_LOWI19) -- USDA's own county-level aggregation of tract-level data from the Food Access Research Atlas. Direct-source companion to chr_limited_access_to_healthy_foods -- County Health Rankings & Roadmaps uses this same 2019 vintage, which the source has not refreshed since. Three Alaska boroughs (Chugach 02063, Copper River 02066, Valdez-Cordova 02261) are NA due to a FIPS reorganization.",
+    "statement": "In {location}, {value} of the population is low-income with limited access to healthy food.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "usda_fara"
+      }
+    ]
+  },
   "chr_uninsured": {
     "id": "chr_uninsured",
     "short_name": "Uninsured",
@@ -1412,6 +1448,24 @@
     "short_description": "Percentage of households with at least 1 of 4 severe housing problems.",
     "long_description": "Percentage of households with at least 1 of 4 housing problems: overcrowding, high housing costs, lack of kitchen facilities, or lack of plumbing facilities, from Comprehensive Housing Affordability Strategy (CHAS) data, a HUD-commissioned special tabulation of American Community Survey (ACS) data.",
     "statement": "In {location}, {value} of households had severe housing problems.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "hud_chas"
+      }
+    ]
+  },
+  "hud_pct_severe_housing_problems": {
+    "id": "hud_pct_severe_housing_problems",
+    "short_name": "Severe Housing Problems (Direct)",
+    "long_name": "Households with 1+ of 4 Severe Housing Problems (HUD CHAS)",
+    "category": "social_determinants_of_health",
+    "subcategory": "neighborhood_and_built_environment",
+    "short_description": "Share of occupied housing units with at least 1 of 4 severe housing problems.",
+    "long_description": "Percentage of occupied housing units (owner + renter) with 1 or more of 4 severe housing problems: lacks complete kitchen facilities, lacks complete plumbing facilities, more than 1.5 persons per room, or cost burden greater than 50%, computed directly from HUD's Comprehensive Housing Affordability Strategy (CHAS) data, a custom tabulation of ACS data. Direct-source companion to chr_severe_housing_problems. Released on the ACS 5-year cycle with no fixed schedule.",
+    "statement": "In {location}, {value} of households have a severe housing problem.",
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
