@@ -275,6 +275,12 @@ nchs_long <- vroom(
   filter(!is.na(value)) %>%
   mutate(
     measure = paste0("nchs_", str_remove(measure, "^n_")),
+    # Align names with populate_county_rates.R's nchs_overdose_deaths /
+    # nchs_overdose_pct_pending for the two measures counties also report.
+    measure = recode(measure,
+      nchs_deaths_overdose    = "nchs_overdose_deaths",
+      nchs_pct_pending_invest = "nchs_overdose_pct_pending"
+    ),
     time    = month_end(time)
   )
 
@@ -374,8 +380,13 @@ for (fips in states) {
     next
   }
 
-  is_terr <- is_territory(match_row$state[1])
-  top_level_dir <- if (is_terr) "territories" else "states"
+  # is_territory() (state abbreviation -> territory?) and
+  # territory_rates_filename() come from geography_helpers.R, sourced above.
+  # Territories get their own top-level territories/ folder instead of
+  # states/ -- see scaffold_structure.R -- and a filename matching their
+  # actual political status rather than reusing state_rates.csv.gz.
+  is_terr        <- is_territory(match_row$state[1])
+  top_level_dir  <- if (is_terr) "territories" else "states"
   rates_filename <- if (is_terr) territory_rates_filename(match_row$state[1]) else "state_rates.csv.gz"
 
   state_folder <- file.path(

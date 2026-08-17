@@ -89,10 +89,94 @@ census_long <- census_wide %>%
 # sources alongside their current successor(s) (see check_geography_renaming.R).
 ALASKA_DEFUNCT_CODES <- c("02201", "02231", "02232", "02261", "02270", "02280")
 
-# vaccine_exemptions_fattah always duplicates its value onto the retired code.
+# vaccine_exemptions_fattah always duplicates its value onto the retired code;
+# census's PEP-derived county estimates sometimes carry a row for a retired
+# code (e.g. Valdez-Cordova, 02261) alongside its current successor(s) even
+# in an otherwise-current vintage -- drop it unconditionally rather than try
+# to reconcile which value is "right".
 drop_alaska_defunct_duplicates <- function(df) {
   df %>% filter(!(geography %in% ALASKA_DEFUNCT_CODES))
 }
+
+# Legacy Connecticut county codes, retired as of the 2022 planning-region
+# cutover (see README). census's PEP/SAIPE/OQM/SAHIE feeds below are single-
+# current-vintage patches, so any row still tagged with a legacy code is
+# stale by definition once the vintage is 2022+ -- drop it rather than
+# double-report the same year under both conventions.
+CT_LEGACY_COUNTY_CODES <- c(
+  "09001", "09003", "09005", "09007", "09009", "09011", "09013", "09015"
+)
+
+drop_ct_legacy_duplicates <- function(df) {
+  df %>% filter(!(geography %in% CT_LEGACY_COUNTY_CODES))
+}
+
+# Census-native replacements for 17 measures historically sourced only from
+# CHR's own redistribution (chr_population, chr_rural, etc.). Each of these
+# Ingest files covers a single current vintage, so this only patches the
+# latest data point per measure -- older CHR-sourced years for these same
+# measure names are left untouched in chr_long below.
+pep_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE)
+saipe_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE)
+oqm_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
+sahie_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE)
+
+census_direct_long <- bind_rows(
+  pep_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      pep_population   = "chr_population",
+      pep_pct_65_older = "chr_65_and_older",
+      pep_pct_under_18 = "chr_below_18_years_of_age",
+      pep_pct_female   = "chr_female",
+      pep_pct_aian     = "chr_american_indian_or_alaska_native",
+      pep_pct_asian    = "chr_asian",
+      pep_pct_nhpi     = "chr_native_hawaiian_or_other_pacific_islander",
+      pep_pct_nh_black = "chr_non_hispanic_black",
+      pep_pct_nh_white = "chr_non_hispanic_white",
+      pep_pct_hispanic = "chr_hispanic"
+    )),
+  saipe_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      saipe_pct_children_poverty    = "chr_children_in_poverty",
+      saipe_median_household_income = "chr_median_household_income"
+    )),
+  oqm_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = "chr_census_participation"),
+  sahie_wide %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      sahie_pct_uninsured          = "chr_uninsured",
+      sahie_pct_uninsured_adults   = "chr_uninsured_adults",
+      sahie_pct_uninsured_children = "chr_uninsured_children"
+    )),
+  # census_ur_pct_urban_pop is a static 2020-decennial value repeated across
+  # every ACS vintage year in census_wide; take the latest one point only.
+  census_wide %>%
+    filter(time == max(time)) %>%
+    transmute(geography, time, measure = "chr_rural", value = 1 - census_ur_pct_urban_pop)
+) %>%
+  filter(!is.na(value)) %>%
+  drop_alaska_defunct_duplicates() %>%
+  drop_ct_legacy_duplicates()
+
+# chr_long (below) is CHR&R's own redistribution, which cuts over to a
+# renamed/split/merged geography on its own schedule -- often later than the
+# actual FIPS change (e.g. it still reports Valdez-Cordova, 02261, through
+# 2023, and legacy CT counties through 2023, despite both changes taking
+# effect earlier). For any date where census_direct_long already reports the
+# current-generation code, drop chr_long's competing legacy/defunct-code row
+# for that same date rather than double-report the year across generations --
+# distinct() further down can't catch this since the geography keys differ.
+census_direct_dates <- unique(census_direct_long$time)
+
+chr_long <- chr_long %>%
+  filter(!(
+    (geography %in% ALASKA_DEFUNCT_CODES | geography %in% CT_LEGACY_COUNTY_CODES) &
+      time %in% census_direct_dates
+  ))
 
 # area_health_resource_file sometimes duplicates and sometimes disagrees; see
 # git history for how each row below was resolved.
@@ -330,6 +414,45 @@ ahrf_long <- vroom(
   select(geography, time, measure, value) %>%
   anti_join(ahrf_alaska_overrides, by = c("geography", "measure", "time"))
 
+# USDA low-income/low-access food environment (direct-source companion to
+# chr_limited_access_to_healthy_foods).
+usda_long <- vroom(
+  file.path(INGEST_PATH, "usda_food_access/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# BLS LAUS county unemployment rate (direct-source companion to
+# chr_unemployment).
+bls_long <- vroom(
+  file.path(INGEST_PATH, "bls_laus/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# HUD CHAS severe housing problems (direct-source companion to
+# chr_severe_housing_problems).
+hud_long <- vroom(
+  file.path(INGEST_PATH, "hud_chas/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 message("Loading environmental, syndromic, and diagnosis-based measures...")
 
 # Epic Cosmos diabetes/obesity prevalence via diagnosis code (CCW), distinct
@@ -371,7 +494,12 @@ noaa_heat_long <- vroom(
 
 # JHU confirmed measles case counts. This file mixes in state-level and a
 # handful of non-FIPS placeholder rows (e.g. "00024") alongside true county
-# rows -- restrict to 5-digit county FIPS.
+# rows -- restrict to 5-digit county FIPS. It also reports Hartford (legacy
+# 09003) alongside the Capitol planning region (09170) for the same weeks
+# (mostly identical counts, occasionally disagreeing by a case or two) --
+# drop the legacy code rather than double-report, same as census_direct_long
+# above; this source only carries 2025+ data, so there's no historical
+# period that would be lost.
 jhu_measles_long <- vroom(
   file.path(INGEST_PATH, "measles_jhu/standard/data_county.csv.gz"),
   show_col_types = FALSE
@@ -381,7 +509,8 @@ jhu_measles_long <- vroom(
     measure = "jhu_measles_cases",
     time    = as.Date(time)
   ) %>%
-  select(geography, time, measure, value)
+  select(geography, time, measure, value) %>%
+  drop_ct_legacy_duplicates()
 
 # Measles wastewater surveillance detection rate. Only the detection-rate
 # column is kept as a measure; sample_count/detection_count/population_served
@@ -452,15 +581,17 @@ nchs_overdose_rate_long <- read_parquet(
   select(geography, time, measure, value)
 
 combined <- bind_rows(
-  chr_long, census_long, epic_long,
+  census_direct_long, chr_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
-  cms_long, nchs_long, ahrf_long,
+  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
   epic_dx_long, noaa_heat_long, jhu_measles_long,
   ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
 ) %>%
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
   # (51005), VA, once per pre/post-2013 independent-city-merger FIPS mapping.
+  # census_direct_long is listed first so it wins any exact match against
+  # chr_long for the same (geography, time, measure) -- see above.
   distinct(geography, time, measure, .keep_all = TRUE) %>%
   arrange(geography, time, measure)
 

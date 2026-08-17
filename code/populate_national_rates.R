@@ -19,6 +19,13 @@ INGEST_PATH <- "../Ingest/data"
 
 year_end <- function(y) as.Date(paste0(as.integer(y), "-12-31"))
 
+month_end <- function(d) {
+  lt <- as.POSIXlt(as.Date(d))
+  lt$mon <- lt$mon + 1L
+  lt$mday <- 1L
+  as.Date(lt) - 1L
+}
+
 mdy_to_date <- function(x) as.Date(x, format = "%m-%d-%Y")
 
 slugify <- function(x) {
@@ -111,9 +118,41 @@ svv_exempt_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
-# CMS Medicare chronic conditions and preventive screenings (under 65). The
-# same file used for county/state-level cms_* measures also carries a
-# national row (geography_level == "n"), just filtered out there.
+# MMR coverage modeled by HealthMap.
+healthmap_long <- vroom(
+  file.path(INGEST_PATH, "mmr_healthmap/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(value), geography == "00") %>%
+  mutate(
+    measure = "healthmap_mmr_coverage",
+    time    = mdy_to_date(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# NCHS drug overdose mortality.
+nchs_long <- vroom(
+  file.path(INGEST_PATH, "nchs_mortality/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(geography), geography == "00") %>%
+  pivot_longer(
+    cols      = c(n_deaths_overdose, pct_pending_invest),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(
+      measure,
+      n_deaths_overdose  = "nchs_overdose_deaths",
+      pct_pending_invest = "nchs_overdose_pct_pending"
+    ),
+    time = month_end(time)
+  ) %>%
+  select(geography, time, measure, value)
+
+# CMS Medicare chronic conditions and preventive screenings (under 65).
 cms_long <- vroom(
   file.path(
     INGEST_PATH,
@@ -130,18 +169,6 @@ cms_long <- vroom(
   ) %>%
   filter(!is.na(value)) %>%
   mutate(time = year_end(format(as.Date(time), "%Y")))
-
-# MMR coverage modeled by HealthMap.
-healthmap_long <- vroom(
-  file.path(INGEST_PATH, "mmr_healthmap/standard/data_state.csv.gz"),
-  show_col_types = FALSE
-) %>%
-  filter(!is.na(value), geography == "00") %>%
-  mutate(
-    measure = "healthmap_mmr_coverage",
-    time    = mdy_to_date(time)
-  ) %>%
-  select(geography, time, measure, value)
 
 # NCHS age-adjusted mortality rates by cause of death.
 nchs_causes_long <- vroom(
@@ -207,26 +234,6 @@ nchs_overdose_rate_long <- read_parquet(
     geography = "00"
   ) %>%
   select(geography, time, measure, value)
-
-# NCHS drug overdose mortality (national row of the same file used for
-# state-level nchs_deaths_*/nchs_pct_* measures).
-nchs_overdose_long <- vroom(
-  file.path(INGEST_PATH, "nchs_mortality/standard/data.csv.gz"),
-  show_col_types = FALSE
-) %>%
-  filter(!is.na(geography), geography == "00") %>%
-  select(geography, time, starts_with("n_deaths_"),
-         pct_complete, pct_pending_invest) %>%
-  pivot_longer(
-    cols      = -c(geography, time),
-    names_to  = "measure",
-    values_to = "value"
-  ) %>%
-  filter(!is.na(value)) %>%
-  mutate(
-    measure = paste0("nchs_", str_remove(measure, "^n_")),
-    time    = as.Date(time)
-  )
 
 # Medical and non-medical MMR exemption rates (national row of the same
 # file used for state-level exempt_mmr_* measures).
@@ -327,7 +334,7 @@ nssp_long <- vroom(
 combined <- bind_rows(
   chr_long, brfss_long, imm_long, svv_exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
-  nchs_causes_long, nchs_overdose_long, exempt_long, jhu_measles_long,
+  nchs_causes_long, nchs_long, exempt_long, jhu_measles_long,
   ww_measles_long, noaa_heat_long
 ) %>%
   arrange(geography, time, measure)
