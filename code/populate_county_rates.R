@@ -494,7 +494,12 @@ noaa_heat_long <- vroom(
 
 # JHU confirmed measles case counts. This file mixes in state-level and a
 # handful of non-FIPS placeholder rows (e.g. "00024") alongside true county
-# rows -- restrict to 5-digit county FIPS.
+# rows -- restrict to 5-digit county FIPS. It also reports Hartford (legacy
+# 09003) alongside the Capitol planning region (09170) for the same weeks
+# (mostly identical counts, occasionally disagreeing by a case or two) --
+# drop the legacy code rather than double-report, same as census_direct_long
+# above; this source only carries 2025+ data, so there's no historical
+# period that would be lost.
 jhu_measles_long <- vroom(
   file.path(INGEST_PATH, "measles_jhu/standard/data_county.csv.gz"),
   show_col_types = FALSE
@@ -504,7 +509,8 @@ jhu_measles_long <- vroom(
     measure = "jhu_measles_cases",
     time    = as.Date(time)
   ) %>%
-  select(geography, time, measure, value)
+  select(geography, time, measure, value) %>%
+  drop_ct_legacy_duplicates()
 
 # Measles wastewater surveillance detection rate. Only the detection-rate
 # column is kept as a measure; sample_count/detection_count/population_served
