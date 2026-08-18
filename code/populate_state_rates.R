@@ -423,11 +423,28 @@ delphi_hosp_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# AHRF workforce, facility, demographic, and environmental measures. Natively
+# county-only; state rows (including territories, which AHRF covers) are
+# aggregated upstream in the area-health-resource-files repo -- see that
+# repo's ingest.R for the sum/weighted-mean/excluded treatment per measure.
+ahrf_long <- vroom(
+  file.path(INGEST_PATH, "area_health_resource_file/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(!is.na(geography), nchar(geography) == 2, geography != "00") %>%
+  pivot_longer(
+    cols      = starts_with("ahrf_"),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  select(geography, time, measure, value)
+
 combined <- bind_rows(
   chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
-  nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
+  nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
   arrange(geography, time, measure)

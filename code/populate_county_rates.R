@@ -178,92 +178,6 @@ chr_long <- chr_long %>%
       time %in% census_direct_dates
   ))
 
-# area_health_resource_file sometimes duplicates and sometimes disagrees; see
-# git history for how each row below was resolved.
-ahrf_alaska_overrides <- tribble(
-  ~geography, ~measure,                    ~time,
-  "02063",    "ahrf_critical_access_hosp", "2023-12-31",
-  "02063",    "ahrf_hospitals",            "2023-12-31",
-  "02063",    "ahrf_hpsa_dental",          "2025-12-31",
-  "02063",    "ahrf_hpsa_mental_health",   "2025-12-31",
-  "02063",    "ahrf_hpsa_prim_care",       "2025-12-31",
-  "02066",    "ahrf_critical_access_hosp", "2023-12-31",
-  "02066",    "ahrf_hospitals",            "2023-12-31",
-  "02066",    "ahrf_hpsa_dental",          "2025-12-31",
-  "02066",    "ahrf_hpsa_mental_health",   "2025-12-31",
-  "02066",    "ahrf_hpsa_prim_care",       "2025-12-31",
-  "02105",    "ahrf_population",           "2011-12-31",
-  "02105",    "ahrf_population",           "2012-12-31",
-  "02195",    "ahrf_md_all",               "2011-12-31",
-  "02195",    "ahrf_md_all",               "2012-12-31",
-  "02195",    "ahrf_population",           "2011-12-31",
-  "02195",    "ahrf_population",           "2012-12-31",
-  "02198",    "ahrf_md_all",               "2011-12-31",
-  "02198",    "ahrf_md_all",               "2012-12-31",
-  "02198",    "ahrf_population",           "2011-12-31",
-  "02198",    "ahrf_population",           "2012-12-31",
-  "02201",    "ahrf_critical_access_hosp", "2011-12-31",
-  "02201",    "ahrf_critical_access_hosp", "2012-12-31",
-  "02201",    "ahrf_dentists",             "2011-12-31",
-  "02201",    "ahrf_dentists",             "2012-12-31",
-  "02201",    "ahrf_good_air_pct",         "2012-12-31",
-  "02201",    "ahrf_hospitals",            "2011-12-31",
-  "02201",    "ahrf_hospitals",            "2012-12-31",
-  "02201",    "ahrf_pcp",                  "2011-12-31",
-  "02201",    "ahrf_pcp",                  "2012-12-31",
-  "02201",    "ahrf_pm25",                 "2012-12-31",
-  "02201",    "ahrf_pop_density",          "2011-12-31",
-  "02201",    "ahrf_pop_density",          "2012-12-31",
-  "02201",    "ahrf_psych",                "2011-12-31",
-  "02201",    "ahrf_psych",                "2012-12-31",
-  "02201",    "ahrf_rural_urban_code",     "2011-12-31",
-  "02201",    "ahrf_rural_urban_code",     "2012-12-31",
-  "02230",    "ahrf_population",           "2011-12-31",
-  "02230",    "ahrf_population",           "2012-12-31",
-  "02232",    "ahrf_critical_access_hosp", "2011-12-31",
-  "02232",    "ahrf_critical_access_hosp", "2012-12-31",
-  "02232",    "ahrf_dentists",             "2011-12-31",
-  "02232",    "ahrf_dentists",             "2012-12-31",
-  "02232",    "ahrf_good_air_pct",         "2012-12-31",
-  "02232",    "ahrf_hospitals",            "2011-12-31",
-  "02232",    "ahrf_hospitals",            "2012-12-31",
-  "02232",    "ahrf_md_all",               "2011-12-31",
-  "02232",    "ahrf_md_all",               "2012-12-31",
-  "02232",    "ahrf_medicare_per_capita",  "2014-12-31",
-  "02232",    "ahrf_pcp",                  "2011-12-31",
-  "02232",    "ahrf_pcp",                  "2012-12-31",
-  "02232",    "ahrf_pm25",                 "2012-12-31",
-  "02232",    "ahrf_pop_density",          "2011-12-31",
-  "02232",    "ahrf_pop_density",          "2012-12-31",
-  "02232",    "ahrf_psych",                "2011-12-31",
-  "02232",    "ahrf_psych",                "2012-12-31",
-  "02232",    "ahrf_rural_urban_code",     "2011-12-31",
-  "02232",    "ahrf_rural_urban_code",     "2012-12-31",
-  "02261",    "ahrf_critical_access_hosp", "2025-12-31",
-  "02261",    "ahrf_hospitals",            "2025-12-31",
-  "02275",    "ahrf_md_all",               "2011-12-31",
-  "02275",    "ahrf_md_all",               "2012-12-31",
-  "02275",    "ahrf_population",           "2011-12-31",
-  "02275",    "ahrf_population",           "2012-12-31",
-  "02280",    "ahrf_critical_access_hosp", "2011-12-31",
-  "02280",    "ahrf_critical_access_hosp", "2012-12-31",
-  "02280",    "ahrf_dentists",             "2011-12-31",
-  "02280",    "ahrf_dentists",             "2012-12-31",
-  "02280",    "ahrf_good_air_pct",         "2012-12-31",
-  "02280",    "ahrf_hospitals",            "2011-12-31",
-  "02280",    "ahrf_hospitals",            "2012-12-31",
-  "02280",    "ahrf_pcp",                  "2011-12-31",
-  "02280",    "ahrf_pcp",                  "2012-12-31",
-  "02280",    "ahrf_pm25",                 "2012-12-31",
-  "02280",    "ahrf_pop_density",          "2011-12-31",
-  "02280",    "ahrf_pop_density",          "2012-12-31",
-  "02280",    "ahrf_psych",                "2011-12-31",
-  "02280",    "ahrf_psych",                "2012-12-31",
-  "02280",    "ahrf_rural_urban_code",     "2011-12-31",
-  "02280",    "ahrf_rural_urban_code",     "2012-12-31"
-) %>%
-  mutate(time = as.Date(time))
-
 message("Loading chronic disease and immunization data...")
 
 # Epic Cosmos diabetes (HbA1c) and obesity (BMI) prevalence.
@@ -399,20 +313,24 @@ nchs_long <- vroom(
   ) %>%
   select(geography, time, measure, value)
 
-# AHRF workforce, facility, demographic, and environmental measures.
+# AHRF workforce, facility, demographic, and environmental measures. The
+# source file now also carries state (nchar 2) and national ("00") rows
+# aggregated upstream in the area-health-resource-files repo -- restrict to
+# county here. The Alaska duplicate/disagreement resolution that used to
+# live here (ahrf_alaska_overrides) has moved upstream to that same repo,
+# so every consumer gets clean data without needing its own copy of the fix.
 ahrf_long <- vroom(
   file.path(INGEST_PATH, "area_health_resource_file/standard/data.csv.gz"),
   show_col_types = FALSE
 ) %>%
-  filter(!is.na(geography)) %>%
+  filter(!is.na(geography), nchar(geography) == 5) %>%
   pivot_longer(
     cols      = starts_with("ahrf_"),
     names_to  = "measure",
     values_to = "value"
   ) %>%
   filter(!is.na(value)) %>%
-  select(geography, time, measure, value) %>%
-  anti_join(ahrf_alaska_overrides, by = c("geography", "measure", "time"))
+  select(geography, time, measure, value)
 
 # USDA low-income/low-access food environment (direct-source companion to
 # chr_limited_access_to_healthy_foods).
