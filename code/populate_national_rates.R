@@ -67,6 +67,25 @@ chr_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# BLS LAUS national unemployment rate (direct-source companion to
+# chr_unemployment). Shares data_state.csv.gz with the state-level pull in
+# populate_state_rates.R -- national is the single "00" row (BLS's
+# standard CPS-based rate, series LNU04000000, since LAUS itself has no
+# national series). No HUD CHAS block here -- HUD publishes no national
+# CHAS table (see hud-chas repo's ingest.R), so hud_pct_severe_housing_problems
+# has no national-level counterpart.
+bls_long <- vroom(
+  file.path(INGEST_PATH, "bls_laus/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(geography == "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 # BRFSS diabetes and obesity prevalence.
 brfss_long <- read_parquet(
   file.path(
@@ -381,7 +400,7 @@ combined <- bind_rows(
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_causes_long, nchs_long, exempt_long, jhu_measles_long,
-  ww_measles_long, noaa_heat_long
+  ww_measles_long, noaa_heat_long, bls_long
 ) %>%
   arrange(geography, time, measure)
 

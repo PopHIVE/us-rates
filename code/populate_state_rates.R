@@ -95,6 +95,36 @@ census_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# BLS LAUS state unemployment rate (direct-source companion to
+# chr_unemployment). Same file also carries the national row under
+# geography "00", split out in populate_national_rates.R.
+bls_long <- vroom(
+  file.path(INGEST_PATH, "bls_laus/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(geography != "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
+# HUD CHAS severe housing problems (direct-source companion to
+# chr_severe_housing_problems). State-only -- HUD publishes no national
+# CHAS table (see hud-chas repo's ingest.R), so there's no national
+# counterpart in populate_national_rates.R.
+hud_long <- vroom(
+  file.path(INGEST_PATH, "hud_chas/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 message("Loading chronic disease and immunization data...")
 
 # BRFSS diabetes and obesity prevalence.
@@ -445,7 +475,7 @@ combined <- bind_rows(
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,
-  nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
+  nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long, bls_long, hud_long
 ) %>%
   arrange(geography, time, measure)
 
