@@ -88,6 +88,7 @@ census_long <- vroom(
   file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
   show_col_types = FALSE
 ) %>%
+  filter(geography != "00") %>%
   pivot_longer(
     cols = -c(geography, time),
     names_to = "measure",
