@@ -95,6 +95,47 @@ census_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# Census-native replacements for 13 measures historically sourced only from
+# CHR's own redistribution (chr_population, chr_uninsured, etc.) -- same
+# PEP/SAIPE/SAHIE direct sources as census_direct_long in
+# populate_county_rates.R, now that those APIs' state-level geography is
+# wired in. No OQM or chr_rural here: OQM has no state-level rows (only
+# county + national), and census_ur_pct_urban_pop (chr_rural's source)
+# doesn't exist at the state level either.
+census_direct_long <- bind_rows(
+  vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE) %>%
+    filter(nchar(geography) == 2, geography != "00") %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      pep_population   = "chr_population",
+      pep_pct_65_older = "chr_65_and_older",
+      pep_pct_under_18 = "chr_below_18_years_of_age",
+      pep_pct_female   = "chr_female",
+      pep_pct_aian     = "chr_american_indian_or_alaska_native",
+      pep_pct_asian    = "chr_asian",
+      pep_pct_nhpi     = "chr_native_hawaiian_or_other_pacific_islander",
+      pep_pct_nh_black = "chr_non_hispanic_black",
+      pep_pct_nh_white = "chr_non_hispanic_white",
+      pep_pct_hispanic = "chr_hispanic"
+    )),
+  vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE) %>%
+    filter(nchar(geography) == 2, geography != "00") %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      saipe_pct_children_poverty    = "chr_children_in_poverty",
+      saipe_median_household_income = "chr_median_household_income"
+    )),
+  vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE) %>%
+    filter(nchar(geography) == 2, geography != "00") %>%
+    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+    mutate(measure = recode(measure,
+      sahie_pct_uninsured          = "chr_uninsured",
+      sahie_pct_uninsured_adults   = "chr_uninsured_adults",
+      sahie_pct_uninsured_children = "chr_uninsured_children"
+    ))
+) %>%
+  filter(!is.na(value))
+
 message("Loading chronic disease and immunization data...")
 
 # BRFSS diabetes and obesity prevalence.
@@ -441,12 +482,15 @@ ahrf_long <- vroom(
   select(geography, time, measure, value)
 
 combined <- bind_rows(
-  chr_long, census_long, brfss_long,
+  census_direct_long, chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long
 ) %>%
+  # census_direct_long is listed first so it wins any exact match against
+  # chr_long for the same (geography, time, measure) -- see above.
+  distinct(geography, time, measure, .keep_all = TRUE) %>%
   arrange(geography, time, measure)
 
 message("Combined ", nrow(combined), " rows across all sources")
