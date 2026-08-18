@@ -4,9 +4,13 @@
 # Shared name -> folder/slug helpers for the geography pipeline. Sourced by
 # scaffold_structure.R, populate_state_rates.R, populate_county_rates.R, and
 # generate_geography_manifest.R so the folder-naming rule lives in exactly one
-# place instead of four independently-maintained copies.
+# place instead of four independently-maintained copies. Also holds
+# ahrf_alaska_overrides, needed by populate_national_rates.R and
+# populate_state_rates.R (for state/national AHRF aggregation) as well as
+# populate_county_rates.R.
 #
-# Requires: stringr (already a dependency of every script that sources this).
+# Requires: stringr, dplyr (both already a dependency of every script that
+# sources this).
 # =============================================================================
 
 # "Autauga County" -> "autauga"; "New York County" -> "new_york";
