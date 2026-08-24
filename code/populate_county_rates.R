@@ -203,14 +203,15 @@ epic_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
-# MMR kindergarten coverage and herd-immunity threshold status
-# (Washington Post / state health departments).
-wapo_long <- read_parquet(
-  file.path(
-    INGEST_PATH,
-    "bundle_childhood_immunizations/dist",
-    "wapo_vax_counties.parquet"
-  )
+# MMR kindergarten coverage and herd-immunity threshold status (Washington
+# Post / state health departments). Read directly from the raw
+# schoolvax_washpost source rather than bundle_childhood_immunizations's
+# copy -- the bundle's wapo_vax_counties.parquet is an unmodified copy of
+# this same file (see that bundle's build.R), so there's no derivation to
+# lose.
+wapo_long <- vroom(
+  file.path(INGEST_PATH, "schoolvax_washpost/standard/data_counties.csv.gz"),
+  show_col_types = FALSE
 ) %>%
   filter(!is.na(geography)) %>%
   mutate(
@@ -460,29 +461,35 @@ epic_heat_long <- vroom(
   ) %>%
   select(geography, time, measure, value)
 
-# CDC NSSP emergency-department visit percentage for RSV/COVID-19/flu.
-# `fips` ships as a bare number (leading zeros stripped) and roughly a
+# CDC NSSP emergency-department visit percentage for RSV/COVID-19/flu,
+# county level. Read directly from the raw nssp source rather than
+# bundle_respiratory's copy -- the bundle's *_ed_visits_by_county.parquet
+# files are this same raw file filtered to county rows and renamed (see
+# that bundle's build.R), so there's no derivation to lose. Roughly a
 # quarter of rows are a state's rate back-filled onto every one of its
 # counties for low-volume privacy suppression (is_state_estimate == TRUE) --
 # those are dropped rather than misrepresented as county-level observations.
-read_nssp_county <- function(file, measure_name) {
-  read_parquet(file.path(INGEST_PATH, "bundle_respiratory/dist", file)) %>%
-    filter(!is_state_estimate, !is.na(fips)) %>%
-    mutate(
-      geography = str_pad(as.character(fips), 5, pad = "0"),
-      measure   = measure_name,
-      time      = as.Date(week_end)
-    ) %>%
-    rename(value = starts_with("percent_visits_")) %>%
-    filter(!is.na(value)) %>%
-    select(geography, time, measure, value)
-}
-
-nssp_long <- bind_rows(
-  read_nssp_county("rsv_ed_visits_by_county.parquet", "nssp_pct_ed_visits_rsv"),
-  read_nssp_county("covid_ed_visits_by_county.parquet", "nssp_pct_ed_visits_covid"),
-  read_nssp_county("flu_ed_visits_by_county.parquet", "nssp_pct_ed_visits_flu")
-)
+nssp_long <- vroom(
+  file.path(INGEST_PATH, "nssp/standard/data.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(str_length(geography) == 5, !is_state_estimate) %>%
+  select(geography, time, starts_with("percent_visits_")) %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value)) %>%
+  mutate(
+    measure = recode(
+      measure,
+      percent_visits_rsv   = "nssp_pct_ed_visits_rsv",
+      percent_visits_covid = "nssp_pct_ed_visits_covid",
+      percent_visits_flu   = "nssp_pct_ed_visits_flu"
+    ),
+    time = as.Date(time)
+  )
 
 # NCHS drug overdose death rate (per capita), distinct from the raw monthly
 # count in nchs_long above, which comes from a different upstream file that

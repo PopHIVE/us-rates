@@ -137,13 +137,13 @@ imm_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
-# SchoolVaxView kindergarten exemption rates.
-svv_exempt_long <- read_parquet(
-  file.path(
-    INGEST_PATH,
-    "bundle_childhood_immunizations/dist",
-    "schoolvaxview_exemptions.parquet"
-  )
+# SchoolVaxView kindergarten exemption rates. Read directly from the raw
+# schoolvaxview source rather than bundle_childhood_immunizations's copy --
+# the bundle's schoolvaxview_exemptions.parquet is an unmodified copy of this
+# same file (see that bundle's build.R), so there's no derivation to lose.
+svv_exempt_long <- vroom(
+  file.path(INGEST_PATH, "schoolvaxview/standard/data_exemptions.csv.gz"),
+  show_col_types = FALSE
 ) %>%
   filter(!is.na(value), geography == "00") %>%
   mutate(

@@ -1,0 +1,330 @@
+# =============================================================================
+# build_measure_registry.R
+#
+# Builds a measure-level registry from measure_info.json and the rate files
+# currently in the repo: what each measure is, which geography levels it's
+# expected to appear at, which levels it actually appears at, and basic
+# coverage stats (observation counts, time range, states/counties with data).
+#
+# Writes tracker/measure_registry.csv, one row per measure_id.
+#
+# Usage:
+#   Rscript code/build_measure_registry.R
+# =============================================================================
+
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(stringr)
+library(vroom)
+library(jsonlite)
+
+REPO_ROOT <- "."
+
+if (!file.exists(file.path(REPO_ROOT, "measure_info.json"))) {
+  stop(
+    "build_measure_registry.R must be run from the us-rates repo root, e.g.:\n",
+    "  Rscript code/build_measure_registry.R"
+  )
+}
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+message("Loading measure_info.json...")
+
+info <- fromJSON(
+  file.path(REPO_ROOT, "measure_info.json"),
+  simplifyVector = FALSE
+)
+info[["_sources"]] <- NULL
+
+measures <- tibble(measure_id = names(info)) %>%
+  mutate(
+    entry       = map(measure_id, ~ info[[.x]]),
+    category    = map_chr(entry, ~ .x$category    %||% NA_character_),
+    subcategory = map_chr(entry, ~ .x$subcategory  %||% NA_character_),
+    measure_type = map_chr(entry, ~ .x$measure_type %||% NA_character_),
+    unit        = map_chr(entry, ~ .x$unit          %||% NA_character_),
+    scale       = map_chr(entry, ~ .x$scale         %||% NA_character_),
+    time_resolution = map_chr(entry, ~ .x$time_resolution %||% NA_character_),
+    source_id   = map_chr(entry, ~ {
+      s <- .x$sources
+      if (is.null(s) || length(s) == 0) return(NA_character_)
+      paste(map_chr(s, ~ .x$id %||% NA_character_), collapse = "; ")
+    }),
+    n_sources   = map_int(entry, ~ length(.x$sources %||% list()))
+  ) %>%
+  select(-entry)
+
+# -----------------------------------------------------------------------------
+# Pipeline: which Ingest/data/<folder> a measure's rows come from. Transcribed
+# from the INGEST_PATH file paths actually read in populate_national_rates.R /
+# populate_state_rates.R / populate_county_rates.R (grep INGEST_PATH there to
+# re-verify), not guessed -- most id prefixes map to one folder 1:1, but a
+# prefix isn't always enough: nchs_overdose_rate is pulled from
+# bundle_injury_overdose (every other nchs_ id comes from nchs_mortality), and
+# epic_heat_ed_rate is pulled from epic_injury (every other epic_ id comes
+# from epic_chronic), so both get an explicit override below. nssp_ ids are
+# pulled from the "nssp" folder at national/state but from a county-only cut
+# in bundle_respiratory -- same underlying CDC feed, so no override is
+# needed, but the file differs by geography level for this prefix.
+#
+# Several prefixes (brfss, nis, svv, wapo) point at a "bundle_*" folder
+# rather than a same-topic raw source folder, even though a raw source folder
+# also exists (e.g. both brfss/ and bundle_chronic_diseases/ are real Ingest
+# projects) -- this isn't an indirection to remove. Each bundle's build.R
+# does the derivation that produces the exact number these measures need,
+# which the raw source alone doesn't have: bundle_chronic_diseases aggregates
+# raw brfss across sex and fine age groups into the "Total" prevalence row
+# populate_national_rates.R filters on; bundle_childhood_immunizations
+# reconciles the raw nis and schoolvaxview sources into one comparable
+# format; bundle_injury_overdose computes rate_deaths_overdose from raw
+# nchs_mortality counts plus population data (the rate isn't in the raw
+# source at all); bundle_respiratory merges the raw nssp county feed with
+# Epic, wastewater, Delphi, and Google Trends data and nssp_ county rows are
+# extracted from that merge. If a bundle here ever looks avoidable, check its
+# build.R in the Ingest repo before routing around it -- it's usually where
+# the actual number gets computed, not just a repackaging.
+#
+# Pipeline is a separate fact from "true origin": measure_info.json's own
+# per-measure `sources` field (captured above as source_id) already records
+# who actually produced the statistic -- e.g. chr_adult_smoking's source_id
+# is "brfss", not "chr", even though its pipeline here is
+# county_health_rankings. `via` below distinguishes a CHR&R/AHRF pass-through
+# from a directly-ingested source; pipeline + source_id + via together answer
+# "where did this row come from" without needing anything further.
+# -----------------------------------------------------------------------------
+
+prefix_pipeline <- c(
+  chr        = "county_health_rankings",
+  ahrf       = "area_health_resource_file",
+  acs        = "census",
+  census     = "census",
+  bls        = "bls_laus",
+  brfss      = "bundle_chronic_diseases",
+  nchs       = "nchs_mortality",
+  epic       = "epic_chronic",
+  cms        = "cms_mmd",
+  delphi     = NA, # split across delphi_doctors_claims / delphi_hospital_claims
+  nssp       = "nssp",
+  jhu        = "measles_jhu",
+  healthmap  = "mmr_healthmap",
+  noaa       = "noaa_heat_risk",
+  ww         = "wastewater_measles",
+  exempt     = "vaccine_exemptions_fattah",
+  usda       = "usda_food_access",
+  nis        = "bundle_childhood_immunizations",
+  svv        = "bundle_childhood_immunizations",
+  wapo       = "bundle_childhood_immunizations",
+  hud        = "hud_chas",
+  nhtsa      = "nhtsa_crash"
+)
+
+pipeline_overrides <- c(
+  nchs_overdose_rate = "bundle_injury_overdose",
+  epic_heat_ed_rate   = "epic_injury"
+)
+
+id_prefix <- function(x) str_extract(x, "^[a-z]+(?=_)")
+
+measures <- measures %>%
+  mutate(
+    prefix   = id_prefix(measure_id),
+    pipeline = coalesce(pipeline_overrides[measure_id], prefix_pipeline[prefix]),
+    via      = if_else(prefix == "chr", "chr",
+                if_else(prefix == "ahrf" & measure_id != "ahrf_population", "ahrf",
+                        "direct"))
+  )
+
+# -----------------------------------------------------------------------------
+# Actual coverage: scan every rate file in the repo for which measures have
+# at least one row (rows with NA value are never written, so presence in the
+# file is sufficient), plus observation counts and time range.
+# -----------------------------------------------------------------------------
+
+message("Scanning national rates...")
+
+national_file <- file.path(REPO_ROOT, "national", "national_rates.csv.gz")
+national <- vroom(national_file, show_col_types = FALSE, col_types = "cccd") %>%
+  filter(!is.na(value))
+
+message("Scanning state-level rates (states + territories)...")
+
+state_files <- c(
+  Sys.glob(file.path(REPO_ROOT, "states", "*", "state_rates.csv.gz")),
+  Sys.glob(file.path(REPO_ROOT, "territories", "*", "commonwealth_rates.csv.gz")),
+  Sys.glob(file.path(REPO_ROOT, "territories", "*", "territory_rates.csv.gz"))
+)
+
+state_level <- map_dfr(state_files, function(f) {
+  vroom(f, show_col_types = FALSE, col_types = "cccd") %>%
+    filter(!is.na(value)) %>%
+    mutate(state_fips = str_sub(geography, 1, 2))
+})
+
+message("Scanning county-level rates...")
+
+county_files <- c(
+  Sys.glob(file.path(REPO_ROOT, "states", "*", "counties", "*", "county_rates.csv.gz")),
+  Sys.glob(file.path(REPO_ROOT, "territories", "*", "counties", "*", "county_rates.csv.gz"))
+)
+
+message("Found ", length(county_files), " county rate files")
+
+county_level <- map_dfr(county_files, function(f) {
+  vroom(f, show_col_types = FALSE, col_types = "cccd") %>%
+    filter(!is.na(value)) %>%
+    mutate(state_fips = str_sub(geography, 1, 2))
+})
+
+message("Aggregating coverage per measure...")
+
+national_summary <- national %>%
+  group_by(measure) %>%
+  summarise(
+    actual_national  = TRUE,
+    n_obs_national   = n(),
+    time_min_national = min(time),
+    time_max_national = max(time),
+    .groups = "drop"
+  )
+
+state_summary <- state_level %>%
+  group_by(measure) %>%
+  summarise(
+    actual_state       = TRUE,
+    n_obs_state        = n(),
+    n_states_with_data = n_distinct(state_fips),
+    coverage_states     = paste(sort(unique(state_fips)), collapse = ";"),
+    time_min_state     = min(time),
+    time_max_state     = max(time),
+    .groups = "drop"
+  )
+
+county_summary <- county_level %>%
+  group_by(measure) %>%
+  summarise(
+    actual_county        = TRUE,
+    n_obs_county         = n(),
+    n_counties_with_data = n_distinct(geography),
+    n_states_with_county_data = n_distinct(state_fips),
+    time_min_county      = min(time),
+    time_max_county      = max(time),
+    .groups = "drop"
+  )
+
+registry <- measures %>%
+  left_join(national_summary, by = c("measure_id" = "measure")) %>%
+  left_join(state_summary,    by = c("measure_id" = "measure")) %>%
+  left_join(county_summary,   by = c("measure_id" = "measure")) %>%
+  mutate(
+    actual_national = coalesce(actual_national, FALSE),
+    actual_state    = coalesce(actual_state, FALSE),
+    actual_county   = coalesce(actual_county, FALSE),
+    n_observations  = coalesce(n_obs_national, 0) + coalesce(n_obs_state, 0) + coalesce(n_obs_county, 0),
+    time_min = pmin(time_min_national, time_min_state, time_min_county, na.rm = TRUE),
+    time_max = pmax(time_max_national, time_max_state, time_max_county, na.rm = TRUE)
+  )
+
+# -----------------------------------------------------------------------------
+# Expected coverage: which geography levels each measure should have data at,
+# so actual-vs-expected can be checked automatically instead of by hand.
+# Encoded as explicit id lists/patterns rather than left blank, so the check
+# below has something to run against; revise these lists as measures are
+# individually confirmed to be intentionally scoped, retired, or fixed.
+# -----------------------------------------------------------------------------
+
+state_only_ids <- c(
+  # nis_* and svv_* (childhood immunization coverage) and the NCHS VSRR
+  # rate series are surveyed/published at the state level only.
+  registry$measure_id[str_starts(registry$measure_id, "nis_")],
+  registry$measure_id[str_starts(registry$measure_id, "svv_")],
+  registry$measure_id[str_starts(registry$measure_id, "nchs_rate_")],
+  "jhu_measles_cases", "healthmap_mmr_coverage", "noaa_heat_risk_score"
+)
+
+state_suffixed_ids <- c(
+  registry$measure_id[str_ends(registry$measure_id, "_fl")],
+  registry$measure_id[str_ends(registry$measure_id, "_ny")],
+  registry$measure_id[str_ends(registry$measure_id, "_wi")]
+)
+
+conditional_county_ids <- c(
+  state_suffixed_ids,
+  registry$measure_id[str_starts(registry$measure_id, "wapo_")]
+)
+
+# nchs_pct_complete and nchs_overdose_pct_pending are data-completeness
+# diagnostics (percent of death records still pending investigation /
+# finalized), not health outcomes -- keep them out of the public measure
+# list rather than deleting them, since the underlying pipeline data is
+# still useful for judging how provisional a given month's counts are.
+qa_only_ids <- c("nchs_pct_complete", "nchs_overdose_pct_pending")
+
+registry <- registry %>%
+  mutate(
+    expected_national = case_when(
+      # FL/NY/WI-suffixed CHR&R "additional measures" duplicate an existing
+      # unsuffixed chr_ measure that already covers every state nationally
+      # (e.g. chr_adult_smoking has all 51 states; chr_adult_smoking_fl is
+      # CHR&R's FL-specific supplemental cut of the same concept) -- no
+      # separate national aggregate is meaningful.
+      measure_id %in% state_suffixed_ids ~ "N-A",
+      TRUE ~ "Y"
+    ),
+    expected_state = case_when(
+      measure_id %in% state_suffixed_ids ~ "N-A",
+      TRUE ~ "Y"
+    ),
+    expected_county = case_when(
+      measure_id %in% state_only_ids ~ "N-A",
+      measure_id %in% conditional_county_ids ~ "conditional",
+      TRUE ~ "Y"
+    ),
+    display_status = case_when(
+      measure_id %in% qa_only_ids ~ "qa-only",
+      TRUE ~ "primary"
+    ),
+    parity_flag = case_when(
+      expected_national == "Y" & !actual_national ~ "expected_national_absent",
+      expected_state == "Y" & !actual_state ~ "expected_state_absent",
+      expected_county == "Y" & !actual_county ~ "expected_county_absent",
+      TRUE ~ NA_character_
+    )
+  )
+
+registry <- registry %>%
+  select(
+    measure_id, source_id, n_sources, pipeline, via,
+    category, subcategory, measure_type, unit, scale, time_resolution,
+    expected_national, expected_state, expected_county,
+    actual_national, actual_state, actual_county,
+    parity_flag, display_status,
+    coverage_states,
+    n_states_with_data, n_counties_with_data, n_states_with_county_data,
+    n_observations, time_min, time_max
+  ) %>%
+  arrange(measure_id)
+
+# Every measure is its own concept for now -- once duplicate/near-duplicate
+# measures (e.g. the same statistic ingested via CHR&R and again directly)
+# are grouped under a shared concept id, n_concepts will be lower than
+# nrow(registry).
+n_concepts <- n_distinct(registry$measure_id)
+n_origins  <- n_distinct(registry$pipeline, na.rm = TRUE)
+
+message(
+  "\nRegistry built: ", nrow(registry), " measures ",
+  "(n_concepts = ", n_concepts, ", n_origins = ", n_origins, ")"
+)
+message(
+  "Parity flags: ",
+  sum(!is.na(registry$parity_flag)), " measures flagged -- see parity_flag column"
+)
+
+tracker_dir <- file.path(REPO_ROOT, "tracker")
+dir.create(tracker_dir, recursive = TRUE, showWarnings = FALSE)
+
+vroom_write(registry, file.path(tracker_dir, "measure_registry.csv"), delim = ",")
+
+message("\nComplete. Written to tracker/measure_registry.csv")

@@ -2500,24 +2500,6 @@
       }
     ]
   },
-  "nchs_pct_pending_invest": {
-    "id": "nchs_pct_pending_invest",
-    "short_name": "Deaths Pending Investigation",
-    "long_name": "Percentage of Death Records Pending Investigation (NCHS)",
-    "category": "overall_health_status_and_mortality",
-    "subcategory": "mortality_data_and_completeness",
-    "short_description": "Percentage of death records pending investigation.",
-    "long_description": "Percentage of mortality records still pending investigation, from CDC's National Vital Statistics Rapid Release (VSRR) program, National Center for Health Statistics. Higher values indicate counts more likely to be revised upward.",
-    "statement": "In {location}, {value} of death records were pending investigation.",
-    "measure_type": "percent",
-    "scale": "0-100",
-    "time_resolution": "Month",
-    "sources": [
-      {
-        "id": "nchs"
-      }
-    ]
-  },
   "nchs_rate_all_causes": {
     "id": "nchs_rate_all_causes",
     "short_name": "All-Cause Mortality",
@@ -4467,23 +4449,6 @@
     "short_description": "Provisional count of methadone-involved deaths.",
     "long_description": "Provisional monthly count of methadone-involved deaths from CDC's National Vital Statistics Rapid Release (VSRR) program, National Center for Health Statistics. Counts are provisional, subject to revision, and small counts may be suppressed.",
     "statement": "In {location}, there were {value} methadone-involved deaths.",
-    "measure_type": "number",
-    "time_resolution": "Month",
-    "sources": [
-      {
-        "id": "nchs"
-      }
-    ]
-  },
-  "nchs_deaths_overdose": {
-    "id": "nchs_deaths_overdose",
-    "short_name": "Drug Overdose Deaths",
-    "long_name": "Drug Overdose Deaths (NCHS, provisional)",
-    "category": "substance_abuse",
-    "subcategory": "drug_use_and_overdose",
-    "short_description": "Provisional count of drug overdose deaths.",
-    "long_description": "Provisional monthly count of drug overdose deaths from CDC's National Vital Statistics Rapid Release (VSRR) program, National Center for Health Statistics. Counts are provisional, subject to revision, and small counts may be suppressed.",
-    "statement": "In {location}, there were {value} drug overdose deaths.",
     "measure_type": "number",
     "time_resolution": "Month",
     "sources": [
