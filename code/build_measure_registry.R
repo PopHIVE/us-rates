@@ -261,6 +261,56 @@ conditional_county_ids <- c(
 # still useful for judging how provisional a given month's counts are.
 qa_only_ids <- c("nchs_pct_complete", "nchs_overdose_pct_pending")
 
+# duplicate_group: which measures represent the same underlying concept, so
+# several pipelines reporting the same statistic can be recognized and
+# displayed together instead of looking like unrelated rows. Defaults to a
+# measure's own id (no group) until a cluster is manually confirmed -- don't
+# auto-group by name/prefix similarity, since measures that look alike from
+# their names are often methodologically distinct. Every member below has
+# been checked against actual values (not just descriptions) for at least
+# one geography/year before being added here; the note records what that
+# check found, since two members citing the same source can still differ
+# for very different reasons (final vs. provisional vintage, direct count
+# vs. statistical model, or just a lagged release).
+duplicate_groups <- list(
+  drug_overdose_mortality = c(
+    nchs_overdose_deaths = "raw provisional monthly count (VSRR)",
+    nchs_overdose_rate = "provisional annual crude rate (VSRR)",
+    nchs_rate_drug_overdose = "provisional quarterly age-adjusted rate (VSRR)",
+    chr_drug_overdose_deaths = "direct-count rate from NCHS Multiple Cause of Death files (final, not VSRR)",
+    chr_drug_overdose_deaths_modeled = "SMALL-AREA MODELED estimate, not a direct rate -- CHR&R's own smoothed/regression estimate for counties too small to compute a stable direct rate; spans ~11 to ~33 per 100,000 nationally vs. the other four depending on year"
+  ),
+  population_total = c(
+    chr_population = "Census PEP annual estimate, via CHR&R",
+    ahrf_population = "Census PEP annual estimate, via AHRF -- bit-identical to chr_population from 2023 on (checked CT 2023-2025); diverged 2011-2022, when AHRF was carrying a less-frequently-refreshed vintage",
+    acs_POP = "ACS 5-year survey-based estimate -- methodologically distinct from the PEP-based pair above (rolling 5-year survey vs. an annual administrative estimate), consistently close but never bit-identical to them (checked CT 2023-2024)"
+  ),
+  unemployment_rate = c(
+    chr_unemployment = "BLS LAUS annual county unemployment rate, via CHR&R",
+    bls_pct_unemployment = "the same BLS LAUS series pulled directly -- close but not bit-identical to chr_unemployment (checked CT 2025: 0.0376 vs. 0.04), most likely a different LAUS release vintage"
+  ),
+  severe_housing_problems = c(
+    chr_severe_housing_problems = "HUD CHAS severe-housing-problems rate, via CHR&R",
+    hud_pct_severe_housing_problems = "the same HUD CHAS definition pulled directly -- close but not bit-identical to chr_severe_housing_problems (checked CT 2022: 0.1744 vs. 0.1774), most likely a different CHAS release vintage"
+  ),
+  diabetes_prevalence = c(
+    chr_diabetes_prevalence = "CDC PLACES small-area MODEL estimate (multilevel regression + poststratification), not a direct survey tabulation",
+    brfss_diabetes = "direct BRFSS self-report survey tabulation -- consistently ~1-2 percentage points HIGHER than the PLACES model estimate every year checked (CT 2018-2022), a systematic gap, not noise"
+  )
+)
+
+flatten_groups <- function(groups) {
+  bind_rows(lapply(names(groups), function(g) {
+    tibble(
+      measure_id = names(groups[[g]]),
+      duplicate_group = g,
+      duplicate_note = unname(groups[[g]])
+    )
+  }))
+}
+
+group_lookup <- flatten_groups(duplicate_groups)
+
 registry <- registry %>%
   mutate(
     expected_national = case_when(
@@ -291,7 +341,9 @@ registry <- registry %>%
       expected_county == "Y" & !actual_county ~ "expected_county_absent",
       TRUE ~ NA_character_
     )
-  )
+  ) %>%
+  left_join(group_lookup, by = "measure_id") %>%
+  mutate(duplicate_group = coalesce(duplicate_group, measure_id))
 
 registry <- registry %>%
   select(
@@ -299,18 +351,19 @@ registry <- registry %>%
     category, subcategory, measure_type, unit, scale, time_resolution,
     expected_national, expected_state, expected_county,
     actual_national, actual_state, actual_county,
-    parity_flag, display_status,
+    parity_flag, display_status, duplicate_group, duplicate_note,
     coverage_states,
     n_states_with_data, n_counties_with_data, n_states_with_county_data,
     n_observations, time_min, time_max
   ) %>%
   arrange(measure_id)
 
-# Every measure is its own concept for now -- once duplicate/near-duplicate
-# measures (e.g. the same statistic ingested via CHR&R and again directly)
-# are grouped under a shared concept id, n_concepts will be lower than
-# nrow(registry).
-n_concepts <- n_distinct(registry$measure_id)
+# n_concepts counts distinct duplicate_group values, not rows -- e.g. the
+# five drug_overdose_mortality measures above count as one concept. Most
+# measures don't have a confirmed group yet, so this undercounts the true
+# duplication in the catalog; it will keep dropping as more clusters like
+# that one are identified and added to duplicate_groups.
+n_concepts <- n_distinct(registry$duplicate_group)
 n_origins  <- n_distinct(registry$pipeline, na.rm = TRUE)
 
 message(
