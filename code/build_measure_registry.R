@@ -395,4 +395,118 @@ dir.create(tracker_dir, recursive = TRUE, showWarnings = FALSE)
 
 vroom_write(registry, file.path(tracker_dir, "measure_registry.csv"), delim = ",")
 
-message("\nComplete. Written to tracker/measure_registry.csv")
+message("\nWritten to tracker/measure_registry.csv")
+
+# -----------------------------------------------------------------------------
+# Build-time parity assertion. Without this, a parity_flag is just a column
+# nobody has to look at -- a newly introduced gap would sit quietly in the
+# CSV next to the ones we already know about. known_gaps is every gap
+# currently accepted, with a one-line reason; anything flagged that ISN'T
+# in this list fails the build. When a gap gets fixed (a roll-up lands, a
+# raw-file check resolves it, a measure gets reclassified to N-A), remove
+# its entry -- leaving stale entries in this list would let that exact gap
+# silently reappear later without ever failing again.
+# -----------------------------------------------------------------------------
+
+known_gaps <- c(
+  # County-only measures awaiting a county-to-national roll-up (plan step
+  # 6). The AHRF/nhtsa ones aren't a "just write the aggregation" fix --
+  # several are categorical codes or need recomputing rather than summing
+  # or averaging county values.
+  ahrf_hpsa_dental = "roll-up needed; categorical designation code (0/1/2), not summable",
+  ahrf_hpsa_mental_health = "roll-up needed; categorical designation code (0/1/2), not summable",
+  ahrf_hpsa_prim_care = "roll-up needed; categorical designation code (0/1/2), not summable",
+  ahrf_rural_urban_code = "roll-up needed; categorical code (1-9), not summable",
+  # These are percentages, not counts -- don't assume population is the
+  # right weight without checking. census_ur_pct_urban_hu's denominator is
+  # housing units, not people; census_ur_pct_urban_land's is land area.
+  # Only census_ur_pct_urban_pop is population-denominated, and even then
+  # the roll-up should recompute from national urban/total population
+  # counts, not average the county percentages.
+  census_ur_pct_urban_hu = "roll-up needed; aggregation method not yet determined (denominator is housing units, not population)",
+  census_ur_pct_urban_land = "roll-up needed; aggregation method not yet determined (denominator is land area, not population)",
+  census_ur_pct_urban_pop = "roll-up needed; needs recomputing from national urban/total population counts, not averaging county percentages",
+  nhtsa_cyclist_involved = "roll-up needed; national aggregate not yet built",
+  nhtsa_fatal_crashes = "roll-up needed; national aggregate not yet built",
+  nhtsa_fatalities = "roll-up needed; national aggregate not yet built",
+  nhtsa_fatality_rate = "roll-up needed; a rate -- needs recomputing from national totals, not averaging county rates",
+  nhtsa_pedestrian_involved = "roll-up needed; national aggregate not yet built",
+  nhtsa_rural = "roll-up needed; national aggregate not yet built",
+  nhtsa_single_vehicle = "roll-up needed; national aggregate not yet built",
+  nhtsa_urban = "roll-up needed; national aggregate not yet built",
+  epic_heat_ed_rate = "roll-up needed; national aggregate not yet built",
+  hud_pct_severe_housing_problems = "roll-up needed; also see duplicate_groups -- its chr_ counterpart has 10x the history, don't drop that one in favor of this",
+  usda_pct_limited_access_low_income = "roll-up needed; national aggregate not yet built",
+  nchs_deaths_all_cause = "roll-up needed; national aggregate not yet built",
+  nchs_deaths_any_opioid = "roll-up needed; national aggregate not yet built",
+  nchs_deaths_cocaine = "roll-up needed; national aggregate not yet built",
+  nchs_deaths_heroin = "roll-up needed; national aggregate not yet built",
+  nchs_deaths_methadone = "roll-up needed; national aggregate not yet built",
+
+  # chr_ measures whose roll-up should wait for the vintage fix (plan step
+  # 5) -- no point aggregating county data to national before we know
+  # which year `time` actually means for these.
+  chr_adverse_climate_events = "roll-up blocked on the chr_ vintage fix (time holds release year, not data year)",
+  chr_illiteracy = "roll-up blocked on the chr_ vintage fix (time holds release year, not data year)",
+  chr_living_wage = "roll-up blocked on the chr_ vintage fix (time holds release year, not data year)",
+  chr_population_growth = "roll-up blocked on the chr_ vintage fix (time holds release year, not data year)",
+
+  # Group C: extremely sparse CHR&R measures (2-60 counties) with no
+  # traceable primary source beyond CHR&R itself. Diagnosing whether that's
+  # by design or a mapping break needs the raw CHR&R Zenodo file, which
+  # isn't downloaded locally (plan step 7).
+  chr_alcohol_related_hospitalizations = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_child_abuse = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_did_not_get_needed_health_care = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_drug_arrests = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_hate_crimes = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_lead_poisoned_children = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_local_health_department_staffing = "Group C sparse measure; needs the raw CHR&R file check",
+  chr_w_2_enrollment = "Group C sparse measure; needs the raw CHR&R file check",
+
+  # QA-completeness field. Only populate_state_rates.R currently extracts
+  # pct_complete at all -- not yet confirmed whether that's a pipeline gap
+  # or NCHS just doesn't publish it below the state level.
+  nchs_pct_complete = "not yet investigated -- may be a pipeline gap, may be state-only by design",
+
+  # Direct household survey, not modeled to county level the way
+  # chr_diabetes_prevalence's PLACES estimate is. Plausibly a real N-A
+  # rather than a gap, but not reclassified without confirming BRFSS
+  # publishes no county-level product at all.
+  brfss_diabetes = "likely a real N-A (direct survey, no county product) -- not yet reclassified",
+  brfss_obesity = "likely a real N-A (direct survey, no county product) -- not yet reclassified",
+
+  # County-only by the source's own design (Washington Post's own county
+  # compilation) -- whether a state/national aggregate is even meaningful
+  # is an open question, not a known "yes, build it" roll-up.
+  wapo_met_herd_immunity_postpandemic = "county-only by source design; national aggregate not yet decided",
+  wapo_met_herd_immunity_prepandemic = "county-only by source design; national aggregate not yet decided",
+  wapo_mmr_coverage = "county-only by source design; national aggregate not yet decided",
+
+  # Has national + county data but skips state -- cause not yet diagnosed.
+  ww_measles_detection_rate = "missing at state only; cause not yet diagnosed"
+)
+
+flagged_ids <- registry$measure_id[!is.na(registry$parity_flag)]
+unexpected_gaps <- setdiff(flagged_ids, names(known_gaps))
+resolved_gaps <- setdiff(names(known_gaps), flagged_ids)
+
+if (length(resolved_gaps) > 0) {
+  message(
+    "\nNOTE: ", length(resolved_gaps), " measure(s) in known_gaps no longer have a ",
+    "parity_flag -- remove from known_gaps in this script:\n  ",
+    paste(resolved_gaps, collapse = "\n  ")
+  )
+}
+
+if (length(unexpected_gaps) > 0) {
+  stop(
+    "Parity check failed: ", length(unexpected_gaps), " measure(s) have a coverage gap ",
+    "not in known_gaps. If this is a real, accepted gap, add it to known_gaps in ",
+    "build_measure_registry.R with a reason; otherwise this is a regression to fix:\n  ",
+    paste(unexpected_gaps, collapse = "\n  ")
+  )
+}
+
+message("\nParity check passed: every flagged measure is a known, tracked gap.")
+message("Complete.")

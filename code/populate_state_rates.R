@@ -82,7 +82,27 @@ chr_long <- vroom(
     names_to = "measure",
     values_to = "value"
   ) %>%
-  filter(!is.na(value))
+  filter(!is.na(value)) %>%
+  # CHR's own raw file stores chr_primary_care_physicians correctly scaled
+  # (population per physician, e.g. Alabama 2010 = 80.53) only through
+  # 2010, then drops a x100,000 factor from 2011 on and stores
+  # physicians-per-1-resident instead (Alabama 2011 = 0.00079765 -- a
+  # 100,955x ratio to 2010, matching x100,000 once the ~1% residual from a
+  # real year of change is accounted for). Corrected here rather than
+  # upstream, following the same guarded pattern as CHR's 2013
+  # chr_infant_mortality scale bug (see
+  # Ingest/data/county_health_rankings/ingest.R) -- only values already
+  # below 1 get rescaled, so this becomes a no-op automatically if CHR
+  # restores the original scale. chr_mental_health_providers, chr_dentists,
+  # and chr_other_primary_care_providers show the same suspiciously tiny
+  # values, but have no equivalent pre-bug year to verify a correction
+  # factor against, so they're deliberately left alone -- see
+  # tracker/qa_findings.csv.
+  mutate(value = if_else(
+    measure == "chr_primary_care_physicians" & value < 1,
+    value * 100000,
+    value
+  ))
 
 census_long <- vroom(
   file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
