@@ -86,6 +86,21 @@ bls_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# ACS5 (Metopio) national totals. Shares data_state.csv.gz with the
+# state-level pull in populate_state_rates.R -- national is the single
+# "00" row (Census ACS5 "us" geography level).
+census_long <- vroom(
+  file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(geography == "00") %>%
+  pivot_longer(
+    cols      = -c(geography, time),
+    names_to  = "measure",
+    values_to = "value"
+  ) %>%
+  filter(!is.na(value))
+
 # BRFSS diabetes and obesity prevalence.
 brfss_long <- read_parquet(
   file.path(
@@ -122,13 +137,13 @@ imm_long <- read_parquet(
   ) %>%
   select(geography, time, measure, value)
 
-# SchoolVaxView kindergarten exemption rates.
-svv_exempt_long <- read_parquet(
-  file.path(
-    INGEST_PATH,
-    "bundle_childhood_immunizations/dist",
-    "schoolvaxview_exemptions.parquet"
-  )
+# SchoolVaxView kindergarten exemption rates. Read directly from the raw
+# schoolvaxview source rather than bundle_childhood_immunizations's copy --
+# the bundle's schoolvaxview_exemptions.parquet is an unmodified copy of this
+# same file (see that bundle's build.R), so there's no derivation to lose.
+svv_exempt_long <- vroom(
+  file.path(INGEST_PATH, "schoolvaxview/standard/data_exemptions.csv.gz"),
+  show_col_types = FALSE
 ) %>%
   filter(!is.na(value), geography == "00") %>%
   mutate(
@@ -400,7 +415,7 @@ combined <- bind_rows(
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_causes_long, nchs_long, exempt_long, jhu_measles_long,
-  ww_measles_long, noaa_heat_long, bls_long
+  ww_measles_long, noaa_heat_long, bls_long, census_long
 ) %>%
   arrange(geography, time, measure)
 
