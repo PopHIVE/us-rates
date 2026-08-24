@@ -485,7 +485,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_poor_or_fair_health": {
     "id": "chr_poor_or_fair_health",
@@ -503,7 +504,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_uninsured_adults": {
     "id": "chr_uninsured_adults",
@@ -521,7 +523,8 @@
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_primary_care_physicians": {
     "id": "chr_primary_care_physicians",
@@ -539,7 +542,8 @@
       {
         "id": "ama_physician_masterfile"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_preventable_hospital_stays": {
     "id": "chr_preventable_hospital_stays",
@@ -557,7 +561,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adult_smoking": {
     "id": "chr_adult_smoking",
@@ -575,7 +580,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adult_obesity": {
     "id": "chr_adult_obesity",
@@ -593,7 +599,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_teen_births": {
     "id": "chr_teen_births",
@@ -611,7 +618,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_homicides": {
     "id": "chr_homicides",
@@ -629,7 +637,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_high_school_graduation": {
     "id": "chr_high_school_graduation",
@@ -647,7 +656,8 @@
       {
         "id": "edfacts"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_unemployment": {
     "id": "chr_unemployment",
@@ -665,7 +675,8 @@
       {
         "id": "bls_laus"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "bls_pct_unemployment": {
     "id": "bls_pct_unemployment",
@@ -701,7 +712,8 @@
       {
         "id": "census_saipe"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_poor_physical_health_days": {
     "id": "chr_poor_physical_health_days",
@@ -719,7 +731,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_low_birth_weight": {
     "id": "chr_low_birth_weight",
@@ -737,7 +750,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_motor_vehicle_crash_deaths": {
     "id": "chr_motor_vehicle_crash_deaths",
@@ -755,7 +769,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "nhtsa_fatalities": {
     "id": "nhtsa_fatalities",
@@ -917,7 +932,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_income_inequality": {
     "id": "chr_income_inequality",
@@ -935,7 +951,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_sexually_transmitted_infections": {
     "id": "chr_sexually_transmitted_infections",
@@ -953,7 +970,8 @@
       {
         "id": "cdc_nchhstp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_excessive_drinking": {
     "id": "chr_excessive_drinking",
@@ -971,7 +989,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_mammography_screening": {
     "id": "chr_mammography_screening",
@@ -989,7 +1008,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_population": {
     "id": "chr_population",
@@ -1007,7 +1027,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_below_18_years_of_age": {
     "id": "chr_below_18_years_of_age",
@@ -1025,7 +1046,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_65_and_older": {
     "id": "chr_65_and_older",
@@ -1043,7 +1065,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_non_hispanic_black": {
     "id": "chr_non_hispanic_black",
@@ -1061,7 +1084,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_american_indian_or_alaska_native": {
     "id": "chr_american_indian_or_alaska_native",
@@ -1079,7 +1103,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_hispanic": {
     "id": "chr_hispanic",
@@ -1097,7 +1122,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_female": {
     "id": "chr_female",
@@ -1115,7 +1141,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_rural": {
     "id": "chr_rural",
@@ -1133,7 +1160,8 @@
       {
         "id": "census_decennial"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_not_proficient_in_english": {
     "id": "chr_not_proficient_in_english",
@@ -1151,7 +1179,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_diabetes_prevalence": {
     "id": "chr_diabetes_prevalence",
@@ -1169,7 +1198,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_hiv_prevalence": {
     "id": "chr_hiv_prevalence",
@@ -1187,7 +1217,8 @@
       {
         "id": "cdc_nchhstp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_mental_health_providers": {
     "id": "chr_mental_health_providers",
@@ -1205,7 +1236,8 @@
       {
         "id": "cms_nppes"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_median_household_income": {
     "id": "chr_median_household_income",
@@ -1222,7 +1254,8 @@
       {
         "id": "census_saipe"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_children_eligible_for_free_or_reduced_price_lunch": {
     "id": "chr_children_eligible_for_free_or_reduced_price_lunch",
@@ -1240,7 +1273,8 @@
       {
         "id": "nces"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_driving_alone_to_work": {
     "id": "chr_driving_alone_to_work",
@@ -1258,7 +1292,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_some_college": {
     "id": "chr_some_college",
@@ -1276,7 +1311,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_physical_inactivity": {
     "id": "chr_physical_inactivity",
@@ -1294,7 +1330,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_native_hawaiian_or_other_pacific_islander": {
     "id": "chr_native_hawaiian_or_other_pacific_islander",
@@ -1312,7 +1349,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_asian": {
     "id": "chr_asian",
@@ -1330,7 +1368,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_children_in_single_parent_households": {
     "id": "chr_children_in_single_parent_households",
@@ -1348,7 +1387,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_limited_access_to_healthy_foods": {
     "id": "chr_limited_access_to_healthy_foods",
@@ -1366,7 +1406,8 @@
       {
         "id": "usda_fara"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "usda_pct_limited_access_low_income": {
     "id": "usda_pct_limited_access_low_income",
@@ -1402,7 +1443,8 @@
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_dentists": {
     "id": "chr_dentists",
@@ -1420,7 +1462,8 @@
       {
         "id": "cms_nppes"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_uninsured_children": {
     "id": "chr_uninsured_children",
@@ -1438,7 +1481,8 @@
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_drinking_water_violations": {
     "id": "chr_drinking_water_violations",
@@ -1455,7 +1499,8 @@
       {
         "id": "epa_sdwis"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_air_pollution_particulate_matter": {
     "id": "chr_air_pollution_particulate_matter",
@@ -1473,7 +1518,8 @@
       {
         "id": "cdc_epht"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_non_hispanic_white": {
     "id": "chr_non_hispanic_white",
@@ -1491,7 +1537,8 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_premature_age_adjusted_mortality": {
     "id": "chr_premature_age_adjusted_mortality",
@@ -1509,7 +1556,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_child_mortality": {
     "id": "chr_child_mortality",
@@ -1527,7 +1575,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_infant_mortality": {
     "id": "chr_infant_mortality",
@@ -1545,7 +1594,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_other_primary_care_providers": {
     "id": "chr_other_primary_care_providers",
@@ -1563,7 +1613,8 @@
       {
         "id": "cms_nppes"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_access_to_exercise_opportunities": {
     "id": "chr_access_to_exercise_opportunities",
@@ -1581,7 +1632,8 @@
       {
         "id": "esri_tiger_ymca"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_food_environment_index": {
     "id": "chr_food_environment_index",
@@ -1599,7 +1651,8 @@
       {
         "id": "usda_fea"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_alcohol_impaired_driving_deaths": {
     "id": "chr_alcohol_impaired_driving_deaths",
@@ -1617,7 +1670,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_injury_deaths": {
     "id": "chr_injury_deaths",
@@ -1635,7 +1689,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_severe_housing_problems": {
     "id": "chr_severe_housing_problems",
@@ -1653,7 +1708,8 @@
       {
         "id": "hud_chas"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "hud_pct_severe_housing_problems": {
     "id": "hud_pct_severe_housing_problems",
@@ -1689,7 +1745,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_drug_overdose_deaths": {
     "id": "chr_drug_overdose_deaths",
@@ -1707,7 +1764,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_food_insecurity": {
     "id": "chr_food_insecurity",
@@ -1725,7 +1783,8 @@
       {
         "id": "feeding_america"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_social_associations": {
     "id": "chr_social_associations",
@@ -1743,7 +1802,8 @@
       {
         "id": "census_cbp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_residential_segregation_black_white": {
     "id": "chr_residential_segregation_black_white",
@@ -1761,7 +1821,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_insufficient_sleep": {
     "id": "chr_insufficient_sleep",
@@ -1779,7 +1840,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_frequent_physical_distress": {
     "id": "chr_frequent_physical_distress",
@@ -1797,7 +1859,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_frequent_mental_distress": {
     "id": "chr_frequent_mental_distress",
@@ -1815,7 +1878,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_life_expectancy": {
     "id": "chr_life_expectancy",
@@ -1833,7 +1897,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_firearm_fatalities": {
     "id": "chr_firearm_fatalities",
@@ -1851,7 +1916,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_disconnected_youth": {
     "id": "chr_disconnected_youth",
@@ -1869,7 +1935,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_gender_pay_gap": {
     "id": "chr_gender_pay_gap",
@@ -1887,7 +1954,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_homeownership": {
     "id": "chr_homeownership",
@@ -1905,7 +1973,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_severe_housing_cost_burden": {
     "id": "chr_severe_housing_cost_burden",
@@ -1923,7 +1992,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_flu_vaccinations": {
     "id": "chr_flu_vaccinations",
@@ -1941,7 +2011,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_traffic_volume": {
     "id": "chr_traffic_volume",
@@ -1959,7 +2030,8 @@
       {
         "id": "epa_ejscreen"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_reading_scores": {
     "id": "chr_reading_scores",
@@ -1977,7 +2049,8 @@
       {
         "id": "seda"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_math_scores": {
     "id": "chr_math_scores",
@@ -1995,7 +2068,8 @@
       {
         "id": "seda"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_suicides": {
     "id": "chr_suicides",
@@ -2013,7 +2087,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_broadband_access": {
     "id": "chr_broadband_access",
@@ -2031,7 +2106,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_school_segregation": {
     "id": "chr_school_segregation",
@@ -2049,7 +2125,8 @@
       {
         "id": "nces"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_high_school_completion": {
     "id": "chr_high_school_completion",
@@ -2067,7 +2144,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_school_funding_adequacy": {
     "id": "chr_school_funding_adequacy",
@@ -2085,7 +2163,8 @@
       {
         "id": "sfid"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_living_wage": {
     "id": "chr_living_wage",
@@ -2103,7 +2182,8 @@
       {
         "id": "living_wage_institute"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_child_care_cost_burden": {
     "id": "chr_child_care_cost_burden",
@@ -2121,7 +2201,8 @@
       {
         "id": "living_wage_institute"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_child_care_centers": {
     "id": "chr_child_care_centers",
@@ -2139,7 +2220,8 @@
       {
         "id": "hifld"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_voter_turnout": {
     "id": "chr_voter_turnout",
@@ -2157,7 +2239,8 @@
       {
         "id": "medsl"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_census_participation": {
     "id": "chr_census_participation",
@@ -2175,7 +2258,8 @@
       {
         "id": "census_oqm"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_access_to_parks": {
     "id": "chr_access_to_parks",
@@ -2193,7 +2277,8 @@
       {
         "id": "esri_tiger_ymca"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_disability_functional_limitations": {
     "id": "chr_disability_functional_limitations",
@@ -2211,7 +2296,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_library_access": {
     "id": "chr_library_access",
@@ -2229,7 +2315,8 @@
       {
         "id": "imls"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adverse_climate_events": {
     "id": "chr_adverse_climate_events",
@@ -2247,7 +2334,8 @@
       {
         "id": "noaa_fema"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_feelings_of_loneliness": {
     "id": "chr_feelings_of_loneliness",
@@ -2265,7 +2353,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_lack_of_social_and_emotional_support": {
     "id": "chr_lack_of_social_and_emotional_support",
@@ -2283,7 +2372,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "census_ur_pct_urban_pop": {
     "id": "census_ur_pct_urban_pop",
@@ -5747,7 +5837,8 @@
       {
         "id": "census_cbp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_access_to_recreational_facilities": {
     "id": "chr_access_to_recreational_facilities",
@@ -5765,7 +5856,8 @@
       {
         "id": "census_cbp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_air_pollution_ozone_days": {
     "id": "chr_air_pollution_ozone_days",
@@ -5783,7 +5875,8 @@
       {
         "id": "cdc_epht"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_air_pollution_particulate_matter_days": {
     "id": "chr_air_pollution_particulate_matter_days",
@@ -5801,7 +5894,8 @@
       {
         "id": "cdc_epht"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_alcohol_related_hospitalizations": {
     "id": "chr_alcohol_related_hospitalizations",
@@ -5819,7 +5913,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_binge_drinking": {
     "id": "chr_binge_drinking",
@@ -5837,7 +5932,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_child_abuse": {
     "id": "chr_child_abuse",
@@ -5855,7 +5951,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_college_degrees": {
     "id": "chr_college_degrees",
@@ -5873,7 +5970,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_contaminants_in_municipal_water_wi": {
     "id": "chr_contaminants_in_municipal_water_wi",
@@ -5891,7 +5989,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_could_not_see_doctor_due_to_cost": {
     "id": "chr_could_not_see_doctor_due_to_cost",
@@ -5909,7 +6008,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_covid_19_age_adjusted_mortality": {
     "id": "chr_covid_19_age_adjusted_mortality",
@@ -5927,7 +6027,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_diabetes_monitoring": {
     "id": "chr_diabetes_monitoring",
@@ -5945,7 +6046,8 @@
       {
         "id": "dartmouth_atlas"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_did_not_get_needed_health_care": {
     "id": "chr_did_not_get_needed_health_care",
@@ -5963,7 +6065,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_drug_arrests": {
     "id": "chr_drug_arrests",
@@ -5980,7 +6083,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_drug_overdose_deaths_modeled": {
     "id": "chr_drug_overdose_deaths_modeled",
@@ -5998,7 +6102,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_fast_food_restaurants": {
     "id": "chr_fast_food_restaurants",
@@ -6016,7 +6121,8 @@
       {
         "id": "census_cbp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_hate_crimes": {
     "id": "chr_hate_crimes",
@@ -6034,7 +6140,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_health_care_costs": {
     "id": "chr_health_care_costs",
@@ -6051,7 +6158,8 @@
       {
         "id": "dartmouth_atlas"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_high_housing_costs": {
     "id": "chr_high_housing_costs",
@@ -6069,7 +6177,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_hospice_use": {
     "id": "chr_hospice_use",
@@ -6087,7 +6196,8 @@
       {
         "id": "dartmouth_atlas"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_illiteracy": {
     "id": "chr_illiteracy",
@@ -6105,7 +6215,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_inadequate_social_support": {
     "id": "chr_inadequate_social_support",
@@ -6123,7 +6234,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_juvenile_arrests": {
     "id": "chr_juvenile_arrests",
@@ -6141,7 +6253,8 @@
       {
         "id": "ojjdp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_lead_poisoned_children": {
     "id": "chr_lead_poisoned_children",
@@ -6159,7 +6272,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_liquor_store_density": {
     "id": "chr_liquor_store_density",
@@ -6177,7 +6291,8 @@
       {
         "id": "census_cbp"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_local_health_department_staffing": {
     "id": "chr_local_health_department_staffing",
@@ -6195,7 +6310,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_municipal_water_wi": {
     "id": "chr_municipal_water_wi",
@@ -6213,7 +6329,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_population_growth": {
     "id": "chr_population_growth",
@@ -6231,7 +6348,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_residential_segregation_non_white_white": {
     "id": "chr_residential_segregation_non_white_white",
@@ -6249,7 +6367,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_single_parent_households": {
     "id": "chr_single_parent_households",
@@ -6267,7 +6386,8 @@
       {
         "id": "acs"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_violent_crime": {
     "id": "chr_violent_crime",
@@ -6285,7 +6405,8 @@
       {
         "id": "fbi_ucr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_w_2_enrollment": {
     "id": "chr_w_2_enrollment",
@@ -6302,7 +6423,8 @@
       {
         "id": "chr"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_excessive_drinking_fl": {
     "id": "chr_excessive_drinking_fl",
@@ -6320,7 +6442,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adequate_social_emotional_support_fl": {
     "id": "chr_adequate_social_emotional_support_fl",
@@ -6338,7 +6461,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adult_smoking_fl": {
     "id": "chr_adult_smoking_fl",
@@ -6356,7 +6480,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_overweight_or_obese_adults_fl": {
     "id": "chr_overweight_or_obese_adults_fl",
@@ -6374,7 +6499,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_fruit_and_vegetable_consumption_fl": {
     "id": "chr_fruit_and_vegetable_consumption_fl",
@@ -6392,7 +6518,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adults_who_have_a_personal_doctor_fl": {
     "id": "chr_adults_who_have_a_personal_doctor_fl",
@@ -6410,7 +6537,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adults_engaging_in_moderate_physical_activity_fl": {
     "id": "chr_adults_engaging_in_moderate_physical_activity_fl",
@@ -6428,7 +6556,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_insured_adults_fl": {
     "id": "chr_insured_adults_fl",
@@ -6446,7 +6575,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_binge_drinking_ny": {
     "id": "chr_binge_drinking_ny",
@@ -6464,7 +6594,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_dental_visit_within_the_past_year_ny": {
     "id": "chr_dental_visit_within_the_past_year_ny",
@@ -6482,7 +6613,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_fair_or_poor_health_ny": {
     "id": "chr_fair_or_poor_health_ny",
@@ -6500,7 +6632,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_excessive_drinking_ny": {
     "id": "chr_excessive_drinking_ny",
@@ -6518,7 +6651,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_no_leisure_time_physical_activity_ny": {
     "id": "chr_no_leisure_time_physical_activity_ny",
@@ -6536,7 +6670,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_obese_adults_ny": {
     "id": "chr_obese_adults_ny",
@@ -6554,7 +6689,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "chr_adult_smoking_ny": {
     "id": "chr_adult_smoking_ny",
@@ -6572,7 +6708,8 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "compiled_via": "chr"
   },
   "ahrf_hpsa_prim_care": {
     "id": "ahrf_hpsa_prim_care",
@@ -6590,7 +6727,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_hpsa_dental": {
     "id": "ahrf_hpsa_dental",
@@ -6608,7 +6746,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_hpsa_mental_health": {
     "id": "ahrf_hpsa_mental_health",
@@ -6626,7 +6765,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_rural_urban_code": {
     "id": "ahrf_rural_urban_code",
@@ -6644,7 +6784,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_pcp": {
     "id": "ahrf_pcp",
@@ -6662,7 +6803,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_md_all": {
     "id": "ahrf_md_all",
@@ -6680,7 +6822,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_psych": {
     "id": "ahrf_psych",
@@ -6698,7 +6841,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_dentists": {
     "id": "ahrf_dentists",
@@ -6716,7 +6860,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_hospitals": {
     "id": "ahrf_hospitals",
@@ -6734,7 +6879,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_critical_access_hosp": {
     "id": "ahrf_critical_access_hosp",
@@ -6752,7 +6898,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_population": {
     "id": "ahrf_population",
@@ -6770,7 +6917,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_good_air_pct": {
     "id": "ahrf_good_air_pct",
@@ -6788,7 +6936,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_pm25": {
     "id": "ahrf_pm25",
@@ -6806,7 +6955,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_pop_density": {
     "id": "ahrf_pop_density",
@@ -6824,7 +6974,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_medicare_per_capita": {
     "id": "ahrf_medicare_per_capita",
@@ -6842,7 +6993,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "ahrf_ed_per_1k_medicare": {
     "id": "ahrf_ed_per_1k_medicare",
@@ -6860,7 +7012,8 @@
       {
         "id": "ahrf"
       }
-    ]
+    ],
+    "compiled_via": "ahrf"
   },
   "noaa_heat_risk_score": {
     "id": "noaa_heat_risk_score",
