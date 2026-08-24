@@ -52,7 +52,8 @@ measures <- tibble(measure_id = names(info)) %>%
       if (is.null(s) || length(s) == 0) return(NA_character_)
       paste(map_chr(s, ~ .x$id %||% NA_character_), collapse = "; ")
     }),
-    n_sources   = map_int(entry, ~ length(.x$sources %||% list()))
+    n_sources   = map_int(entry, ~ length(.x$sources %||% list())),
+    compiled_via = map_chr(entry, ~ .x$compiled_via %||% NA_character_)
   ) %>%
   select(-entry)
 
@@ -90,9 +91,20 @@ measures <- tibble(measure_id = names(info)) %>%
 # per-measure `sources` field (captured above as source_id) already records
 # who actually produced the statistic -- e.g. chr_adult_smoking's source_id
 # is "brfss", not "chr", even though its pipeline here is
-# county_health_rankings. `via` below distinguishes a CHR&R/AHRF pass-through
-# from a directly-ingested source; pipeline + source_id + via together answer
+# county_health_rankings. `via` distinguishes a CHR&R/AHRF pass-through from
+# a directly-ingested source; pipeline + source_id + via together answer
 # "where did this row come from" without needing anything further.
+#
+# Every chr_ and ahrf_ measure now carries an authoritative `compiled_via`
+# field directly in measure_info.json ("chr" or "ahrf") -- added as soon as
+# a measure was confirmed to be pipelined through that compiler, whether or
+# not a deeper origin beyond the compiler itself is also known (most chr_
+# measures cite a further origin like brfss/census_pep/nchs in `sources`;
+# a handful, and every current ahrf_ measure, cite only the compiler
+# itself -- compiled_via still applies either way, since it records "went
+# through this pipeline," not "we know what's further upstream"). `via`
+# below reads that field first and only falls back to a prefix guess for
+# measures that don't have it yet (anything outside these two families).
 # -----------------------------------------------------------------------------
 
 prefix_pipeline <- c(
@@ -131,9 +143,12 @@ measures <- measures %>%
   mutate(
     prefix   = id_prefix(measure_id),
     pipeline = coalesce(pipeline_overrides[measure_id], prefix_pipeline[prefix]),
-    via      = if_else(prefix == "chr", "chr",
-                if_else(prefix == "ahrf" & measure_id != "ahrf_population", "ahrf",
-                        "direct"))
+    via      = coalesce(
+      compiled_via,
+      if_else(prefix == "chr", "chr",
+      if_else(prefix == "ahrf", "ahrf",
+              "direct"))
+    )
   )
 
 # -----------------------------------------------------------------------------
