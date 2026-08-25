@@ -309,7 +309,12 @@ cms_long <- vroom(
   filter(!is.na(value)) %>%
   mutate(time = year_end(format(as.Date(time), "%Y")))
 
-# NCHS drug overdose mortality.
+# NCHS drug overdose mortality. This county file suppresses small monthly
+# counts for privacy via its own "suppressed" flag (set for 106,285 of
+# 226,368 rows, ~47%, as of this check) -- a suppression placeholder isn't
+# a real observation, so null out n_deaths_overdose wherever it's flagged
+# before it can reach the pivot below, the same way the state-level
+# suppressed_* flags are handled in populate_state_rates.R.
 nchs_long <- vroom(
   file.path(
     INGEST_PATH,
@@ -318,6 +323,7 @@ nchs_long <- vroom(
   show_col_types = FALSE
 ) %>%
   filter(!is.na(geography)) %>%
+  mutate(n_deaths_overdose = if_else(suppressed == 1, NA_real_, n_deaths_overdose)) %>%
   pivot_longer(
     cols      = c(n_deaths_overdose, pct_pending_invest),
     names_to  = "measure",
@@ -351,6 +357,11 @@ ahrf_long <- vroom(
     values_to = "value"
   ) %>%
   filter(!is.na(value)) %>%
+  # ahrf_rural_urban_code is documented as a 1-9 Rural-Urban Continuum
+  # Code; 0 and 99 are AHRF's own not-classified/missing sentinels (932
+  # and 864 rows respectively in the raw file), not real codes -- drop
+  # them rather than let a sentinel masquerade as a real classification.
+  filter(!(measure == "ahrf_rural_urban_code" & value %in% c(0, 99))) %>%
   select(geography, time, measure, value)
 
 # USDA low-income/low-access food environment (direct-source companion to
