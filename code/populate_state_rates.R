@@ -316,6 +316,23 @@ nchs_long <- vroom(
   show_col_types = FALSE
 ) %>%
   filter(!is.na(geography), nchar(geography) == 2, geography != "00") %>%
+  # NCHS suppresses small monthly counts for privacy by substituting a
+  # fixed placeholder rather than the true value or NA -- e.g. Arizona
+  # reported a flat n_deaths_heroin = 5 for 29 straight months in
+  # 2015-2017 with suppressed_heroin == 1 the whole time, then switched to
+  # real, smoothly-varying counts (334, 318, 324...) the month
+  # suppressed_heroin dropped to 0. A suppression placeholder isn't a real
+  # observation -- null out any count whose own flag is set before it can
+  # reach the pivot below, so it's dropped by the existing
+  # filter(!is.na(value)) rather than shown as if it were a real count.
+  mutate(
+    n_deaths_heroin     = if_else(suppressed_heroin     == 1, NA_real_, n_deaths_heroin),
+    n_deaths_methadone  = if_else(suppressed_methadone  == 1, NA_real_, n_deaths_methadone),
+    n_deaths_cocaine    = if_else(suppressed_cocaine    == 1, NA_real_, n_deaths_cocaine),
+    n_deaths_any_opioid = if_else(suppressed_any_opioid == 1, NA_real_, n_deaths_any_opioid),
+    n_deaths_all_cause  = if_else(suppressed_all_cause  == 1, NA_real_, n_deaths_all_cause),
+    n_deaths_overdose   = if_else(suppressed_overdose   == 1, NA_real_, n_deaths_overdose)
+  ) %>%
   select(geography, time, starts_with("n_deaths_"),
          pct_complete, pct_pending_invest) %>%
   pivot_longer(
@@ -489,6 +506,11 @@ ahrf_long <- vroom(
     values_to = "value"
   ) %>%
   filter(!is.na(value)) %>%
+  # ahrf_rural_urban_code is documented as a 1-9 Rural-Urban Continuum
+  # Code; 0 and 99 are AHRF's own not-classified/missing sentinels (932
+  # and 864 rows respectively in the raw file), not real codes -- drop
+  # them rather than let a sentinel masquerade as a real classification.
+  filter(!(measure == "ahrf_rural_urban_code" & value %in% c(0, 99))) %>%
   select(geography, time, measure, value)
 
 combined <- bind_rows(

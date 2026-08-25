@@ -428,6 +428,11 @@ ahrf_long <- vroom(
     values_to = "value"
   ) %>%
   filter(!is.na(value)) %>%
+  # ahrf_rural_urban_code is documented as a 1-9 Rural-Urban Continuum
+  # Code; 0 and 99 are AHRF's own not-classified/missing sentinels (932
+  # and 864 rows respectively in the raw file), not real codes -- drop
+  # them rather than let a sentinel masquerade as a real classification.
+  filter(!(measure == "ahrf_rural_urban_code" & value %in% c(0, 99))) %>%
   select(geography, time, measure, value)
 
 combined <- bind_rows(
