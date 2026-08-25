@@ -323,11 +323,34 @@ The `time` column in the rate files carries the **release year**, which for comp
 | `vintage_max`     | Latest data year, parsed from `vintage`                                      |
 | `vintage_release` | The release the vintage describes — i.e. which edition `vintage` came from  |
 
-Present on the 137 `chr_` measures that CHR&R supplies a `years_used` value for (118 of them), sourced from CHR&R's own `t_measure_years.csv`. They describe each measure's **most recent release**, which is what the latest-only explorer displays; they are not per-observation, so they should not be used to label historical years in a trend view. Measures from other pipelines have no vintage yet — each needs its own upstream vintage source before these can be filled in.
+Present on the 137 `chr_` measures that CHR&R supplies a `years_used` value for (118 of them), sourced from CHR&R's own `t_measure_years.csv`. Measures from other pipelines have no vintage yet — each needs its own upstream vintage source before these can be filled in.
+
+> **These fields describe each measure's most recent release only.** They are a convenience for the common case, **not the source of truth** — for that, use `tracker/measure_vintages.csv` (below). A value's release is a property of the *geography*, not just the measure: small counties are suppressed in recent releases and fall back to older ones, so for ~3% of county observations — and 34–49% of them for `chr_infant_mortality`, `chr_homicides`, and `chr_disconnected_youth` — the newest release's vintage is the wrong answer.
 
 Absent for four measures retired after the 2010/2011 editions (`chr_college_degrees`, `chr_hospice_use`, `chr_liquor_store_density`, `chr_single_parent_households`), where CHR&R left `years_used` blank, and for the 15 state-specific `_fl`/`_ny` measures, which come from CHR&R's state additional-measures tables and have different data years than the national measure of the same name — deliberately not inherited from it.
 
 The registry (`tracker/measure_registry.csv`) carries these plus a derived `vintage_lag` (`vintage_release - vintage_min`), which is the fastest way to spot measures whose displayed year badly overstates how current they are.
+
+**`tracker/measure_vintages.csv` — vintage per (measure, release)**
+
+The authoritative vintage lookup, written by `code/build_measure_vintages.R`: one row per measure per CHR&R release (1,409 rows, 156 measures, releases 2010–2025). Because `time` in the rate files *is* the release year, this joins directly on both keys and returns the vintage of the release each value actually came from:
+
+```r
+rates |>
+  left_join(
+    vroom("tracker/measure_vintages.csv"),
+    by = c("measure" = "measure_id", "time" = "release_time")
+  )
+```
+
+Joining on `measure` alone resolves 96.9% of county observations correctly; joining on both resolves **99.97%**. Anything displaying a year alongside a value — the explorer especially, via the `*_latest.csv.gz` files — should use this rather than the measure-level fields.
+
+Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`.
+
+Two limits, both expected rather than defects:
+
+* CHR&R leaves `years_used` blank for a handful of rows (measures retired after the 2010/2011 editions, the state-specific `_fl`/`_ny` families in 2011, `% Rural` in 2016, and non-health admin measures like Redlining and Large Cities). Those `(measure, release)` pairs have no row.
+* 17 `chr_` ids are fed at least partly by **direct** Census pipelines rather than CHR&R — `chr_population`, `chr_children_in_poverty`, the `chr_uninsured*` family, the PEP demographic set, `chr_census_participation`, and `chr_rural`. Observations that came from the direct source have no CHR&R release behind them and so get no vintage here; they need their own upstream vintage before they can be labeled. This is the entirety of the 0.03% that does not resolve.
 
 **Categories and their subcategories:**
 
