@@ -178,6 +178,48 @@ jump_findings <- all_rates %>%
   )
 
 findings <- bind_rows(bounds_findings, inversion_findings, jump_findings) %>%
+  mutate(status = "auto-detected")
+
+# -----------------------------------------------------------------------------
+# Investigated findings: a handful of auto-detected findings have been
+# manually cross-checked against ahrf_population and, for one, real Census
+# figures (via web search) -- overriding the generic "two different units"
+# guess with what was actually verified.
+#
+# Root cause for both rows below is now understood: AHRF's own SAS format
+# files carry a rolling window of same-description variables spanning both
+# the 1990s and 2000s+ (e.g. a population variable suffixed "01" for 2001
+# sitting next to one suffixed "99" for 1999), and whichever AHRF edition
+# doesn't carry an explicit year label for these variables, the upstream
+# ingest pipeline (area-health-resource-files/ingest.R, a separate repo)
+# picked whichever variable had the numerically larger 2-digit suffix --
+# so "99" (1999) beat "01" (2001) even though 2001 is newer. A fix (a
+# proper century pivot) has been implemented and verified there against
+# the raw HRSA files -- confirmed to resolve both examples below -- but
+# it is NOT YET committed in that repo, and even once committed it still
+# has to propagate through Ingest's HTTP download before it reaches this
+# repo's own data. So while the cause is no longer a mystery, the values
+# in this repo are still the pre-fix ones, and "status" stays "flagged",
+# not "confirmed" -- there's nothing left to diagnose, but nothing here
+# has actually changed yet either.
+# -----------------------------------------------------------------------------
+
+flagged_root_causes <- tibble(
+  measure_id = c("ahrf_md_all", "ahrf_psych"),
+  finding_type = "mixed_units_within_series",
+  flagged_detail = c(
+    "Example: Lincoln County SD (46083). Confirmed root cause: the AHRF suffix-comparison bug described above. Re-running the upstream pipeline with the century-pivot fix turns both series from erratic into smooth, monotonic growth curves consistent with a fast-growing Sioux Falls suburb -- ahrf_population goes from stuck at 17,666 for 2015-2022 (jumping to 67,870 only in 2023) to a continuous climb (46,793 in 2012 ... 63,019 in 2021 ... 67,870 in 2022, matching what 2023 already showed); ahrf_md_all goes from oscillating (10, 10, ..., 152, 195, back down to 10, 4, 5, 5, ..., then 349) to a steady climb (91, 129, 148, 152, 195, 212, 231, 256, ..., 395). Not yet reflected in this repo's data -- see note above.",
+    "Example: Henrico County VA (51087). Confirmed root cause: the same suffix-comparison bug. ahrf_population goes from flat at 244,652 for most of 2001-2014 to a smooth climb (264,973 in 2002 ... 296,415 in 2009, consistent with the true ~262,300 2000 Census count); ahrf_psych goes from an implausible 1 (2003-2004) to 81, consistent with neighboring years. ahrf_hospitals is a SEPARATE, still-unresolved issue: it reads 0 in Henrico's raw AHRF row for 2001-2009 even in the corrected variable, so this isn't a parsing bug -- it's either a genuine HRSA data gap or a different bug not yet found. Not yet reflected in this repo's data -- see note above."
+  )
+)
+
+findings <- findings %>%
+  left_join(flagged_root_causes, by = c("measure_id", "finding_type")) %>%
+  mutate(
+    status = if_else(!is.na(flagged_detail), "flagged", status),
+    detail  = coalesce(flagged_detail, detail)
+  ) %>%
+  select(-flagged_detail) %>%
   arrange(desc(severity), measure_id)
 
 message("\nFound ", nrow(findings), " finding(s):")
