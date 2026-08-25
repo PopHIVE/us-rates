@@ -181,36 +181,53 @@ findings <- bind_rows(bounds_findings, inversion_findings, jump_findings) %>%
   mutate(status = "auto-detected")
 
 # -----------------------------------------------------------------------------
-# Investigated findings: a handful of auto-detected findings have been
-# manually cross-checked against ahrf_population and, for one, real Census
-# figures (via web search) -- overriding the generic "two different units"
-# guess with what was actually verified.
+# Investigated findings: auto-detected findings that have been manually
+# cross-checked against ahrf_population and real Census figures, overriding
+# the generic "two different units" guess with what was actually verified.
 #
-# Root cause for both rows below is now understood: AHRF's own SAS format
-# files carry a rolling window of same-description variables spanning both
-# the 1990s and 2000s+ (e.g. a population variable suffixed "01" for 2001
-# sitting next to one suffixed "99" for 1999), and whichever AHRF edition
-# doesn't carry an explicit year label for these variables, the upstream
-# ingest pipeline (area-health-resource-files/ingest.R, a separate repo)
-# picked whichever variable had the numerically larger 2-digit suffix --
-# so "99" (1999) beat "01" (2001) even though 2001 is newer. A fix (a
-# proper century pivot) has been implemented and verified there against
-# the raw HRSA files -- confirmed to resolve both examples below -- but
-# it is NOT YET committed in that repo, and even once committed it still
-# has to propagate through Ingest's HTTP download before it reaches this
-# repo's own data. So while the cause is no longer a mystery, the values
-# in this repo are still the pre-fix ones, and "status" stays "flagged",
-# not "confirmed" -- there's nothing left to diagnose, but nothing here
-# has actually changed yet either.
+# The AHRF suffix-comparison bug that originally drove these is RESOLVED.
+# AHRF's SAS format files carry a rolling window of same-description
+# variables spanning both the 1990s and 2000s+ (e.g. a population variable
+# suffixed "01" for 2001 sitting next to one suffixed "99" for 1999), and
+# where an edition carried no explicit year label the upstream ingest
+# (area-health-resource-files/ingest.R) picked the numerically larger
+# 2-digit suffix -- so "99" (1999) beat "01" (2001). The century-pivot fix
+# landed upstream, propagated through Ingest, and is reflected in this
+# repo's data as of commit 82ff8e3a1. ahrf_psych no longer trips the jump
+# check at all, and ahrf_md_all is down to the three residual jumps
+# described below, which have a different cause.
 # -----------------------------------------------------------------------------
 
 flagged_root_causes <- tibble(
-  measure_id = c("ahrf_md_all", "ahrf_psych"),
+  measure_id = c("ahrf_md_all", "chr_mental_health_providers"),
   finding_type = "mixed_units_within_series",
-  flagged_detail = c(
-    "Example: Lincoln County SD (46083). Confirmed root cause: the AHRF suffix-comparison bug described above. Re-running the upstream pipeline with the century-pivot fix turns both series from erratic into smooth, monotonic growth curves consistent with a fast-growing Sioux Falls suburb -- ahrf_population goes from stuck at 17,666 for 2015-2022 (jumping to 67,870 only in 2023) to a continuous climb (46,793 in 2012 ... 63,019 in 2021 ... 67,870 in 2022, matching what 2023 already showed); ahrf_md_all goes from oscillating (10, 10, ..., 152, 195, back down to 10, 4, 5, 5, ..., then 349) to a steady climb (91, 129, 148, 152, 195, 212, 231, 256, ..., 395). Not yet reflected in this repo's data -- see note above.",
-    "Example: Henrico County VA (51087). Confirmed root cause: the same suffix-comparison bug. ahrf_population goes from flat at 244,652 for most of 2001-2014 to a smooth climb (264,973 in 2002 ... 296,415 in 2009, consistent with the true ~262,300 2000 Census count); ahrf_psych goes from an implausible 1 (2003-2004) to 81, consistent with neighboring years. ahrf_hospitals is a SEPARATE, still-unresolved issue: it reads 0 in Henrico's raw AHRF row for 2001-2009 even in the corrected variable, so this isn't a parsing bug -- it's either a genuine HRSA data gap or a different bug not yet found. Not yet reflected in this repo's data -- see note above."
-  )
+  flagged_detail = c(paste0(
+    "The century-pivot bug that originally caused this is fixed and reflected in the data ",
+    "(Lincoln County SD 46083, the original example, now climbs smoothly: 91 in 2003 ... 395 in 2022). ",
+    "Three residual >=50x jumps remain, from two causes unrelated to that fix. ",
+    "(1) Roanoke County VA (51161): 790 in 2000 -> 12 in 2001. The pre-2001 AHRF editions appear to ",
+    "consolidate Virginia's independent cities into their surrounding county -- Roanoke city is a ",
+    "separate FIPS (51770) from 2001 on. The same pattern shows in ahrf_population for Henrico (51087), ",
+    "which reads ~437,000 for 1999-2000 against a true 2000 Census count of ~262,300, though that one ",
+    "falls under the 50x threshold and so is not separately flagged here. ",
+    "(2) Carson City NV (32510): an isolated single-year dropout, 107 in 2001 -> 2 in 2002 -> 125 in 2003. ",
+    "Both are pre-2001/single-year data-quality issues in the upstream AHRF editions, not unit mixing. ",
+    "Separately, ahrf_hospitals reads 0 for Henrico 2001-2009 even in the corrected variable -- ",
+    "confirmed against raw HRSA bytes as a genuine data gap, root cause still unknown."
+  ), paste0(
+    "NOT a unit bug -- a real CHR&R definitional change, so the values are correct as stored and ",
+    "no correction is warranted. Through the 2013 release CHR&R counted psychiatrists only; from ",
+    "2014 it broadened 'mental health providers' to include psychologists, clinical social workers, ",
+    "counselors, marriage and family therapists, and advanced practice psychiatric nurses. Verified ",
+    "in the raw Zenodo numerators: Macon County AL (01087) goes from 1 provider in the 2013 release ",
+    "to 55 in 2014 against a near-flat ~22,000 population, and the national median falls from ",
+    "~17,000 population per provider (2011-2012) to ~1,200 (2015+). The jump check cannot ",
+    "distinguish this from unit mixing because it compares consecutive observations within a ",
+    "geography, and a definitional break looks identical to a scale break at that resolution. ",
+    "Consumers comparing pre-2014 to post-2014 values are comparing two different concepts -- this ",
+    "is a vintage/definition labeling problem (see the completion plan's vintage field), not a ",
+    "pipeline defect."
+  ))
 )
 
 findings <- findings %>%

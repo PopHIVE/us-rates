@@ -47,6 +47,16 @@ measures <- tibble(measure_id = names(info)) %>%
     unit        = map_chr(entry, ~ .x$unit          %||% NA_character_),
     scale       = map_chr(entry, ~ .x$scale         %||% NA_character_),
     time_resolution = map_chr(entry, ~ .x$time_resolution %||% NA_character_),
+    # True data years, distinct from the release year carried in `time`. Only
+    # CHR&R measures have this so far: it comes from years_used in CHR&R's own
+    # t_measure_years.csv and describes each measure's most recent release
+    # (vintage_release), which is what the latest-only explorer displays. Other
+    # pipelines need their own vintage source before they can be filled in.
+    vintage     = map_chr(entry, ~ .x$vintage         %||% NA_character_),
+    vintage_min = map_int(entry, ~ as.integer(.x$vintage_min     %||% NA_integer_)),
+    vintage_max = map_int(entry, ~ as.integer(.x$vintage_max     %||% NA_integer_)),
+    vintage_release = map_int(entry, ~ as.integer(.x$vintage_release %||% NA_integer_)),
+    vintage_lag = vintage_release - vintage_min,
     source_id   = map_chr(entry, ~ {
       s <- .x$sources
       if (is.null(s) || length(s) == 0) return(NA_character_)
@@ -364,6 +374,7 @@ registry <- registry %>%
   select(
     measure_id, source_id, n_sources, pipeline, via,
     category, subcategory, measure_type, unit, scale, time_resolution,
+    vintage, vintage_min, vintage_max, vintage_release, vintage_lag,
     expected_national, expected_state, expected_county,
     actual_national, actual_state, actual_county,
     parity_flag, display_status, duplicate_group, duplicate_note,

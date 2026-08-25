@@ -481,6 +481,10 @@
     "measure_type": "number",
     "unit": "Years lost per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2020-2022",
+    "vintage_min": 2020,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -500,6 +504,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -519,6 +527,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_sahie"
@@ -538,6 +550,10 @@
     "measure_type": "number",
     "unit": "Population per physician",
     "time_resolution": "Year",
+    "vintage": "2021",
+    "vintage_min": 2021,
+    "vintage_max": 2021,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "ama_physician_masterfile"
@@ -557,6 +573,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 Medicare enrollees",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms"
@@ -576,6 +596,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -595,6 +619,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -614,6 +642,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 females ages 15-19",
     "time_resolution": "Year",
+    "vintage": "2017-2023",
+    "vintage_min": 2017,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -633,6 +665,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2016-2022",
+    "vintage_min": 2016,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -652,6 +688,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2021-2022",
+    "vintage_min": 2021,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "edfacts"
@@ -671,6 +711,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "bls_laus"
@@ -708,6 +752,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023 & 2019",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_saipe"
@@ -727,6 +775,10 @@
     "measure_type": "number",
     "unit": "Days per month",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -746,6 +798,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2017-2023",
+    "vintage_min": 2017,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -765,6 +821,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2016-2022",
+    "vintage_min": 2016,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -928,6 +988,10 @@
     "measure_type": "number",
     "unit": "Days per month",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -947,6 +1011,10 @@
     "measure_type": "number",
     "unit": "Ratio",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -966,6 +1034,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cdc_nchhstp"
@@ -985,6 +1057,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1004,6 +1080,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms"
@@ -1023,6 +1103,10 @@
     "measure_type": "number",
     "unit": "Persons",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1042,6 +1126,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1061,6 +1149,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1080,6 +1172,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1099,6 +1195,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1118,6 +1218,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1137,6 +1241,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1156,6 +1264,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2020",
+    "vintage_min": 2020,
+    "vintage_max": 2020,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_decennial"
@@ -1175,6 +1287,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1194,6 +1310,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1213,6 +1333,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cdc_nchhstp"
@@ -1232,6 +1356,10 @@
     "measure_type": "number",
     "unit": "Population per provider",
     "time_resolution": "Year",
+    "vintage": "2024",
+    "vintage_min": 2024,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms_nppes"
@@ -1250,6 +1378,10 @@
     "statement": "In {location}, the median household income was {value}.",
     "measure_type": "dollars",
     "time_resolution": "Year",
+    "vintage": "2023 & 2019",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_saipe"
@@ -1269,6 +1401,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022-2023",
+    "vintage_min": 2022,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nces"
@@ -1288,6 +1424,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1307,6 +1447,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1326,6 +1470,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1345,6 +1493,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1364,6 +1516,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1383,6 +1539,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1402,6 +1562,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019",
+    "vintage_min": 2019,
+    "vintage_max": 2019,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "usda_fara"
@@ -1439,6 +1603,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_sahie"
@@ -1458,6 +1626,10 @@
     "measure_type": "number",
     "unit": "Population per dentist",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms_nppes"
@@ -1477,6 +1649,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_sahie"
@@ -1495,6 +1671,10 @@
     "statement": "In {location}, health-related drinking water violations were present: {value}.",
     "measure_type": "number",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "epa_sdwis"
@@ -1514,6 +1694,10 @@
     "measure_type": "number",
     "unit": "Micrograms per cubic meter",
     "time_resolution": "Year",
+    "vintage": "2020",
+    "vintage_min": 2020,
+    "vintage_max": 2020,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cdc_epht"
@@ -1533,6 +1717,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2023",
+    "vintage_min": 2023,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_pep"
@@ -1552,6 +1740,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2020-2022",
+    "vintage_min": 2020,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1571,6 +1763,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2019-2022",
+    "vintage_min": 2019,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1590,6 +1786,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 live births",
     "time_resolution": "Year",
+    "vintage": "2016-2022",
+    "vintage_min": 2016,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1609,6 +1809,10 @@
     "measure_type": "number",
     "unit": "Population per provider",
     "time_resolution": "Year",
+    "vintage": "2024",
+    "vintage_min": 2024,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms_nppes"
@@ -1628,6 +1832,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2024, 2022",
+    "vintage_min": 2022,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "esri_tiger_ymca"
@@ -1647,6 +1855,10 @@
     "measure_type": "number",
     "unit": "Index (0-10)",
     "time_resolution": "Year",
+    "vintage": "2019 & 2022",
+    "vintage_min": 2019,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "usda_fea"
@@ -1666,6 +1878,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2018-2022",
+    "vintage_min": 2018,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nhtsa_fars"
@@ -1685,6 +1901,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2018-2022",
+    "vintage_min": 2018,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1704,6 +1924,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2017-2021",
+    "vintage_min": 2017,
+    "vintage_max": 2021,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "hud_chas"
@@ -1741,6 +1965,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1760,6 +1988,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2020-2022",
+    "vintage_min": 2020,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1779,6 +2011,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "feeding_america"
@@ -1798,6 +2034,10 @@
     "measure_type": "number",
     "unit": "Per 10,000 population",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_cbp"
@@ -1817,6 +2057,10 @@
     "measure_type": "number",
     "unit": "Index (0-100)",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1836,6 +2080,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1855,6 +2103,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1874,6 +2126,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -1893,6 +2149,10 @@
     "measure_type": "number",
     "unit": "Years",
     "time_resolution": "Year",
+    "vintage": "2020-2022",
+    "vintage_min": 2020,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1912,6 +2172,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2018-2022",
+    "vintage_min": 2018,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -1931,6 +2195,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1950,6 +2218,10 @@
     "measure_type": "number",
     "unit": "Cents per dollar",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1969,6 +2241,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -1988,6 +2264,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -2007,6 +2287,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "cms"
@@ -2026,6 +2310,10 @@
     "measure_type": "number",
     "unit": "Vehicles per meter",
     "time_resolution": "Year",
+    "vintage": "2020",
+    "vintage_min": 2020,
+    "vintage_max": 2020,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "epa_ejscreen"
@@ -2045,6 +2333,10 @@
     "measure_type": "number",
     "unit": "Grade level",
     "time_resolution": "Year",
+    "vintage": "2019",
+    "vintage_min": 2019,
+    "vintage_max": 2019,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "seda"
@@ -2064,6 +2356,10 @@
     "measure_type": "number",
     "unit": "Grade level",
     "time_resolution": "Year",
+    "vintage": "2019",
+    "vintage_min": 2019,
+    "vintage_max": 2019,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "seda"
@@ -2083,6 +2379,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2018-2022",
+    "vintage_min": 2018,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nchs"
@@ -2102,6 +2402,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -2121,6 +2425,10 @@
     "measure_type": "number",
     "unit": "Index (0-1)",
     "time_resolution": "Year",
+    "vintage": "2023-2024",
+    "vintage_min": 2023,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "nces"
@@ -2140,6 +2448,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "acs"
@@ -2159,6 +2471,10 @@
     "measure_type": "dollars",
     "unit": "Per pupil",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "sfid"
@@ -2178,6 +2494,10 @@
     "measure_type": "dollars",
     "unit": "Per hour",
     "time_resolution": "Year",
+    "vintage": "2024",
+    "vintage_min": 2024,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "living_wage_institute"
@@ -2197,6 +2517,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2024 & 2023",
+    "vintage_min": 2023,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "living_wage_institute"
@@ -2216,6 +2540,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 children under 5",
     "time_resolution": "Year",
+    "vintage": "2010-2022",
+    "vintage_min": 2010,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "hifld"
@@ -2235,6 +2563,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2020 & 2016",
+    "vintage_min": 2016,
+    "vintage_max": 2020,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "medsl"
@@ -2254,6 +2586,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2020",
+    "vintage_min": 2020,
+    "vintage_max": 2020,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "census_oqm"
@@ -2273,6 +2609,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2024 & 2020",
+    "vintage_min": 2020,
+    "vintage_max": 2024,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "esri_tiger_ymca"
@@ -2292,6 +2632,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -2311,6 +2655,10 @@
     "measure_type": "number",
     "unit": "Visits per person per year",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "imls"
@@ -2330,6 +2678,10 @@
     "measure_type": "number",
     "unit": "Count of thresholds met",
     "time_resolution": "Year",
+    "vintage": "2019-2023",
+    "vintage_min": 2019,
+    "vintage_max": 2023,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "noaa_fema"
@@ -2349,6 +2701,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -2368,6 +2724,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2022",
+    "vintage_min": 2022,
+    "vintage_max": 2022,
+    "vintage_release": 2025,
     "sources": [
       {
         "id": "brfss"
@@ -5833,6 +6193,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2009",
+    "vintage_min": 2009,
+    "vintage_max": 2009,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "census_cbp"
@@ -5852,6 +6216,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2010",
+    "vintage_min": 2010,
+    "vintage_max": 2010,
+    "vintage_release": 2013,
     "sources": [
       {
         "id": "census_cbp"
@@ -5871,6 +6239,10 @@
     "measure_type": "number",
     "unit": "Days",
     "time_resolution": "Year",
+    "vintage": "2007",
+    "vintage_min": 2007,
+    "vintage_max": 2007,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "cdc_epht"
@@ -5890,6 +6262,10 @@
     "measure_type": "number",
     "unit": "Days",
     "time_resolution": "Year",
+    "vintage": "2007",
+    "vintage_min": 2007,
+    "vintage_max": 2007,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "cdc_epht"
@@ -5909,6 +6285,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 population",
     "time_resolution": "Year",
+    "vintage": "2016",
+    "vintage_min": 2016,
+    "vintage_max": 2016,
+    "vintage_release": 2020,
     "sources": [
       {
         "id": "chr"
@@ -5928,6 +6308,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2003-2009",
+    "vintage_min": 2003,
+    "vintage_max": 2009,
+    "vintage_release": 2011,
     "sources": [
       {
         "id": "brfss"
@@ -5947,6 +6331,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 population",
     "time_resolution": "Year",
+    "vintage": "2018",
+    "vintage_min": 2018,
+    "vintage_max": 2018,
+    "vintage_release": 2020,
     "sources": [
       {
         "id": "chr"
@@ -5985,6 +6373,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2010",
+    "vintage_min": 2010,
+    "vintage_max": 2010,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "chr"
@@ -6004,6 +6396,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2006-2012",
+    "vintage_min": 2006,
+    "vintage_max": 2012,
+    "vintage_release": 2015,
     "sources": [
       {
         "id": "brfss"
@@ -6023,6 +6419,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2020",
+    "vintage_min": 2020,
+    "vintage_max": 2020,
+    "vintage_release": 2022,
     "sources": [
       {
         "id": "nchs"
@@ -6042,6 +6442,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2014",
+    "vintage_min": 2014,
+    "vintage_max": 2014,
+    "vintage_release": 2018,
     "sources": [
       {
         "id": "dartmouth_atlas"
@@ -6061,6 +6465,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2012, 2014,",
+    "vintage_min": 2012,
+    "vintage_max": 2014,
+    "vintage_release": 2018,
     "sources": [
       {
         "id": "chr"
@@ -6079,6 +6487,10 @@
     "statement": "In {location}, there were {value} drug-related arrests.",
     "measure_type": "number",
     "time_resolution": "Year",
+    "vintage": "2018",
+    "vintage_min": 2018,
+    "vintage_max": 2018,
+    "vintage_release": 2019,
     "sources": [
       {
         "id": "chr"
@@ -6098,6 +6510,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2016",
+    "vintage_min": 2016,
+    "vintage_max": 2016,
+    "vintage_release": 2018,
     "sources": [
       {
         "id": "nchs"
@@ -6117,6 +6533,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2010",
+    "vintage_min": 2010,
+    "vintage_max": 2010,
+    "vintage_release": 2013,
     "sources": [
       {
         "id": "census_cbp"
@@ -6136,6 +6556,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2016",
+    "vintage_min": 2016,
+    "vintage_max": 2016,
+    "vintage_release": 2019,
     "sources": [
       {
         "id": "chr"
@@ -6154,6 +6578,10 @@
     "statement": "In {location}, Medicare reimbursements per enrollee were {value}.",
     "measure_type": "dollars",
     "time_resolution": "Year",
+    "vintage": "2015",
+    "vintage_min": 2015,
+    "vintage_max": 2015,
+    "vintage_release": 2018,
     "sources": [
       {
         "id": "dartmouth_atlas"
@@ -6173,6 +6601,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2007-2011",
+    "vintage_min": 2007,
+    "vintage_max": 2011,
+    "vintage_release": 2013,
     "sources": [
       {
         "id": "acs"
@@ -6211,6 +6643,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2003",
+    "vintage_min": 2003,
+    "vintage_max": 2003,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "chr"
@@ -6230,6 +6666,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2005-2010",
+    "vintage_min": 2005,
+    "vintage_max": 2010,
+    "vintage_release": 2014,
     "sources": [
       {
         "id": "brfss"
@@ -6249,6 +6689,10 @@
     "measure_type": "number",
     "unit": "Per 1,000 juveniles",
     "time_resolution": "Year",
+    "vintage": "2021",
+    "vintage_min": 2021,
+    "vintage_max": 2021,
+    "vintage_release": 2024,
     "sources": [
       {
         "id": "ojjdp"
@@ -6268,6 +6712,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2010",
+    "vintage_min": 2010,
+    "vintage_max": 2010,
+    "vintage_release": 2013,
     "sources": [
       {
         "id": "chr"
@@ -6306,6 +6754,10 @@
     "measure_type": "number",
     "unit": "FTEs per 10,000 population",
     "time_resolution": "Year",
+    "vintage": "2014",
+    "vintage_min": 2014,
+    "vintage_max": 2014,
+    "vintage_release": 2017,
     "sources": [
       {
         "id": "chr"
@@ -6325,6 +6777,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2011",
+    "vintage_min": 2011,
+    "vintage_max": 2011,
+    "vintage_release": 2012,
     "sources": [
       {
         "id": "chr"
@@ -6344,6 +6800,10 @@
     "measure_type": "percent",
     "scale": "0-1",
     "time_resolution": "Year",
+    "vintage": "2018, 2010",
+    "vintage_min": 2010,
+    "vintage_max": 2018,
+    "vintage_release": 2020,
     "sources": [
       {
         "id": "chr"
@@ -6363,6 +6823,10 @@
     "measure_type": "number",
     "unit": "Index (0-100)",
     "time_resolution": "Year",
+    "vintage": "2016-2020",
+    "vintage_min": 2016,
+    "vintage_max": 2020,
+    "vintage_release": 2022,
     "sources": [
       {
         "id": "acs"
@@ -6401,6 +6865,10 @@
     "measure_type": "number",
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
+    "vintage": "2014 & 2016",
+    "vintage_min": 2014,
+    "vintage_max": 2016,
+    "vintage_release": 2022,
     "sources": [
       {
         "id": "fbi_ucr"
@@ -6419,6 +6887,10 @@
     "statement": "In {location}, {value} individuals were enrolled in Wisconsin Works (W-2).",
     "measure_type": "number",
     "time_resolution": "Year",
+    "vintage": "2018",
+    "vintage_min": 2018,
+    "vintage_max": 2018,
+    "vintage_release": 2020,
     "sources": [
       {
         "id": "chr"
