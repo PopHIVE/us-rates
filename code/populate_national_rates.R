@@ -17,6 +17,13 @@ library(arrow)
 REPO_ROOT   <- "."
 INGEST_PATH <- "../Ingest/data"
 
+CHR_PROVIDER_RATIO_MEASURES <- c(
+  "chr_primary_care_physicians",
+  "chr_dentists",
+  "chr_mental_health_providers",
+  "chr_other_primary_care_providers"
+)
+
 year_end <- function(y) as.Date(paste0(as.integer(y), "-12-31"))
 
 month_end <- function(d) {
@@ -66,26 +73,23 @@ chr_long <- vroom(
     values_to = "value"
   ) %>%
   filter(!is.na(value)) %>%
-  # CHR's own raw file stores chr_primary_care_physicians correctly scaled
-  # (population per physician, e.g. Alabama 2010 = 80.53) only through
-  # 2010, then drops a x100,000 factor from 2011 on and stores
-  # physicians-per-1-resident instead (Alabama 2011 = 0.00079765 -- a
-  # 100,955x ratio to 2010, matching x100,000 once the ~1% residual from a
-  # real year of change is accounted for). Corrected here rather than
-  # upstream, following the same guarded pattern as CHR's 2013
-  # chr_infant_mortality scale bug (see
-  # Ingest/data/county_health_rankings/ingest.R) -- only values already
-  # below 1 get rescaled, so this becomes a no-op automatically if CHR
-  # restores the original scale. chr_mental_health_providers, chr_dentists,
-  # and chr_other_primary_care_providers show the same suspiciously tiny
-  # values, but have no equivalent pre-bug year to verify a correction
-  # factor against, so they're deliberately left alone -- see
-  # tracker/qa_findings.csv.
-  mutate(value = if_else(
-    measure == "chr_primary_care_physicians" & value < 1,
-    value * 100000,
-    value
-  ))
+  # CHR&R publishes the provider-availability measures as population per
+  # provider, but stores raw_value as providers per resident
+  # (numerator/denominator in the Zenodo files -- New Haven 2022 dentists =
+  # 669 / 851,948 = 0.000785). Invert to match the declared unit. A zero
+  # provider count leaves the ratio undefined rather than infinite, and the
+  # 2010 release published primary care as a rate per 100,000 population
+  # ("Primary care provider rate") before adopting the ratio format in
+  # 2011, so that one vintage inverts through 100,000 instead. No 2011+
+  # value reaches 1, so this is a no-op if CHR&R ever publishes true ratios.
+  mutate(value = case_when(
+    !measure %in% CHR_PROVIDER_RATIO_MEASURES ~ value,
+    value == 0                                ~ NA_real_,
+    substr(as.character(time), 1, 4) == "2010" ~ 100000 / value,
+    value < 1                                 ~ 1 / value,
+    TRUE                                      ~ value
+  )) %>%
+  filter(!is.na(value))
 
 # BLS LAUS national unemployment rate (direct-source companion to
 # chr_unemployment). Shares data_state.csv.gz with the state-level pull in

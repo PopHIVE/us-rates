@@ -312,6 +312,23 @@ The root `measure_info.json` documents every measure used across the repository.
 | `time_resolution`   | One of: `Week`, `Month`, `Year`                                           |
 | `sources`           | Array of source IDs matching entries in `_sources`                        |
 
+**Vintage fields (optional):**
+
+The `time` column in the rate files carries the **release year**, which for compiled sources is often much later than the year the underlying data describes. These optional fields record the true data vintage so the two are never confused:
+
+| Field             | Description                                                                 |
+|-------------------|------------------------------------------------------------------------------|
+| `vintage`         | The data years as the upstream source states them, verbatim — may be a single year (`"2022"`), a range (`"2016-2022"`), or a set (`"2020 & 2016"`) |
+| `vintage_min`     | Earliest data year, parsed from `vintage`                                    |
+| `vintage_max`     | Latest data year, parsed from `vintage`                                      |
+| `vintage_release` | The release the vintage describes — i.e. which edition `vintage` came from  |
+
+Present on the 137 `chr_` measures that CHR&R supplies a `years_used` value for (118 of them), sourced from CHR&R's own `t_measure_years.csv`. They describe each measure's **most recent release**, which is what the latest-only explorer displays; they are not per-observation, so they should not be used to label historical years in a trend view. Measures from other pipelines have no vintage yet — each needs its own upstream vintage source before these can be filled in.
+
+Absent for four measures retired after the 2010/2011 editions (`chr_college_degrees`, `chr_hospice_use`, `chr_liquor_store_density`, `chr_single_parent_households`), where CHR&R left `years_used` blank, and for the 15 state-specific `_fl`/`_ny` measures, which come from CHR&R's state additional-measures tables and have different data years than the national measure of the same name — deliberately not inherited from it.
+
+The registry (`tracker/measure_registry.csv`) carries these plus a derived `vintage_lag` (`vintage_release - vintage_min`), which is the fastest way to spot measures whose displayed year badly overstates how current they are.
+
 **Categories and their subcategories:**
 
 | Category                              | Subcategories                                                                                          |
