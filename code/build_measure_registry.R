@@ -370,11 +370,83 @@ registry <- registry %>%
   left_join(group_lookup, by = "measure_id") %>%
   mutate(duplicate_group = coalesce(duplicate_group, measure_id))
 
+# -----------------------------------------------------------------------------
+# Compiler credit.
+#
+# Credit, not provenance. compiled_via records who compiles a measure NOW and
+# can change; these columns record that a compiler supplied it, which does not
+# stop being true if the measure is later converted to a direct source.
+#
+# Deliberately generic rather than one set of columns per compiler: compiled_via
+# already names which one, so chr_/ahrf_-specific columns would be the same
+# three facts written twice. Both publishers require their citation verbatim.
+#
+# CHR&R spans come from tracker/measure_vintages.csv, which is per release (run
+# code/build_measure_vintages.R first). AHRF has no equivalent release table, so
+# its span is the measure's own data-year range -- for AHRF, time IS the data
+# year.
+# -----------------------------------------------------------------------------
+vintages_path <- file.path(REPO_ROOT, "tracker", "measure_vintages.csv")
+
+if (file.exists(vintages_path)) {
+  chr_span <- vroom(vintages_path, show_col_types = FALSE, guess_max = Inf) %>%
+    group_by(measure_id) %>%
+    summarise(
+      span_first = min(release_year),
+      span_last  = max(release_year),
+      .groups = "drop"
+    )
+} else {
+  warning(
+    "tracker/measure_vintages.csv not found -- CHR&R credit will be empty. ",
+    "Run code/build_measure_vintages.R first."
+  )
+  chr_span <- tibble(
+    measure_id = character(), span_first = integer(), span_last = integer()
+  )
+}
+
+registry <- registry %>%
+  left_join(chr_span, by = "measure_id") %>%
+  mutate(
+    compiler_first_year = case_when(
+      compiled_via == "chr"  ~ span_first,
+      compiled_via == "ahrf" ~ as.integer(substr(time_min, 1, 4)),
+      TRUE                   ~ NA_integer_
+    ),
+    compiler_last_year = case_when(
+      compiled_via == "chr"  ~ span_last,
+      compiled_via == "ahrf" ~ as.integer(substr(time_max, 1, 4)),
+      TRUE                   ~ NA_integer_
+    ),
+    # paste0() renders NA as the literal string "NA", so a missing year would
+    # otherwise publish "...Roadmaps NA." -- a malformed citation that still
+    # reads as populated. Guard on the years being present so an incomplete
+    # citation is empty rather than wrong.
+    compiler_citation = case_when(
+      compiled_via == "chr" & !is.na(compiler_last_year) ~ paste0(
+        "University of Wisconsin Population Health Institute. ",
+        "County Health Rankings & Roadmaps ", compiler_last_year, ". ",
+        "www.countyhealthrankings.org."
+      ),
+      compiled_via == "ahrf" &
+        !is.na(compiler_first_year) & !is.na(compiler_last_year) ~ paste0(
+        "Area Health Resources Files (AHRF) ", compiler_first_year, "-",
+        compiler_last_year, ". US Department of Health and Human Services, ",
+        "Health Resources and Services Administration, Bureau of Health ",
+        "Workforce, Rockville, MD."
+      ),
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  select(-span_first, -span_last)
+
 registry <- registry %>%
   select(
     measure_id, source_id, n_sources, pipeline, via,
     category, subcategory, measure_type, unit, scale, time_resolution,
     vintage, vintage_min, vintage_max, vintage_release, vintage_lag,
+    compiler_first_year, compiler_last_year, compiler_citation,
     expected_national, expected_state, expected_county,
     actual_national, actual_state, actual_county,
     parity_flag, display_status, duplicate_group, duplicate_note,

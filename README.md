@@ -345,11 +345,34 @@ rates |>
 
 Joining on `measure` alone resolves 96.9% of county observations correctly; joining on both resolves **99.97%**. Anything displaying a year alongside a value — the explorer especially, via the `*_latest.csv.gz` files — should use this rather than the measure-level fields.
 
-Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`, `format_type`.
+Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`, `format_type`, `compiled_via`, `compiled_via_county`, `county_override`.
 
-**`tracker/measure_definition_changes.csv` — every description change**
+**Provenance can differ by year and by geography level.** Seventeen measures keep a `chr_` id while a single vintage of each is replaced by a direct Census pull — see the `census_direct_long` block in `code/populate_county_rates.R`. The shared id is deliberate and load-bearing: `census_direct_long` is bound first and `distinct(geography, time, measure)` keeps the first row, so *matching ids are the mechanism* that lets the Census value win. Renaming them would break the override and mislabel the rest of each series, which is still CHR&R.
 
-Also written by `code/build_measure_vintages.R`: one row per release where CHR&R's description text for a measure differs from the previous release (51 changes across 35 measures). Most are cosmetic rewording, but this is the **only** signal that catches a denominator change — `chr_preventable_hospital_stays` switched from "per 1,000 Medicare enrollees" to "per 100,000" between the 2018 and 2019 releases with `format_type` fixed at 0 and `years_used` advancing normally, so neither of the other signals sees it. Screening these for denominator or framing wording surfaces exactly three real unit changes in the whole catalog: `chr_primary_care_physicians` (2011), `chr_drinking_water_violations` (2016), and `chr_preventable_hospital_stays` (2019). All three are handled — the first and third are corrected in the populate scripts, the second is a genuine redefinition triaged in `tracker/qa_findings.csv`. Re-screen this file whenever a new CHR&R release lands.
+These are **interior patches, not the newest point** — CHR&R runs to 2025 while the Census files sit at 2020–2024, so the latest observation of all 17 is CHR&R-sourced. `chr_census_participation` is the inverse case, where the Census year is the *oldest* in the series; never assume the direct year is the latest one. The override is also **county-only**, because the PEP/SAIPE/SAHIE files contain no state or national rows — which is why `compiled_via_county` is a separate column rather than an edit to `compiled_via`:
+
+| Column | Meaning |
+|---|---|
+| `compiled_via` | Who compiled this release at state and national level — always `chr` today |
+| `compiled_via_county` | Who compiled it at **county** level: `chr`, or one of `census_pep` / `census_saipe` / `census_sahie` / `census_oqm` / `census_decennial` |
+| `county_override` | `TRUE` on the 17 rows where the two differ |
+
+The same 17 measures carry `county_override_via` and `county_override_time` in `measure_info.json` so the exception is visible without the join. The build fails loudly if the count drifts from 17 — a patch year moving in the populate script would otherwise silently mislabel provenance.
+
+**Compiler credit** lives on the registry, not in a file of its own — it is one row per measure, which is that table's grain. `compiler_first_year`, `compiler_last_year`, and `compiler_citation` record that a compiler supplied a measure, which stays true even if it is later converted to a direct source. That is distinct from `compiled_via`, which tracks who compiles it *now* and can change.
+
+The columns are generic rather than one set per compiler, because `compiled_via` already names which one — `chr_*` and `ahrf_*` columns would be the same three facts written twice. Both publishers require their citation verbatim:
+
+| `compiled_via` | Measures | Required citation |
+|---|---|---|
+| `chr` | 137 | University of Wisconsin Population Health Institute. County Health Rankings & Roadmaps *{year}*. www.countyhealthrankings.org. |
+| `ahrf` | 16 | Area Health Resources Files (AHRF) *{first}*-*{last}*. US Department of Health and Human Services, Health Resources and Services Administration, Bureau of Health Workforce, Rockville, MD. |
+
+CHR&R state theirs "should accompany" any contents or graphics used, and the year is that measure's own last release — so a retired measure cites the edition it actually came from rather than the current one (`chr_access_to_healthy_foods` cites 2012, not 2025). AHRF's is a span, since HRSA publishes annual editions and a measure typically draws on many; HRSA place no usage limitations on the data beyond attribution.
+
+Note that CHR&R's own data sharing is bounded by the terms of its upstream sources, so republishing a `chr_` measure can carry obligations beyond this citation.
+
+**`description` and `description_changed`** flag every release where CHR&R reworded a measure (49 rewordings across 33 measures). Most are cosmetic, but this is the **only** signal that catches a denominator change — `chr_preventable_hospital_stays` switched from "per 1,000 Medicare enrollees" to "per 100,000" between the 2018 and 2019 releases with `format_type` fixed at 0 and `years_used` advancing normally, so neither of the other signals sees it. Filtering `description_changed` for denominator or framing wording surfaces exactly three real unit changes in the whole catalog: `chr_primary_care_physicians` (2011), `chr_drinking_water_violations` (2016), and `chr_preventable_hospital_stays` (2019). All three are handled — the first and third are corrected in the populate scripts, the second is a genuine redefinition triaged in `tracker/qa_findings.csv`. Re-screen whenever a new CHR&R release lands.
 
 `format_type` is CHR&R's own display-format code, and it is a reliable signal that a measure changed **units** between releases — `vintage` cannot be trusted for this. `chr_drinking_water_violations` went from a percentage (`format_type` 1) to a yes/no indicator (`format_type` 5) between the 2015 and 2016 releases while its `years_used` string stayed *identical*, so the redefinition is invisible in the vintage alone. Where this column changes across consecutive releases, values either side are not comparable no matter what the vintage says. Only three measures do so today: `chr_drinking_water_violations` (2016, 1→5), `chr_primary_care_physicians` (2011, 0→3 — the rate-to-ratio switch the populate scripts correct for), and `chr_drug_overdose_deaths_modeled` (2018, 4→6).
 
