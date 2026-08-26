@@ -99,7 +99,22 @@ chr_long <- chr_wide %>%
     value < 1                                 ~ 1 / value,
     TRUE                                      ~ value
   )) %>%
-  filter(!is.na(value))
+  filter(!is.na(value)) %>%
+  # CHR&R changed the denominator on chr_preventable_hospital_stays between the
+  # 2018 and 2019 releases -- "per 1,000 Medicare enrollees" through 2018, "per
+  # 100,000 Medicare enrollees" from 2019 -- and measure_info.json declares the
+  # per-100,000 form, so the earlier releases are stored 100x too small against
+  # their own unit. The change is stated ONLY in CHR&R's description text:
+  # format_type stays 0 and years_used advances normally, so neither signal in
+  # tracker/measure_vintages.csv catches it. Scoped by release year rather than
+  # magnitude because the two eras overlap (per-1,000 runs 12-342, per-100,000
+  # runs 133-33,333), so no value threshold can separate them.
+  mutate(value = if_else(
+    measure == "chr_preventable_hospital_stays" &
+      as.integer(substr(as.character(time), 1, 4)) <= 2018,
+    value * 100,
+    value
+  ))
 
 census_long <- census_wide %>%
   pivot_longer(

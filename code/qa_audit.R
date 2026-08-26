@@ -199,7 +199,8 @@ findings <- bind_rows(bounds_findings, inversion_findings, jump_findings) %>%
 # -----------------------------------------------------------------------------
 
 flagged_root_causes <- tibble(
-  measure_id = c("ahrf_md_all", "chr_mental_health_providers"),
+  measure_id = c("ahrf_md_all", "chr_mental_health_providers",
+                 "chr_drinking_water_violations"),
   finding_type = "mixed_units_within_series",
   flagged_detail = c(paste0(
     "The century-pivot bug that originally caused this is fixed and reflected in the data ",
@@ -227,6 +228,21 @@ flagged_root_causes <- tibble(
     "Consumers comparing pre-2014 to post-2014 values are comparing two different concepts -- this ",
     "is a vintage/definition labeling problem (see the completion plan's vintage field), not a ",
     "pipeline defect."
+  ), paste0(
+    "NOT a unit bug in the pipeline -- the stored values match the raw CHR&R archive exactly ",
+    "(2016: 51.8% ones in both; 2018: 43.1% in both). CHR&R redefined the measure between the ",
+    "2015 and 2016 releases: format_type goes 1 -> 5 and the description changes from ",
+    "'Percentage of population potentially exposed to water exceeding a violation limit' to ",
+    "'Indicator of the presence of health-related drinking water violations'. So 2013-2015 hold a ",
+    "continuous proportion and 2016-2025 hold a binary 0/1 flag, which is a genuine mixed-unit ",
+    "series and correctly flagged -- but the fix is labeling the break, not correcting values. ",
+    "448 of the 510 jumps sit exactly on the 2015->2016 transition. Note the trap: years_used is ",
+    "IDENTICAL either side of that break, so the redefinition is invisible in the vintage alone -- ",
+    "format_type in tracker/measure_vintages.csv is the signal that catches it. A second trap: the ",
+    "median flips from 1.0 (2016-17) to 0.0 (2018+) only because the share of counties reading 1 ",
+    "crosses 50% (51.8% -> 43.1%); that is an artifact of a binary variable near the midpoint, not ",
+    "a change in the data. The remaining 62 jumps are 2013->2015, within the percentage era, where ",
+    "a county moving off a near-zero proportion clears 50x on a tiny base."
   ))
 )
 
