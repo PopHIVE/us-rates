@@ -345,7 +345,13 @@ rates |>
 
 Joining on `measure` alone resolves 96.9% of county observations correctly; joining on both resolves **99.97%**. Anything displaying a year alongside a value — the explorer especially, via the `*_latest.csv.gz` files — should use this rather than the measure-level fields.
 
-Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`.
+Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`, `format_type`.
+
+**`tracker/measure_definition_changes.csv` — every description change**
+
+Also written by `code/build_measure_vintages.R`: one row per release where CHR&R's description text for a measure differs from the previous release (51 changes across 35 measures). Most are cosmetic rewording, but this is the **only** signal that catches a denominator change — `chr_preventable_hospital_stays` switched from "per 1,000 Medicare enrollees" to "per 100,000" between the 2018 and 2019 releases with `format_type` fixed at 0 and `years_used` advancing normally, so neither of the other signals sees it. Screening these for denominator or framing wording surfaces exactly three real unit changes in the whole catalog: `chr_primary_care_physicians` (2011), `chr_drinking_water_violations` (2016), and `chr_preventable_hospital_stays` (2019). All three are handled — the first and third are corrected in the populate scripts, the second is a genuine redefinition triaged in `tracker/qa_findings.csv`. Re-screen this file whenever a new CHR&R release lands.
+
+`format_type` is CHR&R's own display-format code, and it is a reliable signal that a measure changed **units** between releases — `vintage` cannot be trusted for this. `chr_drinking_water_violations` went from a percentage (`format_type` 1) to a yes/no indicator (`format_type` 5) between the 2015 and 2016 releases while its `years_used` string stayed *identical*, so the redefinition is invisible in the vintage alone. Where this column changes across consecutive releases, values either side are not comparable no matter what the vintage says. Only three measures do so today: `chr_drinking_water_violations` (2016, 1→5), `chr_primary_care_physicians` (2011, 0→3 — the rate-to-ratio switch the populate scripts correct for), and `chr_drug_overdose_deaths_modeled` (2018, 4→6).
 
 Two limits, both expected rather than defects:
 

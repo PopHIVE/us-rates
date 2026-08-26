@@ -93,7 +93,17 @@ vintages <- meta %>%
     vintage      = years_used,
     vintage_min  = vapply(yrs, min, integer(1)),
     vintage_max  = vapply(yrs, max, integer(1)),
-    vintage_lag  = release_year - vintage_min
+    vintage_lag  = release_year - vintage_min,
+    # CHR&R's display format code, carried through because it is the only
+    # reliable signal that a measure changed UNITS between releases.
+    # years_used cannot be trusted for this: chr_drinking_water_violations
+    # went from a percentage (format_type 1, "Percentage of population
+    # potentially exposed") to a yes/no indicator (format_type 5, "presence
+    # of a violation") between the 2015 and 2016 releases while its
+    # years_used string stayed identical, so the redefinition is invisible in
+    # the vintage alone. A change in this column across consecutive releases
+    # means values on either side are not comparable, whatever the vintage says.
+    format_type  = as.integer(format_type)
   ) %>%
   # Two CHR&R measure_ids can slug to one measure_id here when CHR&R retires an
   # id and reissues the same concept (see the collision note in
@@ -120,6 +130,35 @@ if (nrow(dupe_keys) > 0) {
   )
 }
 
+# -----------------------------------------------------------------------------
+# Definition-change report.
+#
+# Neither vintage nor format_type is sufficient to spot a measure whose UNITS
+# changed. chr_preventable_hospital_stays switched denominator from "per 1,000
+# Medicare enrollees" to "per 100,000" between the 2018 and 2019 releases with
+# format_type fixed at 0 and years_used advancing normally -- the change is
+# stated only in the description prose. Diffing that prose across consecutive
+# releases is the one signal that catches this class, so surface every change
+# and let a human judge which are cosmetic and which are real redefinitions.
+# -----------------------------------------------------------------------------
+definition_changes <- meta %>%
+  left_join(col_names, by = "measure_id") %>%
+  transmute(
+    measure_id  = col_name,
+    release_year = as.integer(year),
+    description = str_squish(as.character(description))
+  ) %>%
+  filter(!is.na(description), description != "", description != "NA") %>%
+  distinct() %>%
+  arrange(measure_id, release_year) %>%
+  group_by(measure_id) %>%
+  mutate(prev_description = lag(description)) %>%
+  ungroup() %>%
+  filter(!is.na(prev_description), prev_description != description)
+
+changes_path <- file.path(REPO_ROOT, "tracker", "measure_definition_changes.csv")
+vroom_write(definition_changes, changes_path, delim = ",")
+
 out_path <- file.path(REPO_ROOT, "tracker", "measure_vintages.csv")
 vroom_write(vintages, out_path, delim = ",")
 
@@ -131,3 +170,10 @@ message(
 message("  median release-vs-vintage lag: ", median(vintages$vintage_lag), " years")
 message("  max lag: ", max(vintages$vintage_lag), " years")
 message("\nWritten to ", out_path)
+
+message(
+  "\nWrote ", nrow(definition_changes), " description change(s) across ",
+  n_distinct(definition_changes$measure_id), " measures to ", changes_path
+)
+message("  Review these for unit/denominator changes -- they are invisible in")
+message("  both vintage and format_type. See chr_preventable_hospital_stays 2019.")
