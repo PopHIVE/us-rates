@@ -29,8 +29,11 @@
 library(dplyr)
 library(vroom)
 library(stringr)
+library(jsonlite)
 
 REPO_ROOT <- "."
+
+`%||%` <- function(x, y) if (is.null(x)) y else x
 
 if (!file.exists(file.path(REPO_ROOT, "measure_info.json"))) {
   stop(
@@ -38,6 +41,12 @@ if (!file.exists(file.path(REPO_ROOT, "measure_info.json"))) {
     "  Rscript code/build_measure_vintages.R"
   )
 }
+
+info <- fromJSON(
+  file.path(REPO_ROOT, "measure_info.json"),
+  simplifyVector = FALSE
+)
+info <- info[names(info) != "_sources"]
 
 # Prefer a local checkout of the CHR&R source repo (the usual dev layout, and
 # it keeps the build offline); fall back to the canonical raw URL so this also
@@ -75,24 +84,33 @@ col_names <- meta %>%
 # ranges ("2016-2022"), and disjoint sets ("2020 & 2016") all occur. Keep the
 # string verbatim -- collapsing "2020 & 2016" to a range would assert a
 # continuity that isn't there -- and derive min/max from the years present.
+# Every release gets a row, including the ~28 where CHR&R left years_used blank
+# (measures retired after 2010/2011, the state-specific _fl/_ny families, % Rural
+# in 2016, and non-health admin measures). Those rows carry NA vintage but real
+# format_type, description and credit -- dropping them would leave those measures
+# with no provenance at all and would silently strip their CHR&R attribution.
 vintages <- meta %>%
   mutate(years_used = str_trim(as.character(years_used))) %>%
-  filter(!is.na(years_used), years_used != "", years_used != "NA") %>%
   left_join(col_names, by = "measure_id") %>%
   rowwise() %>%
   mutate(
-    yrs = list(as.integer(unlist(str_extract_all(years_used, "(?:19|20)\\d{2}"))))
+    yrs = list(
+      if (is.na(years_used) || years_used %in% c("", "NA")) {
+        integer(0)
+      } else {
+        as.integer(unlist(str_extract_all(years_used, "(?:19|20)\\d{2}")))
+      }
+    )
   ) %>%
   ungroup() %>%
-  filter(lengths(yrs) > 0) %>%
   transmute(
     measure_id   = col_name,
     release_year = as.integer(year),
     # Matches the `time` column in every rate file, so this joins directly.
     release_time = paste0(year, "-12-31"),
-    vintage      = years_used,
-    vintage_min  = vapply(yrs, min, integer(1)),
-    vintage_max  = vapply(yrs, max, integer(1)),
+    vintage      = if_else(lengths(yrs) > 0, years_used, NA_character_),
+    vintage_min  = vapply(yrs, function(v) if (length(v)) min(v) else NA_integer_, integer(1)),
+    vintage_max  = vapply(yrs, function(v) if (length(v)) max(v) else NA_integer_, integer(1)),
     vintage_lag  = release_year - vintage_min,
     # CHR&R's display format code, carried through because it is the only
     # reliable signal that a measure changed UNITS between releases.
@@ -111,7 +129,104 @@ vintages <- meta %>%
   # produce identical rows -- chr_access_to_healthy_foods in 2012 is the only
   # current case -- so collapsing them is lossless.
   distinct() %>%
+  arrange(measure_id, release_year) %>%
+  mutate(compiled_via = "chr")
+
+# -----------------------------------------------------------------------------
+# County-level Census overrides.
+#
+# 17 measures keep a chr_ id while a single vintage of each is replaced by a
+# direct Census pull (see the census_direct_long block in
+# populate_county_rates.R). The id is deliberate: census_direct_long is bound
+# first and distinct(geography, time, measure) keeps the first row, so matching
+# ids are what makes the Census value win. Renaming would break the override and
+# mislabel the other ~93% of each series, which is still CHR&R -- including
+# every state and national row, since the PEP/SAIPE/SAHIE files are county-only.
+#
+# What the id cannot express is that ONE year of each series has a different
+# origin, so it is recorded here instead, per (measure, release_time).
+#
+# These are interior patches, not the newest point: CHR&R runs to 2025 while the
+# Census files sit at 2020-2024. chr_census_participation is the inverse case --
+# its Census year is the OLDEST in the series -- so never assume the direct year
+# is the latest one.
+# -----------------------------------------------------------------------------
+census_override <- bind_rows(
+  tibble(
+    measure_id = c(
+      "chr_population", "chr_65_and_older", "chr_below_18_years_of_age",
+      "chr_female", "chr_american_indian_or_alaska_native", "chr_asian",
+      "chr_native_hawaiian_or_other_pacific_islander", "chr_non_hispanic_black",
+      "chr_non_hispanic_white", "chr_hispanic"
+    ),
+    release_time = "2023-12-31", via_county = "census_pep"
+  ),
+  tibble(
+    measure_id = c("chr_children_in_poverty", "chr_median_household_income"),
+    release_time = "2024-12-31", via_county = "census_saipe"
+  ),
+  tibble(
+    measure_id = c("chr_uninsured", "chr_uninsured_adults", "chr_uninsured_children"),
+    release_time = "2024-12-31", via_county = "census_sahie"
+  ),
+  tibble(
+    measure_id = "chr_census_participation",
+    release_time = "2020-12-31", via_county = "census_oqm"
+  ),
+  # Derived, not passed through: 1 - census_ur_pct_urban_pop. The underlying
+  # value is a static 2020 decennial figure carried on the latest ACS vintage
+  # year, so this release_time is not a data year.
+  tibble(
+    measure_id = "chr_rural",
+    release_time = "2024-12-31", via_county = "census_decennial"
+  )
+)
+
+vintages <- vintages %>%
+  left_join(census_override, by = c("measure_id", "release_time")) %>%
+  mutate(
+    # compiled_via_county differs from compiled_via only where a direct Census
+    # pull replaces CHR&R at county level; state and national rows for that same
+    # (measure, time) stay CHR&R, which is why this is a separate column rather
+    # than an edit to compiled_via.
+    compiled_via_county = coalesce(via_county, compiled_via),
+    county_override = !is.na(via_county)
+  ) %>%
+  select(-via_county)
+
+# Most overrides replace a CHR&R release that already exists, so the join above
+# is enough. But an override year can have no CHR&R release behind it at all:
+# chr_census_participation exists in us-rates for 2020 ONLY because of the OQM
+# pull -- CHR&R first published the measure in its 2023 release. Those rows have
+# to be added, or the (measure, time) pairs they cover never resolve.
+census_only <- census_override %>%
+  anti_join(vintages, by = c("measure_id", "release_time")) %>%
+  mutate(
+    release_year = as.integer(substr(release_time, 1, 4)),
+    # For a Census-sourced year the release IS the data year -- no CHR&R
+    # publication lag sits between them.
+    vintage = as.character(release_year),
+    vintage_min = release_year,
+    vintage_max = release_year,
+    vintage_lag = 0L,
+    format_type = NA_integer_,
+    compiled_via = via_county,
+    compiled_via_county = via_county,
+    county_override = TRUE
+  ) %>%
+  select(-via_county)
+
+vintages <- bind_rows(vintages, census_only) %>%
   arrange(measure_id, release_year)
+
+n_override <- sum(vintages$county_override)
+if (n_override != 17) {
+  stop(
+    "Expected all 17 county Census overrides to be represented, got ",
+    n_override, ". A patch year has moved in populate_county_rates.R -- ",
+    "reconcile census_override before trusting compiled_via_county."
+  )
+}
 
 # (measure_id, release_time) is the join key. A duplicate would silently fan out
 # rows on every left_join against it -- duplicating observations rather than
@@ -141,7 +256,7 @@ if (nrow(dupe_keys) > 0) {
 # releases is the one signal that catches this class, so surface every change
 # and let a human judge which are cosmetic and which are real redefinitions.
 # -----------------------------------------------------------------------------
-definition_changes <- meta %>%
+descriptions <- meta %>%
   left_join(col_names, by = "measure_id") %>%
   transmute(
     measure_id  = col_name,
@@ -152,12 +267,14 @@ definition_changes <- meta %>%
   distinct() %>%
   arrange(measure_id, release_year) %>%
   group_by(measure_id) %>%
-  mutate(prev_description = lag(description)) %>%
-  ungroup() %>%
-  filter(!is.na(prev_description), prev_description != description)
+  mutate(description_changed = !is.na(lag(description)) & lag(description) != description) %>%
+  ungroup()
 
-changes_path <- file.path(REPO_ROOT, "tracker", "measure_definition_changes.csv")
-vroom_write(definition_changes, changes_path, delim = ",")
+vintages <- vintages %>%
+  left_join(descriptions, by = c("measure_id", "release_year")) %>%
+  mutate(description_changed = coalesce(description_changed, FALSE))
+
+
 
 out_path <- file.path(REPO_ROOT, "tracker", "measure_vintages.csv")
 vroom_write(vintages, out_path, delim = ",")
@@ -167,13 +284,14 @@ message(
   n_distinct(vintages$measure_id), " measures across releases ",
   min(vintages$release_year), "-", max(vintages$release_year), "."
 )
-message("  median release-vs-vintage lag: ", median(vintages$vintage_lag), " years")
-message("  max lag: ", max(vintages$vintage_lag), " years")
+message("  median release-vs-vintage lag: ", median(vintages$vintage_lag, na.rm = TRUE), " years")
+message("  max lag: ", max(vintages$vintage_lag, na.rm = TRUE), " years")
+message(
+  "  releases where CHR&R reworded the description: ",
+  sum(vintages$description_changed), " across ",
+  n_distinct(vintages$measure_id[vintages$description_changed]), " measures"
+)
+message("    Screen these for unit/denominator changes -- they are invisible in")
+message("    both vintage and format_type. See chr_preventable_hospital_stays 2019.")
 message("\nWritten to ", out_path)
 
-message(
-  "\nWrote ", nrow(definition_changes), " description change(s) across ",
-  n_distinct(definition_changes$measure_id), " measures to ", changes_path
-)
-message("  Review these for unit/denominator changes -- they are invisible in")
-message("  both vintage and format_type. See chr_preventable_hospital_stays 2019.")

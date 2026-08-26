@@ -536,7 +536,9 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_sahie",
+    "county_override_time": "2024-12-31"
   },
   "chr_primary_care_physicians": {
     "id": "chr_primary_care_physicians",
@@ -761,7 +763,9 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_saipe",
+    "county_override_time": "2024-12-31"
   },
   "chr_poor_physical_health_days": {
     "id": "chr_poor_physical_health_days",
@@ -1112,7 +1116,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_below_18_years_of_age": {
     "id": "chr_below_18_years_of_age",
@@ -1135,7 +1141,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_65_and_older": {
     "id": "chr_65_and_older",
@@ -1158,7 +1166,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_non_hispanic_black": {
     "id": "chr_non_hispanic_black",
@@ -1181,7 +1191,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_american_indian_or_alaska_native": {
     "id": "chr_american_indian_or_alaska_native",
@@ -1204,7 +1216,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_hispanic": {
     "id": "chr_hispanic",
@@ -1227,7 +1241,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_female": {
     "id": "chr_female",
@@ -1250,7 +1266,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_rural": {
     "id": "chr_rural",
@@ -1273,7 +1291,9 @@
         "id": "census_decennial"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_decennial",
+    "county_override_time": "2024-12-31"
   },
   "chr_not_proficient_in_english": {
     "id": "chr_not_proficient_in_english",
@@ -1387,7 +1407,9 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_saipe",
+    "county_override_time": "2024-12-31"
   },
   "chr_children_eligible_for_free_or_reduced_price_lunch": {
     "id": "chr_children_eligible_for_free_or_reduced_price_lunch",
@@ -1502,7 +1524,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_asian": {
     "id": "chr_asian",
@@ -1525,7 +1549,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_children_in_single_parent_households": {
     "id": "chr_children_in_single_parent_households",
@@ -1612,7 +1638,9 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_sahie",
+    "county_override_time": "2024-12-31"
   },
   "chr_dentists": {
     "id": "chr_dentists",
@@ -1658,7 +1686,9 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_sahie",
+    "county_override_time": "2024-12-31"
   },
   "chr_drinking_water_violations": {
     "id": "chr_drinking_water_violations",
@@ -1726,7 +1756,9 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_pep",
+    "county_override_time": "2023-12-31"
   },
   "chr_premature_age_adjusted_mortality": {
     "id": "chr_premature_age_adjusted_mortality",
@@ -2595,7 +2627,9 @@
         "id": "census_oqm"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "county_override_via": "census_oqm",
+    "county_override_time": "2020-12-31"
   },
   "chr_access_to_parks": {
     "id": "chr_access_to_parks",
