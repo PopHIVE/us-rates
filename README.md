@@ -345,19 +345,23 @@ rates |>
 
 Joining on `measure` alone resolves 96.9% of county observations correctly; joining on both resolves **99.97%**. Anything displaying a year alongside a value — the explorer especially, via the `*_latest.csv.gz` files — should use this rather than the measure-level fields.
 
-Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`, `format_type`, `compiled_via`, `compiled_via_county`, `county_override`.
+Columns: `measure_id`, `release_year`, `release_time` (the join key, `YYYY-12-31`), `vintage`, `vintage_min`, `vintage_max`, `vintage_lag`, `format_type`, `compiled_via`, `description`, `description_changed`.
 
-**Provenance can differ by year and by geography level.** Seventeen measures keep a `chr_` id while a single vintage of each is replaced by a direct Census pull — see the `census_direct_long` block in `code/populate_county_rates.R`. The shared id is deliberate and load-bearing: `census_direct_long` is bound first and `distinct(geography, time, measure)` keeps the first row, so *matching ids are the mechanism* that lets the Census value win. Renaming them would break the override and mislabel the rest of each series, which is still CHR&R.
+**Direct sources keep their own prefix.** Census publishes several concepts that CHR&R also redistributes. Where PopHIVE ingests the source directly, those measures carry the source's own prefix rather than being mapped onto a `chr_` id:
 
-These are **interior patches, not the newest point** — CHR&R runs to 2025 while the Census files sit at 2020–2024, so the latest observation of all 17 is CHR&R-sourced. `chr_census_participation` is the inverse case, where the Census year is the *oldest* in the series; never assume the direct year is the latest one. The override is also **county-only**, because the PEP/SAIPE/SAHIE files contain no state or national rows — which is why `compiled_via_county` is a separate column rather than an edit to `compiled_via`:
+| Prefix | Source | Measures | Levels |
+|---|---|---|---|
+| `pep_` | Census Population Estimates Program | 10 | national, state, county |
+| `saipe_` | Small Area Income and Poverty Estimates | 2 | national, state, county |
+| `sahie_` | Small Area Health Insurance Estimates | 3 | national, state, county |
+| `oqm_` | Census Operational Quality Metrics | 1 | national, county (Census publishes no state table) |
+| `census_ur_` | 2020 Census Urban Area relationship file | 3 | state, county |
 
-| Column | Meaning |
-|---|---|
-| `compiled_via` | Who compiled this release at state and national level — always `chr` today |
-| `compiled_via_county` | Who compiled it at **county** level: `chr`, or one of `census_pep` / `census_saipe` / `census_sahie` / `census_oqm` / `census_decennial` |
-| `county_override` | `TRUE` on the 17 rows where the two differ |
+The `chr_` equivalents remain as separate series, because CHR&R carries far more history (2010 onward) than any single direct pull. Both are kept and labelled; neither overwrites the other.
 
-The same 17 measures carry `county_override_via` and `county_override_time` in `measure_info.json` so the exception is visible without the join. The build fails loudly if the count drifts from 17 — a patch year moving in the populate script would otherwise silently mislabel provenance.
+Earlier these direct values were mapped onto the matching `chr_` ids so they would replace CHR&R's. That was wrong in a way worth recording: each Census file holds one current-vintage year, while CHR&R's series lags its release year by a consistent 2–3 years, so a single spliced point produced a false spike in up to 63% of counties — 2024 median household income jumping ~19% and falling back the next year. Separate ids remove the conflict entirely: each series is internally consistent, and no precedence rule is needed.
+
+It also makes coverage honest. CHR&R still reports Connecticut under legacy county codes, so `chr_population` genuinely does not exist for the 9 planning regions — `pep_population` does. The same holds for Alaska's Chugach and Copper River, and for Puerto Rico's municipios, which CHR&R does not cover at all.
 
 **Compiler credit** lives on the registry, not in a file of its own — it is one row per measure, which is that table's grain. `compiler_first_year`, `compiler_last_year`, and `compiler_citation` record that a compiler supplied a measure, which stays true even if it is later converted to a direct source. That is distinct from `compiled_via`, which tracks who compiles it *now* and can change.
 

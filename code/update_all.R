@@ -16,20 +16,9 @@
 #  10. code/build_measure_registry.R   - write tracker/measure_registry.csv
 #  11. code/qa_audit.R                 - write tracker/qa_findings.csv
 #
-# Steps 9-11 refresh the tracker tables so they can never drift from the data
-# they describe. They only WRITE to tracker/ -- no step here touches a rate
-# file, measure_info.json, or us-rates-geographies.json, so a failure in this
-# block leaves the published data exactly as steps 1-8 wrote it.
-#
-# Order matters between 9 and 10: build_measure_registry.R reads
-# tracker/measure_vintages.csv for the compiler-credit columns, and running it
-# first leaves all 153 citations empty. Enforced by position here rather than
-# by convention.
-#
-# Nothing in tracker/ is part of the published data contract -- the explorer
-# reads measure_info.json, the *_rates.csv.gz files, and
-# us-rates-geographies.json. These tables are internal, so refreshing them
-# cannot affect a downstream consumer.
+# Steps 9-11 write only to tracker/, so a failure there leaves the published
+# data exactly as steps 1-8 wrote it. Step 9 must precede step 10, which reads
+# measure_vintages.csv for the compiler-credit columns.
 #
 # Must be run from the repo root (paths in every step are relative to root).
 #

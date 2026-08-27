@@ -150,72 +150,29 @@ drop_ct_legacy_duplicates <- function(df) {
   df %>% filter(!(geography %in% CT_LEGACY_COUNTY_CODES))
 }
 
-# Census-native replacements for 17 measures historically sourced only from
-# CHR's own redistribution (chr_population, chr_rural, etc.). Each of these
-# Ingest files covers a single current vintage, so this only patches the
-# latest data point per measure -- older CHR-sourced years for these same
-# measure names are left untouched in chr_long below.
-pep_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE)
-saipe_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE)
-oqm_wide   <- vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
-sahie_wide <- vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE)
-
+# Direct-from-source Census pulls, kept under their own source prefixes
+# (pep_, saipe_, sahie_, oqm_) rather than mapped onto chr_ ids. The direct
+# source is the authority; CHR&R's redistribution of the same concepts stays a
+# separate, separately-labelled series. Mapping them onto chr_ ids previously
+# spliced one current-vintage year into CHR&R's consistently-lagged series,
+# producing a false spike in up to 63% of counties.
 census_direct_long <- bind_rows(
-  pep_wide %>%
-    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
-    mutate(measure = recode(measure,
-      pep_population   = "chr_population",
-      pep_pct_65_older = "chr_65_and_older",
-      pep_pct_under_18 = "chr_below_18_years_of_age",
-      pep_pct_female   = "chr_female",
-      pep_pct_aian     = "chr_american_indian_or_alaska_native",
-      pep_pct_asian    = "chr_asian",
-      pep_pct_nhpi     = "chr_native_hawaiian_or_other_pacific_islander",
-      pep_pct_nh_black = "chr_non_hispanic_black",
-      pep_pct_nh_white = "chr_non_hispanic_white",
-      pep_pct_hispanic = "chr_hispanic"
-    )),
-  saipe_wide %>%
-    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
-    mutate(measure = recode(measure,
-      saipe_pct_children_poverty    = "chr_children_in_poverty",
-      saipe_median_household_income = "chr_median_household_income"
-    )),
-  oqm_wide %>%
-    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
-    mutate(measure = "chr_census_participation"),
-  sahie_wide %>%
-    pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
-    mutate(measure = recode(measure,
-      sahie_pct_uninsured          = "chr_uninsured",
-      sahie_pct_uninsured_adults   = "chr_uninsured_adults",
-      sahie_pct_uninsured_children = "chr_uninsured_children"
-    )),
-  # census_ur_pct_urban_pop is a static 2020-decennial value repeated across
-  # every ACS vintage year in census_wide; take the latest one point only.
-  census_wide %>%
-    filter(time == max(time)) %>%
-    transmute(geography, time, measure = "chr_rural", value = 1 - census_ur_pct_urban_pop)
+  vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
 ) %>%
+  filter(nchar(geography) == 5) %>%
+  pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
   filter(!is.na(value)) %>%
   drop_alaska_defunct_duplicates() %>%
   drop_ct_legacy_duplicates()
 
-# chr_long (below) is CHR&R's own redistribution, which cuts over to a
-# renamed/split/merged geography on its own schedule -- often later than the
-# actual FIPS change (e.g. it still reports Valdez-Cordova, 02261, through
-# 2023, and legacy CT counties through 2023, despite both changes taking
-# effect earlier). For any date where census_direct_long already reports the
-# current-generation code, drop chr_long's competing legacy/defunct-code row
-# for that same date rather than double-report the year across generations --
-# distinct() further down can't catch this since the geography keys differ.
-census_direct_dates <- unique(census_direct_long$time)
-
-chr_long <- chr_long %>%
-  filter(!(
-    (geography %in% ALASKA_DEFUNCT_CODES | geography %in% CT_LEGACY_COUNTY_CODES) &
-      time %in% census_direct_dates
-  ))
+# The direct-Census pulls above now carry their own pep_/saipe_/sahie_/oqm_
+# ids, so they no longer collide with chr_ ids under a different geography
+# generation. CHR&R's legacy-code rows are kept as published;
+# check_geography_renaming.R verifies nothing is double-reported across a
+# renamed, split, or merged geography.
 
 message("Loading chronic disease and immunization data...")
 
@@ -624,7 +581,7 @@ delphi_hosp_long <- vroom(
   filter(!is.na(value))
 
 combined <- bind_rows(
-  census_direct_long, chr_long, census_long, epic_long,
+  chr_long, census_direct_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
   cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
@@ -634,8 +591,15 @@ combined <- bind_rows(
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
   # (51005), VA, once per pre/post-2013 independent-city-merger FIPS mapping.
-  # census_direct_long is listed first so it wins any exact match against
-  # chr_long for the same (geography, time, measure) -- see above.
+  # chr_long is listed BEFORE census_direct_long so CHR&R wins any exact match
+  # for the same (geography, time, measure). The direct-Census pull is a single
+  # current-vintage year; splicing it into CHR&R's consistently-lagged series
+  # produced a false spike in up to 63% of counties (2024 median household
+  # income jumping ~19% then falling back). Bound second, it only FILLS GAPS --
+  # which is where it is indispensable: CHR&R still reports legacy CT county and
+  # defunct Alaska codes, so Census is the sole source for the 9 CT planning
+  # regions and for Chugach/Copper River, and the only source of chr_rural for
+  # Puerto Rico's municipios.
   distinct(geography, time, measure, .keep_all = TRUE) %>%
   arrange(geography, time, measure)
 

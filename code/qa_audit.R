@@ -181,21 +181,9 @@ findings <- bind_rows(bounds_findings, inversion_findings, jump_findings) %>%
   mutate(status = "auto-detected")
 
 # -----------------------------------------------------------------------------
-# Investigated findings: auto-detected findings that have been manually
-# cross-checked against ahrf_population and real Census figures, overriding
-# the generic "two different units" guess with what was actually verified.
-#
-# The AHRF suffix-comparison bug that originally drove these is RESOLVED.
-# AHRF's SAS format files carry a rolling window of same-description
-# variables spanning both the 1990s and 2000s+ (e.g. a population variable
-# suffixed "01" for 2001 sitting next to one suffixed "99" for 1999), and
-# where an edition carried no explicit year label the upstream ingest
-# (area-health-resource-files/ingest.R) picked the numerically larger
-# 2-digit suffix -- so "99" (1999) beat "01" (2001). The century-pivot fix
-# landed upstream, propagated through Ingest, and is reflected in this
-# repo's data as of commit 82ff8e3a1. ahrf_psych no longer trips the jump
-# check at all, and ahrf_md_all is down to the three residual jumps
-# described below, which have a different cause.
+# Findings investigated by hand, replacing the generic "two different units"
+# guess with what was actually verified. Each detail string below is written to
+# tracker/qa_findings.csv as the finding's diagnosis.
 # -----------------------------------------------------------------------------
 
 flagged_root_causes <- tibble(
