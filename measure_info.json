@@ -536,9 +536,7 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_sahie",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_primary_care_physicians": {
     "id": "chr_primary_care_physicians",
@@ -763,9 +761,7 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_saipe",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_poor_physical_health_days": {
     "id": "chr_poor_physical_health_days",
@@ -1116,9 +1112,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_below_18_years_of_age": {
     "id": "chr_below_18_years_of_age",
@@ -1141,9 +1135,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_65_and_older": {
     "id": "chr_65_and_older",
@@ -1166,9 +1158,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_non_hispanic_black": {
     "id": "chr_non_hispanic_black",
@@ -1191,9 +1181,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_american_indian_or_alaska_native": {
     "id": "chr_american_indian_or_alaska_native",
@@ -1216,9 +1204,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_hispanic": {
     "id": "chr_hispanic",
@@ -1241,9 +1227,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_female": {
     "id": "chr_female",
@@ -1266,9 +1250,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_rural": {
     "id": "chr_rural",
@@ -1291,9 +1273,7 @@
         "id": "census_decennial"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_decennial",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_not_proficient_in_english": {
     "id": "chr_not_proficient_in_english",
@@ -1407,9 +1387,7 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_saipe",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_children_eligible_for_free_or_reduced_price_lunch": {
     "id": "chr_children_eligible_for_free_or_reduced_price_lunch",
@@ -1524,9 +1502,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_asian": {
     "id": "chr_asian",
@@ -1549,9 +1525,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_children_in_single_parent_households": {
     "id": "chr_children_in_single_parent_households",
@@ -1638,9 +1612,7 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_sahie",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_dentists": {
     "id": "chr_dentists",
@@ -1686,9 +1658,7 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_sahie",
-    "county_override_time": "2024-12-31"
+    "compiled_via": "chr"
   },
   "chr_drinking_water_violations": {
     "id": "chr_drinking_water_violations",
@@ -1756,9 +1726,7 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_pep",
-    "county_override_time": "2023-12-31"
+    "compiled_via": "chr"
   },
   "chr_premature_age_adjusted_mortality": {
     "id": "chr_premature_age_adjusted_mortality",
@@ -2627,9 +2595,7 @@
         "id": "census_oqm"
       }
     ],
-    "compiled_via": "chr",
-    "county_override_via": "census_oqm",
-    "county_override_time": "2020-12-31"
+    "compiled_via": "chr"
   },
   "chr_access_to_parks": {
     "id": "chr_access_to_parks",
@@ -7787,6 +7753,293 @@
     "sources": [
       {
         "id": "epic"
+      }
+    ]
+  },
+  "pep_population": {
+    "id": "pep_population",
+    "short_name": "Population (PEP)",
+    "long_name": "Total Resident Population",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Resident population.",
+    "long_description": "Total resident population, direct from the U.S. Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, the total population was {value}.",
+    "measure_type": "number",
+    "unit": "Persons",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_65_older": {
+    "id": "pep_pct_65_older",
+    "short_name": "Age 65 and Older (PEP)",
+    "long_name": "Percent of Population Age 65 and Older",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population ages 65 and older.",
+    "long_description": "Share of residents aged 65 and older, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population was 65 or older.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_under_18": {
+    "id": "pep_pct_under_18",
+    "short_name": "Under 18 (PEP)",
+    "long_name": "Percent of Population Under 18",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population below 18 years of age.",
+    "long_description": "Share of residents under 18, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population was under 18 years old.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_female": {
+    "id": "pep_pct_female",
+    "short_name": "Female (PEP)",
+    "long_name": "Percent of Population Female",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as female.",
+    "long_description": "Share of residents who are female, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as female.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_aian": {
+    "id": "pep_pct_aian",
+    "short_name": "American Indian / Alaska Native (PEP)",
+    "long_name": "Percent American Indian or Alaska Native",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as American Indian or Alaska Native.",
+    "long_description": "Share of residents identifying as American Indian or Alaska Native alone, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as American Indian or Alaska Native.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_asian": {
+    "id": "pep_pct_asian",
+    "short_name": "Asian (PEP)",
+    "long_name": "Percent Asian",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as Asian.",
+    "long_description": "Share of residents identifying as Asian alone, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as Asian.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_nhpi": {
+    "id": "pep_pct_nhpi",
+    "short_name": "Native Hawaiian / Pacific Islander (PEP)",
+    "long_name": "Percent Native Hawaiian or Other Pacific Islander",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as Native Hawaiian or Other Pacific Islander.",
+    "long_description": "Share of residents identifying as Native Hawaiian or Other Pacific Islander alone, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as Native Hawaiian or Other Pacific Islander.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_nh_black": {
+    "id": "pep_pct_nh_black",
+    "short_name": "Non-Hispanic Black (PEP)",
+    "long_name": "Percent Non-Hispanic Black",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as non-Hispanic Black or African American.",
+    "long_description": "Share of residents identifying as Black or African American alone, not Hispanic or Latino, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as non-Hispanic Black or African American.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_nh_white": {
+    "id": "pep_pct_nh_white",
+    "short_name": "Non-Hispanic White (PEP)",
+    "long_name": "Percent Non-Hispanic White",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as non-Hispanic white.",
+    "long_description": "Share of residents identifying as White alone, not Hispanic or Latino, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as non-Hispanic white.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "pep_pct_hispanic": {
+    "id": "pep_pct_hispanic",
+    "short_name": "Hispanic or Latino (PEP)",
+    "long_name": "Percent Hispanic or Latino",
+    "category": "population_demographics",
+    "subcategory": null,
+    "short_description": "Percentage of population identifying as Hispanic.",
+    "long_description": "Share of residents identifying as Hispanic or Latino of any race, direct from the Census Bureau's Population Estimates Program.",
+    "statement": "In {location}, {value} of the population identified as Hispanic.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_pep"
+      }
+    ]
+  },
+  "saipe_pct_children_poverty": {
+    "id": "saipe_pct_children_poverty",
+    "short_name": "Children in Poverty (SAIPE)",
+    "long_name": "Percent of Children in Poverty",
+    "category": "social_determinants_of_health",
+    "subcategory": "economic_stability",
+    "short_description": "Percentage of people under age 18 in poverty.",
+    "long_description": "Share of children under 18 living below the federal poverty level, direct from the Census Bureau's Small Area Income and Poverty Estimates.",
+    "statement": "In {location}, {value} of children lived in poverty.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_saipe"
+      }
+    ]
+  },
+  "saipe_median_household_income": {
+    "id": "saipe_median_household_income",
+    "short_name": "Median Household Income (SAIPE)",
+    "long_name": "Median Household Income",
+    "category": "social_determinants_of_health",
+    "subcategory": "economic_stability",
+    "short_description": "The income where half of households earn more and half earn less.",
+    "long_description": "Median household income, direct from the Census Bureau's Small Area Income and Poverty Estimates.",
+    "statement": "In {location}, the median household income was {value}.",
+    "measure_type": "dollars",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_saipe"
+      }
+    ]
+  },
+  "sahie_pct_uninsured": {
+    "id": "sahie_pct_uninsured",
+    "short_name": "Uninsured (SAHIE)",
+    "long_name": "Percent Uninsured",
+    "category": "social_determinants_of_health",
+    "subcategory": "health_care_access_and_quality",
+    "short_description": "Percentage of population under age 65 without health insurance.",
+    "long_description": "Share of the population without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
+    "statement": "In {location}, {value} of the population under 65 lacked health insurance.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_sahie"
+      }
+    ]
+  },
+  "sahie_pct_uninsured_adults": {
+    "id": "sahie_pct_uninsured_adults",
+    "short_name": "Uninsured Adults (SAHIE)",
+    "long_name": "Percent of Adults Uninsured",
+    "category": "social_determinants_of_health",
+    "subcategory": "health_care_access_and_quality",
+    "short_description": "Percentage of adults under age 65 without health insurance.",
+    "long_description": "Share of adults aged 18-64 without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
+    "statement": "In {location}, {value} of adults under 65 lacked health insurance.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_sahie"
+      }
+    ]
+  },
+  "sahie_pct_uninsured_children": {
+    "id": "sahie_pct_uninsured_children",
+    "short_name": "Uninsured Children (SAHIE)",
+    "long_name": "Percent of Children Uninsured",
+    "category": "social_determinants_of_health",
+    "subcategory": "health_care_access_and_quality",
+    "short_description": "Percentage of children under age 19 without health insurance.",
+    "long_description": "Share of children under 19 without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
+    "statement": "In {location}, {value} of children under 19 lacked health insurance.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_sahie"
+      }
+    ]
+  },
+  "oqm_self_response_rate": {
+    "id": "oqm_self_response_rate",
+    "short_name": "Census Self-Response Rate",
+    "long_name": "2020 Census Self-Response Rate",
+    "category": "social_determinants_of_health",
+    "subcategory": "social_and_community_context",
+    "short_description": "Percentage of households that self-responded to the 2020 census.",
+    "long_description": "Share of households that self-responded to the 2020 Census, direct from the Census Bureau's Operational Quality Metrics.",
+    "statement": "In {location}, {value} of households self-responded to the 2020 census.",
+    "measure_type": "percent",
+    "scale": "0-1",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "census_oqm"
       }
     ]
   }

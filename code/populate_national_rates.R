@@ -113,6 +113,19 @@ chr_long <- vroom(
 # national series). No HUD CHAS block here -- HUD publishes no national
 # CHAS table (see hud-chas repo's ingest.R), so hud_pct_severe_housing_problems
 # has no national-level counterpart.
+# Direct-from-source Census pulls (PEP, SAIPE, SAHIE, OQM), kept under their own
+# source prefixes rather than mapped onto chr_ ids -- see populate_county_rates.R.
+# OQM publishes no state row, so it contributes only at national.
+census_direct_long <- bind_rows(
+  vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
+) %>%
+  filter(geography == "00") %>%
+  pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+  filter(!is.na(value))
+
 bls_long <- vroom(
   file.path(INGEST_PATH, "bls_laus/standard/data_state.csv.gz"),
   show_col_types = FALSE
@@ -455,7 +468,7 @@ ahrf_long <- vroom(
   select(geography, time, measure, value)
 
 combined <- bind_rows(
-  chr_long, brfss_long, imm_long, svv_exempt_long, cms_long, epic_dx_long,
+  census_direct_long, chr_long, brfss_long, imm_long, svv_exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_causes_long, nchs_long, exempt_long, jhu_measles_long,

@@ -123,6 +123,19 @@ chr_long <- vroom(
     value
   ))
 
+# Direct-from-source Census pulls (PEP, SAIPE, SAHIE, OQM), kept under their own
+# source prefixes rather than mapped onto chr_ ids -- see populate_county_rates.R.
+# OQM publishes no state row, so it contributes only at national.
+census_direct_long <- bind_rows(
+  vroom(file.path(INGEST_PATH, "census/standard/data_pep.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_saipe.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_sahie.csv.gz"), show_col_types = FALSE),
+  vroom(file.path(INGEST_PATH, "census/standard/data_oqm.csv.gz"), show_col_types = FALSE)
+) %>%
+  filter(nchar(geography) == 2, geography != "00") %>%
+  pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
+  filter(!is.na(value))
+
 census_long <- vroom(
   file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
   show_col_types = FALSE
@@ -533,7 +546,7 @@ ahrf_long <- vroom(
   select(geography, time, measure, value)
 
 combined <- bind_rows(
-  chr_long, census_long, brfss_long,
+  census_direct_long, chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,

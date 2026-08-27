@@ -47,11 +47,9 @@ measures <- tibble(measure_id = names(info)) %>%
     unit        = map_chr(entry, ~ .x$unit          %||% NA_character_),
     scale       = map_chr(entry, ~ .x$scale         %||% NA_character_),
     time_resolution = map_chr(entry, ~ .x$time_resolution %||% NA_character_),
-    # True data years, distinct from the release year carried in `time`. Only
-    # CHR&R measures have this so far: it comes from years_used in CHR&R's own
-    # t_measure_years.csv and describes each measure's most recent release
-    # (vintage_release), which is what the latest-only explorer displays. Other
-    # pipelines need their own vintage source before they can be filled in.
+    # True data years, distinct from the release year in `time`. CHR&R only so
+    # far, and describes the most recent release; per-release truth lives in
+    # tracker/measure_vintages.csv.
     vintage     = map_chr(entry, ~ .x$vintage         %||% NA_character_),
     vintage_min = map_int(entry, ~ as.integer(.x$vintage_min     %||% NA_integer_)),
     vintage_max = map_int(entry, ~ as.integer(.x$vintage_max     %||% NA_integer_)),
@@ -75,10 +73,10 @@ measures <- tibble(measure_id = names(info)) %>%
 # prefix isn't always enough: nchs_overdose_rate is pulled from
 # bundle_injury_overdose (every other nchs_ id comes from nchs_mortality), and
 # epic_heat_ed_rate is pulled from epic_injury (every other epic_ id comes
-# from epic_chronic), so both get an explicit override below. nssp_ ids are
-# pulled from the "nssp" folder at national/state but from a county-only cut
-# in bundle_respiratory -- same underlying CDC feed, so no override is
-# needed, but the file differs by geography level for this prefix.
+# from epic_chronic), so both get an explicit override below. nssp_ ids read
+# the "nssp" folder at all three levels.
+#
+# Every measure reads one Ingest folder at every geography level it appears at.
 #
 # Several prefixes (brfss, nis, svv, wapo) point at a "bundle_*" folder
 # rather than a same-topic raw source folder, even though a raw source folder
@@ -91,11 +89,9 @@ measures <- tibble(measure_id = names(info)) %>%
 # reconciles the raw nis and schoolvaxview sources into one comparable
 # format; bundle_injury_overdose computes rate_deaths_overdose from raw
 # nchs_mortality counts plus population data (the rate isn't in the raw
-# source at all); bundle_respiratory merges the raw nssp county feed with
-# Epic, wastewater, Delphi, and Google Trends data and nssp_ county rows are
-# extracted from that merge. If a bundle here ever looks avoidable, check its
-# build.R in the Ingest repo before routing around it -- it's usually where
-# the actual number gets computed, not just a repackaging.
+# source at all). If a bundle here ever looks avoidable, check its build.R in
+# the Ingest repo before routing around it -- it's usually where the actual
+# number gets computed, not just a repackaging.
 #
 # Pipeline is a separate fact from "true origin": measure_info.json's own
 # per-measure `sources` field (captured above as source_id) already records
@@ -349,6 +345,8 @@ registry <- registry %>%
     ),
     expected_state = case_when(
       measure_id %in% state_suffixed_ids ~ "N-A",
+      # Census OQM publishes county and national rows only -- no state table.
+      measure_id == "oqm_self_response_rate" ~ "N-A",
       TRUE ~ "Y"
     ),
     expected_county = case_when(
@@ -371,20 +369,12 @@ registry <- registry %>%
   mutate(duplicate_group = coalesce(duplicate_group, measure_id))
 
 # -----------------------------------------------------------------------------
-# Compiler credit.
+# Compiler credit. Generic rather than per-compiler columns, since compiled_via
+# already names which one. Both publishers require their citation verbatim.
 #
-# Credit, not provenance. compiled_via records who compiles a measure NOW and
-# can change; these columns record that a compiler supplied it, which does not
-# stop being true if the measure is later converted to a direct source.
-#
-# Deliberately generic rather than one set of columns per compiler: compiled_via
-# already names which one, so chr_/ahrf_-specific columns would be the same
-# three facts written twice. Both publishers require their citation verbatim.
-#
-# CHR&R spans come from tracker/measure_vintages.csv, which is per release (run
-# code/build_measure_vintages.R first). AHRF has no equivalent release table, so
-# its span is the measure's own data-year range -- for AHRF, time IS the data
-# year.
+# CHR&R spans come from tracker/measure_vintages.csv -- run
+# code/build_measure_vintages.R FIRST or every citation is empty. AHRF has no
+# release table, so its span is the measure's own data-year range.
 # -----------------------------------------------------------------------------
 vintages_path <- file.path(REPO_ROOT, "tracker", "measure_vintages.csv")
 
@@ -419,10 +409,8 @@ registry <- registry %>%
       compiled_via == "ahrf" ~ as.integer(substr(time_max, 1, 4)),
       TRUE                   ~ NA_integer_
     ),
-    # paste0() renders NA as the literal string "NA", so a missing year would
-    # otherwise publish "...Roadmaps NA." -- a malformed citation that still
-    # reads as populated. Guard on the years being present so an incomplete
-    # citation is empty rather than wrong.
+    # paste0() renders NA as "NA", which would publish "...Roadmaps NA." --
+    # malformed but non-empty. Guard so an incomplete citation is empty.
     compiler_citation = case_when(
       compiled_via == "chr" & !is.na(compiler_last_year) ~ paste0(
         "University of Wisconsin Population Health Institute. ",
