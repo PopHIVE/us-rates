@@ -487,6 +487,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -509,6 +512,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -533,6 +539,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_sahie"
       }
     ],
@@ -555,6 +564,9 @@
     "vintage_max": 2021,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "ama_physician_masterfile"
       }
@@ -579,6 +591,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cms"
       }
     ],
@@ -601,6 +616,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -625,6 +643,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -647,6 +668,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "nchs"
       }
@@ -671,6 +695,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -694,6 +721,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "edfacts"
       }
     ],
@@ -716,6 +746,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "bls_laus"
       }
@@ -758,6 +791,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_saipe"
       }
     ],
@@ -780,6 +816,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -804,6 +843,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -826,6 +868,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "nchs"
       }
@@ -994,6 +1039,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -1016,6 +1064,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -1040,6 +1091,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cdc_nchhstp"
       }
     ],
@@ -1062,6 +1116,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -1086,6 +1143,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cms"
       }
     ],
@@ -1108,6 +1168,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1132,6 +1195,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_pep"
       }
     ],
@@ -1154,6 +1220,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1178,6 +1247,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_pep"
       }
     ],
@@ -1200,6 +1272,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1224,6 +1299,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_pep"
       }
     ],
@@ -1246,6 +1324,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1270,6 +1351,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_decennial"
       }
     ],
@@ -1293,6 +1377,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -1305,7 +1392,7 @@
     "category": "chronic_disease",
     "subcategory": "cardiovascular_metabolic",
     "short_description": "Percentage of adults aged 18+ with diagnosed diabetes (age-adjusted).",
-    "long_description": "Percentage of adults aged 18 and above with diagnosed diabetes (age-adjusted), from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
+    "long_description": "Percentage of adults aged 18 and above with diagnosed diabetes (age-adjusted), from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation. Population base changed at the 2025 release: releases 2011-2024 cover adults aged 20 and above, releases 2025 onward adults aged 18 and above, so values either side are not directly comparable. The change is stated only in CHR&R's description text -- format_type stays 1 and the vintage advances normally -- so tracker/measure_vintages.csv's description_changed is the only signal that catches it.",
     "statement": "In {location}, {value} of adults had diagnosed diabetes.",
     "measure_type": "percent",
     "scale": "0-1",
@@ -1315,6 +1402,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -1339,6 +1429,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cdc_nchhstp"
       }
     ],
@@ -1362,6 +1455,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cms_nppes"
       }
     ],
@@ -1383,6 +1479,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_saipe"
       }
@@ -1407,6 +1506,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nces"
       }
     ],
@@ -1429,6 +1531,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -1453,6 +1558,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -1475,6 +1583,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -1499,6 +1610,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_pep"
       }
     ],
@@ -1521,6 +1635,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1545,6 +1662,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -1567,6 +1687,9 @@
     "vintage_max": 2019,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "usda_fara"
       }
@@ -1609,6 +1732,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_sahie"
       }
     ],
@@ -1631,6 +1757,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "cms_nppes"
       }
@@ -1655,6 +1784,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_sahie"
       }
     ],
@@ -1676,6 +1808,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "epa_sdwis"
       }
@@ -1700,6 +1835,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cdc_epht"
       }
     ],
@@ -1722,6 +1860,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_pep"
       }
@@ -1746,6 +1887,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -1768,6 +1912,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "nchs"
       }
@@ -1792,6 +1939,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -1814,6 +1964,9 @@
     "vintage_max": 2024,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "cms_nppes"
       }
@@ -1838,6 +1991,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "esri_tiger_ymca"
       }
     ],
@@ -1860,6 +2016,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "usda_fea"
       }
@@ -1884,6 +2043,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nhtsa_fars"
       }
     ],
@@ -1907,6 +2069,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -1929,6 +2094,9 @@
     "vintage_max": 2021,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "hud_chas"
       }
@@ -1971,6 +2139,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -1993,6 +2164,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "nchs"
       }
@@ -2017,6 +2191,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "feeding_america"
       }
     ],
@@ -2039,6 +2216,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_cbp"
       }
@@ -2063,6 +2243,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -2085,6 +2268,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -2109,6 +2295,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -2131,6 +2320,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -2155,6 +2347,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -2177,6 +2372,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "nchs"
       }
@@ -2201,6 +2399,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -2223,6 +2424,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -2247,6 +2451,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -2269,6 +2476,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -2293,6 +2503,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cms"
       }
     ],
@@ -2315,6 +2528,9 @@
     "vintage_max": 2020,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "epa_ejscreen"
       }
@@ -2339,6 +2555,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "seda"
       }
     ],
@@ -2361,6 +2580,9 @@
     "vintage_max": 2019,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "seda"
       }
@@ -2385,6 +2607,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -2407,6 +2632,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -2431,6 +2659,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nces"
       }
     ],
@@ -2453,6 +2684,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -2477,6 +2711,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "sfid"
       }
     ],
@@ -2499,6 +2736,9 @@
     "vintage_max": 2024,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "living_wage_institute"
       }
@@ -2523,6 +2763,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "living_wage_institute"
       }
     ],
@@ -2545,6 +2788,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "hifld"
       }
@@ -2569,6 +2815,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "medsl"
       }
     ],
@@ -2591,6 +2840,9 @@
     "vintage_max": 2020,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_oqm"
       }
@@ -2615,6 +2867,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "esri_tiger_ymca"
       }
     ],
@@ -2637,6 +2892,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -2661,6 +2919,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "imls"
       }
     ],
@@ -2683,6 +2944,9 @@
     "vintage_max": 2023,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "noaa_fema"
       }
@@ -2707,6 +2971,9 @@
     "vintage_release": 2025,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -2729,6 +2996,9 @@
     "vintage_max": 2022,
     "vintage_release": 2025,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -5275,7 +5545,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the lowest income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the lowest income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -5293,7 +5563,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the second income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the second income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -5311,7 +5581,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the third (middle) income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the middle income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -5329,7 +5599,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the fourth income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the fourth income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -5347,7 +5617,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the highest income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the highest income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -5365,7 +5635,7 @@
     "long_description": "Proportion of total aggregate household income received by households in the top 5%, derived from ACS Table B19082.",
     "statement": "In {location}, the top 5% of households receive {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-100",
+    "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
       {
@@ -6199,6 +6469,9 @@
     "vintage_release": 2012,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "census_cbp"
       }
     ],
@@ -6221,6 +6494,9 @@
     "vintage_max": 2010,
     "vintage_release": 2013,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_cbp"
       }
@@ -6245,6 +6521,9 @@
     "vintage_release": 2012,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "cdc_epht"
       }
     ],
@@ -6267,6 +6546,9 @@
     "vintage_max": 2007,
     "vintage_release": 2012,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "cdc_epht"
       }
@@ -6314,6 +6596,9 @@
     "vintage_release": 2011,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -6355,6 +6640,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -6402,6 +6690,9 @@
     "vintage_release": 2015,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -6425,6 +6716,9 @@
     "vintage_release": 2022,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -6447,6 +6741,9 @@
     "vintage_max": 2014,
     "vintage_release": 2018,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "dartmouth_atlas"
       }
@@ -6516,6 +6813,9 @@
     "vintage_release": 2018,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "nchs"
       }
     ],
@@ -6538,6 +6838,9 @@
     "vintage_max": 2010,
     "vintage_release": 2013,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_cbp"
       }
@@ -6584,6 +6887,9 @@
     "vintage_release": 2018,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "dartmouth_atlas"
       }
     ],
@@ -6607,6 +6913,9 @@
     "vintage_release": 2013,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -6625,6 +6934,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "dartmouth_atlas"
       }
@@ -6672,6 +6984,9 @@
     "vintage_release": 2014,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -6694,6 +7009,9 @@
     "vintage_max": 2021,
     "vintage_release": 2024,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "ojjdp"
       }
@@ -6736,6 +7054,9 @@
     "unit": "Per 100,000 population",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "census_cbp"
       }
@@ -6829,6 +7150,9 @@
     "vintage_release": 2022,
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "acs"
       }
     ],
@@ -6847,6 +7171,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "acs"
       }
@@ -6870,6 +7197,9 @@
     "vintage_max": 2016,
     "vintage_release": 2022,
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "fbi_ucr"
       }
@@ -6912,6 +7242,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -6930,6 +7263,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -6950,6 +7286,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -6968,6 +7307,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -6988,6 +7330,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7006,6 +7351,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -7026,6 +7374,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7044,6 +7395,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -7064,6 +7418,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7082,6 +7439,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -7102,6 +7462,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7120,6 +7483,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }
@@ -7140,6 +7506,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7159,6 +7528,9 @@
     "time_resolution": "Year",
     "sources": [
       {
+        "id": "chr"
+      },
+      {
         "id": "brfss"
       }
     ],
@@ -7177,6 +7549,9 @@
     "scale": "0-1",
     "time_resolution": "Year",
     "sources": [
+      {
+        "id": "chr"
+      },
       {
         "id": "brfss"
       }

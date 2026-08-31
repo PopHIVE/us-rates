@@ -3,9 +3,18 @@
 #
 # Scans actual observation values -- not coverage, which
 # build_measure_registry.R already covers -- for data-quality problems:
-# values outside a measure's declared scale, "population per X" ratios
-# stored inverted, and mixed-unit series where consecutive observations for
-# the same geography jump by an implausible order of magnitude.
+#
+#   1. scale_bounds_violation    values outside a measure's declared scale
+#   2. ratio_inversion           "population per X" ratios stored inverted
+#   3. mixed_units_within_series consecutive observations for one geography
+#                                jumping by an implausible order of magnitude
+#   4. scale_magnitude_mismatch  a whole series sitting at the wrong order of
+#                                magnitude for its declared scale
+#
+# Checks 1 and 4 are deliberate counterparts: 1 catches values that escape the
+# declared range, 4 catches a series that stays inside it but is plainly on the
+# wrong scale. A silent upstream rescale trips neither 1 nor 3, which is what
+# motivated 4 -- see its block comment below.
 #
 # Writes tracker/qa_findings.csv, one row per finding.
 #
@@ -177,7 +186,69 @@ jump_findings <- all_rates %>%
     )
   )
 
-findings <- bind_rows(bounds_findings, inversion_findings, jump_findings) %>%
+# -----------------------------------------------------------------------------
+# Check 4: scale-magnitude mismatch. The counterpart to check 1, which only
+# looks OUTSIDE the declared range. A whole series that gets silently rescaled
+# stays comfortably inside it and so slips past every other check here:
+#
+#   * check 1 (bounds) passes, because 0.03 is a legal value for a "0-100"
+#     percent -- being far too small for the concept isn't a bounds violation.
+#   * check 3 (mixed units) passes, because it compares consecutive
+#     observations within a geography. A clean rescale moves EVERY year by the
+#     same factor, so there is no year-over-year jump to catch. It only fires
+#     when two units coexist in one series, never when the whole series moves.
+#
+# That is not hypothetical: the six ACS income-share measures (acs_INL..acs_INQ)
+# were rescaled 100x upstream, from 0-100 to 0-1, and both checks above stayed
+# silent while measure_info.json still declared "0-100".
+#
+# A percentage declared on the 0-100 scale that never once exceeds 1 across the
+# entire catalog is almost certainly being stored as a 0-1 proportion. The
+# converse (a "0-1" measure holding 0-100 values) needs no check here -- those
+# values exceed 1 and check 1 already catches them.
+#
+# Threshold note: the smallest observed maximum among genuinely 0-100 measures
+# is svv_exempt_medical at 1.70, so a cutoff of 1.0 clears every real measure
+# today. It is deliberately tight rather than generous -- a true percentage
+# whose maximum drifts below 1 across every geography and year in the repo is
+# worth a look regardless of which way it turns out.
+# -----------------------------------------------------------------------------
+
+message("Checking scale magnitude against declared scale...")
+
+MAGNITUDE_CEILING <- 1
+
+magnitude_findings <- all_rates %>%
+  inner_join(measure_meta, by = c("measure" = "measure_id")) %>%
+  filter(scale == "0-100", !is.na(value)) %>%
+  group_by(measure) %>%
+  summarise(
+    n_obs = n(),
+    max_value = max(value),
+    median_value = median(value),
+    .groups = "drop"
+  ) %>%
+  filter(max_value <= MAGNITUDE_CEILING) %>%
+  transmute(
+    measure_id = measure,
+    finding_type = "scale_magnitude_mismatch",
+    severity = "high",
+    detail = paste0(
+      "declared scale is 0-100 but the maximum value across all ", n_obs,
+      " observation(s) is ", signif(max_value, 4), " (median ",
+      signif(median_value, 4), ") -- never exceeding ", MAGNITUDE_CEILING,
+      ". The values look like 0-1 proportions stored against a 0-100 ",
+      "declaration. Confirm which is right against the upstream source, then ",
+      "correct whichever is wrong -- measure_info.json's scale, or the ",
+      "pipeline block that writes the value. Do NOT assume the data is at ",
+      "fault: an upstream source that rescales its own series is the more ",
+      "common cause, in which case the declaration is what needs updating."
+    )
+  )
+
+findings <- bind_rows(
+  bounds_findings, inversion_findings, jump_findings, magnitude_findings
+) %>%
   mutate(status = "auto-detected")
 
 # -----------------------------------------------------------------------------
