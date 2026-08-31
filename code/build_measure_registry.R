@@ -93,24 +93,17 @@ measures <- tibble(measure_id = names(info)) %>%
 # the Ingest repo before routing around it -- it's usually where the actual
 # number gets computed, not just a repackaging.
 #
-# Pipeline is a separate fact from "true origin": measure_info.json's own
-# per-measure `sources` field (captured above as source_id) already records
-# who actually produced the statistic -- e.g. chr_adult_smoking's source_id
-# is "brfss", not "chr", even though its pipeline here is
-# county_health_rankings. `via` distinguishes a CHR&R/AHRF pass-through from
-# a directly-ingested source; pipeline + source_id + via together answer
-# "where did this row come from" without needing anything further.
+# Pipeline is a separate fact from provenance. `source_id` above is
+# measure_info.json's `sources` array, "; "-joined in order, and that order is
+# pull-point first: chr_adult_smoking is "chr; brfss" because CHR&R is who we
+# pull it from and BRFSS produced the statistic underneath. sources[[1]]
+# always equals compiled_via; a second entry appears only where the deeper
+# origin is known. See CONTRIBUTING.md for why the order matters.
 #
-# Every chr_ and ahrf_ measure now carries an authoritative `compiled_via`
-# field directly in measure_info.json ("chr" or "ahrf") -- added as soon as
-# a measure was confirmed to be pipelined through that compiler, whether or
-# not a deeper origin beyond the compiler itself is also known (most chr_
-# measures cite a further origin like brfss/census_pep/nchs in `sources`;
-# a handful, and every current ahrf_ measure, cite only the compiler
-# itself -- compiled_via still applies either way, since it records "went
-# through this pipeline," not "we know what's further upstream"). `via`
-# below reads that field first and only falls back to a prefix guess for
-# measures that don't have it yet (anything outside these two families).
+# `via` distinguishes a compiler pass-through from a direct ingest, reading
+# compiled_via first and falling back to a prefix guess only for measures
+# outside the chr_/ahrf_ families. pipeline + source_id + via together answer
+# "where did this row come from".
 # -----------------------------------------------------------------------------
 
 prefix_pipeline <- c(

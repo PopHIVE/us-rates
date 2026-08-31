@@ -160,8 +160,8 @@ touch either of these — both are documented in the README and enforced by
 `code/check_geography_renaming.R`:
 
 * **Alaska's renamed/split/merged boroughs and census areas** — if your source
-  might report values under a retired FIPS code (see the table in the README's
-  [Alaska section](README.md#alaska-historical-borough-and-census-area-changes)),
+  might report values under a retired FIPS code (see
+  [Geography lineages](#geography-lineages-and-how-they-are-resolved) below),
   decide whether to drop the duplicate unconditionally
   (`drop_alaska_defunct_duplicates()`) or need a per-row override
   (`ahrf_alaska_overrides`-style `tribble()`) the way `populate_county_rates.R`
@@ -186,10 +186,19 @@ than a source-specific fix.
 ## Step 5: Document every new measure in `measure_info.json`
 
 Every measure name you introduced needs an entry in the root `measure_info.json`
-— see the README's [`measure_info.json`](README.md#top-level-measure_infojson)
+— see the README's [Measure Documentation](README.md#measure-documentation)
 section for the full field list, `_sources` entry requirements, and the
 category/subcategory table. Add the source's own `_sources` entry too if this
 is its first measure in this repo.
+
+`sources` is ordered **pull-point first**. If you pulled the measure through a
+compiler rather than from the producer, the compiler leads and the producer
+follows — `"sources": [{ "id": "chr" }, { "id": "brfss" }]`, plus
+`"compiled_via": "chr"`. List the producer only when you actually know it;
+a compiler-only array is correct otherwise. Getting the order wrong isn't
+cosmetic: CHR&R is CC BY 4.0 and requires attribution, so a `chr_` measure
+that credits only its public-domain upstream under-credits the one party
+whose licence demands it.
 
 ---
 
@@ -237,6 +246,182 @@ Check that:
       (county-level sources only)
 - [ ] Added an entry to `measure_info.json` for every new measure name (and a
       `_sources` entry if this source is new to the repo)
+- [ ] Ordered `sources` pull-point first, with `compiled_via` set to match
+      `sources[0]` for anything pulled through a compiler
 - [ ] Ran the affected script(s) (or `update_all.R --skip-scaffold`) and
       confirmed `check_geography_renaming.R` passes
 - [ ] Spot-checked the new measure's values in the written output
+
+---
+
+# Reference: pipeline decisions and their rationale
+
+Background for anyone changing the pipeline. None of this is needed to *use*
+the data — the README covers that — but each item below records a decision that
+is easy to undo by accident.
+
+## The pipeline, step by step
+
+`code/update_all.R` runs these in order. Steps 9-11 write only to `tracker/`,
+so a failure there leaves the published data exactly as steps 1-8 wrote it.
+Step 9 must precede step 10, which reads `measure_vintages.csv`.
+
+| # | Script | Writes |
+|---|---|---|
+| 1 | `all_fips.R` | `resources/all_fips.csv.gz`, the FIPS-to-name reference (via `tidycensus`) |
+| 2 | `scaffold_structure.R` | any new `states\|territories/{name}/counties/{fips}_{name}/` folders. Safe to re-run; never overwrites. Skip with `--skip-scaffold` |
+| 3 | `code/populate_national_rates.R` | `national/national_rates.csv.gz` |
+| 4 | `code/populate_state_rates.R` | `states/*/state_rates.csv.gz`, `territories/*/{commonwealth,territory}_rates.csv.gz` |
+| 5 | `code/populate_county_rates.R` | `states\|territories/*/counties/*/county_rates.csv.gz` |
+| 6 | `code/populate_latest_rates.R` | the `*_latest.csv.gz` cuts — must run after 4 and 5, which it reads |
+| 7 | `code/check_geography_renaming.R` | nothing; **fails the build** on a cross-convention double-count |
+| 8 | `code/generate_geography_manifest.R` | `us-rates-geographies.json` |
+| 9 | `code/build_measure_vintages.R` | `tracker/measure_vintages.csv` |
+| 10 | `code/build_measure_registry.R` | `tracker/measure_registry.csv` |
+| 11 | `code/qa_audit.R` | `tracker/qa_findings.csv` — the slow step; skip with `--skip-qa` |
+
+## Geography lineages, and how they are resolved
+
+The lineage tables — which retired FIPS code maps to which successor, for both
+Alaska and Connecticut — are in the
+[README](README.md#geographies-that-changed-over-time), since they're needed to
+read the folder tree. What follows is how the pipeline resolves them.
+
+Two sources write to retired Alaska codes rather than cutting over cleanly,
+both resolved in `populate_county_rates.R`:
+
+* `vaccine_exemptions_fattah` always writes the identical value to a retired
+  code and its successor(s), so the retired copy is dropped unconditionally
+  (`drop_alaska_defunct_duplicates()`).
+* `area_health_resource_file` sometimes duplicates and sometimes *disagrees*
+  between a retired code and its successor(s) for the same `(measure, time)`.
+  The disagreements are almost always a new code's placeholder `0` before real
+  tracking starts, or a retired code decaying to `0` in its last year or two.
+  Each of the 79 affected rows is resolved by an explicit override table
+  (`ahrf_alaska_overrides`) rather than a general rule — guessing wrong here
+  silently reports the wrong health-workforce count.
+
+**Connecticut** — the 2022 planning-region cutover. The direct Census feeds are
+single-current-vintage patches, so any row still on a legacy county code is
+stale by definition once the vintage is 2022+; `drop_ct_legacy_duplicates()`
+drops those rather than double-reporting the same year under both conventions.
+
+## Direct sources keep their own prefix
+
+Several concepts are available both directly from their producer and through a
+compiler that redistributes them. Both are kept, under separate ids
+(`pep_population` and `chr_population`, `sahie_pct_uninsured` and
+`chr_uninsured`), and neither overwrites the other.
+
+This was originally done the other way — direct values were mapped onto the
+matching `chr_` id so they would replace the compiler's. That was wrong, and
+the failure is worth remembering: each Census file holds one current-vintage
+year, while the compiler's series lags its release year consistently, so a
+single spliced point produced a false spike in up to 63% of counties. 2024
+median household income jumped ~19% and fell back the next year. Separate ids
+remove the conflict entirely — each series is internally consistent and no
+precedence rule is needed.
+
+It also keeps coverage honest. Where a compiler still reports legacy geography
+codes, the direct pull is the *only* source for the current ones — Connecticut's
+planning regions, Alaska's Chugach and Copper River, and Puerto Rico's
+municipios, which some compilers do not cover at all.
+
+Corollary for new sources: **never map a direct pull onto a compiler's measure
+id.** Give it its own prefix and let `duplicate_group` in the registry record
+that the two describe the same concept.
+
+## Compiler credit
+
+`compiler_first_year`, `compiler_last_year`, and `compiler_citation` on the
+registry record that a compiler supplied a measure — which stays true even if
+it is later converted to a direct source. `compiled_via` is different: it
+tracks who compiles it *now*, and can change.
+
+The columns are generic rather than one set per compiler, since `compiled_via`
+already names which one; per-compiler columns would be the same three facts
+written twice. The citation year is that measure's own last release, so a
+retired measure cites the edition it actually came from rather than the current
+one.
+
+## Detecting a mid-series redefinition
+
+A publisher can change what a measure means without any obvious signal. Three
+columns in `tracker/measure_vintages.csv` catch different cases, and none of
+them catches all three:
+
+* **`format_type`** is the publisher's own display-format code, and it reliably
+  flags a **unit** change. `chr_drinking_water_violations` went from a
+  percentage (1) to a yes/no indicator (5) between the 2015 and 2016 releases
+  while `years_used` stayed *identical* — invisible in the vintage alone. Three
+  measures change it: `chr_drinking_water_violations` (2016, 1->5),
+  `chr_primary_care_physicians` (2011, 0->3), `chr_drug_overdose_deaths_modeled`
+  (2018, 4->6).
+* **`description_changed`** is the **only** signal that catches a denominator or
+  population-base change. `chr_preventable_hospital_stays` switched from "per
+  1,000 Medicare enrollees" to "per 100,000" between the 2018 and 2019 releases
+  with `format_type` fixed and `years_used` advancing normally.
+* **`vintage`** catches neither on its own.
+
+Most rewordings are cosmetic. Filtering `description_changed` for denominator or
+framing wording currently surfaces four real breaks:
+
+| Measure | Release | Break | Handling |
+|---|---|---|---|
+| `chr_primary_care_physicians` | 2011 | rate -> ratio | corrected in `populate_county_rates.R` |
+| `chr_drinking_water_violations` | 2016 | proportion -> binary flag | triaged in `qa_findings.csv`; values stand |
+| `chr_preventable_hospital_stays` | 2019 | per 1,000 -> per 100,000 | corrected in `populate_county_rates.R` |
+| `chr_diabetes_prevalence` | 2025 | adults 20+ -> adults 18+ | documented in `long_description`; values stand |
+
+The 2025 case is the one to imitate when a new break appears. It changes *who
+is counted* rather than what the number means, so no correction applies — the
+values are correct as published and the discontinuity is documented instead.
+Note also that its step (+5.6% median, 81% of counties up, against +0.7% the
+prior release) runs *opposite* to what broadening the age base would produce
+alone, so the upstream evidently revised more than the age cut. Record what the
+description actually says; don't attribute the whole step to it.
+
+Re-screen `description_changed` whenever a new compiler release lands.
+
+## Labelling breaks rather than repairing values
+
+A run of `qa_audit.R` findings are not defects. `mixed_units_within_series`
+compares consecutive observations within a geography, and a genuine
+definitional change looks identical to a scale error at that resolution. Before
+"fixing" one, check the raw upstream archive: if the stored values match what
+the publisher published, the fix is to label the break, not to alter the data.
+`flagged_root_causes` in `qa_audit.R` carries the written diagnosis for each
+finding already triaged this way.
+
+That table only annotates findings that already exist, so a real break that
+trips no threshold — a few percent, rather than the 50x jump check — has no
+machine-readable home today. Those are recorded in the measure's
+`long_description` instead.
+
+## Watch for a silent rescale when a source updates
+
+The most dangerous change an upstream source can make is to rescale a whole
+series at once, because the obvious checks all look elsewhere. When the six ACS
+income-share measures moved from 0-100 to 0-1 upstream, `scale_bounds_violation`
+stayed silent (0.03 is a legal value on a 0-100 scale) and
+`mixed_units_within_series` stayed silent too (it compares consecutive
+observations within a geography, and every year had moved by the same factor,
+so there was no jump). `measure_info.json` went on declaring `0-100` against
+data that was no longer on it.
+
+`scale_magnitude_mismatch` exists to catch exactly this: a measure declared
+`0-100` whose maximum never exceeds 1 across the entire catalog. If it fires
+after a refresh, **check the upstream source before touching anything** — an
+intentional upstream rescale means `measure_info.json` is what needs updating,
+not the data. `Ingest/data/census/ingest.R` records the reasoning for its own
+rescale in a comment, which is the pattern to follow.
+
+More generally, after any refresh that moves a lot of values, confirm the
+change is a *revision* and not a *unit change* before committing: compare a
+handful of old and new values and look at the ratio. A constant ratio across
+every geography and year — 0.01, 100, 1000 — is a unit change, not new data.
+
+Note that `scale` in this repo is descriptive: it records the scale each source
+publishes on, and values are never normalised. Sources split roughly evenly
+between the two conventions and each one is internally consistent, so a measure
+that disagrees with the rest of its own prefix family is worth a second look.
