@@ -216,7 +216,14 @@ rates |>
   )
 ```
 
-**Join on both keys.** The `vintage` fields in `measure_info.json` describe only each measure's most recent release, so applying them across a measure's full history mislabels the great majority of its observations. Joining on both `measure` and `time` resolves every observation this file covers.
+**Join on both keys.** Doing so resolves **100%** of the observations this file covers, at either scope below. The `vintage` fields in `measure_info.json` describe only each measure's *most recent* release, so how badly a measure-only join misleads depends entirely on which files you are reading:
+
+| Reading | Observations | Measure-only join correct |
+|---|---|---|
+| `*_latest.csv.gz` (one row per geography × measure) | 337,269 | 93% |
+| `county_rates.csv.gz` (the full time series) | 3,232,772 | 11% |
+
+The latest-value files mostly hold each measure's newest release, so the measure-level fields are usually right there — but the ~7% they get wrong are the small counties suppressed in recent releases and carried forward from older ones, which is exactly where a confidently wrong year does the most damage. Across a full time series the same shortcut is wrong nine times out of ten.
 
 A `vintage` of `NA` means the publisher stated no data year for that release, not that the row is missing.
 
