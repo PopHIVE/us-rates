@@ -133,6 +133,34 @@ Yakutat City and Borough (`02282`) is *not* part of the Skagway lineage despite 
 
 **If you aggregate county files, do not sum blindly across both conventions** — the old and new codes carve up the same ground. No single `(measure, time)` pair is ever reported under both conventions for the same place; `code/check_geography_renaming.R` enforces this on every pipeline run and fails the build otherwise. So filtering to one convention is safe, but summing every folder is not.
 
+### Telling a retired geography from a current one
+
+`us-rates-geographies.json` carries lineage metadata, so a consumer never has to infer which convention it is looking at:
+
+| Field | Meaning |
+|---|---|
+| `retired` | `true` if the area is no longer a valid county-equivalent. **Present and boolean on every entry** — never absent, never null, including the national and state rows, which are simply never retired. Trust this rather than inferring from a date, since one boundary date is genuinely unknown. |
+| `activeThrough` | ISO date the area ceased to be valid. Absent if current, or if the date predates the Census change logs. |
+| `activeFrom` | ISO date the area came into existence, where a documented event created it. Absent for areas older than the records. |
+| `supersededBy` | FIPS codes now covering this retired area's ground. Always an array. |
+| `supersedes` | FIPS codes this area replaced. Always an array. |
+
+The last four are omitted where they have nothing to say — for those, absence has exactly one meaning (no recorded boundary, no successor). `retired` is the field with two possible readings, which is why it is the one that always appears.
+
+```json
+{ "fips": "02261", "name": "Valdez-Cordova Census Area", "retired": true,
+  "activeThrough": "2019-01-02", "supersededBy": ["02063", "02066"] }
+```
+
+Effective dates are the Census Bureau's own, from its [county-changes documentation](https://www.census.gov/programs-surveys/geography/technical-documentation/county-changes). `GEOGRAPHY_LINEAGE` in `code/geography_helpers.R` is the single source for both this metadata and the double-count check, so the two cannot disagree.
+
+**Why this matters:** roughly 17,000 observations sit on county-equivalents that had already been dissolved when the data was collected — because the sources feeding them migrate on their own schedules, not because anything is wrong with the values. The data is correct; the labels need this metadata to be read correctly. **Filter on `retired` and `activeThrough` before presenting a current-year view.**
+
+Two limits worth knowing before you rely on `supersededBy`:
+
+* **Connecticut's legacy counties and planning regions do not nest.** The regions were assembled from towns and several counties split across more than one region, so each retired county points at all nine regions. Read it as "look at these instead", not as a containment mapping.
+* **Alaska's 2008 Prince of Wales-Outer Ketchikan dissolution also moved territory into Ketchikan Gateway Borough (`02130`) and Wrangell City and Borough (`02275`)**, both of which survive. Only the direct successor (`02198`) is recorded, so a user sent there is not seeing the whole of the old area.
+
 ---
 
 ## Measure Names
@@ -241,6 +269,16 @@ Machine-readable records of what's in the repo and what's known about it. These 
 
 **Check `qa_findings.csv` before treating a long series as continuous.** Some measures have genuine breaks where a publisher changed a definition, a denominator, or a unit mid-series — values either side are not comparable, and the values as stored are correct rather than something to be repaired. Where a break is known, it is also described in that measure's `long_description`.
 
+**Check `display_status` in the registry before presenting a measure.** Not every measure in the catalog is a live one, and nothing in a value itself says otherwise:
+
+| `display_status` | Meaning |
+|---|---|
+| `primary` | A current measure. Show it normally. |
+| `historical` | The upstream source is gone and the series is closed — it will never gain another year. The observations are real and kept for comparison, but its newest value is not a current reading and must not be shown as one. |
+| `qa-only` | A pipeline diagnostic rather than a health measure (how provisional a month's counts are). Useful for judging the data; not for the public measure list. |
+
+Each measure's own `long_description` says why it carries a non-`primary` status.
+
 `duplicate_group` in the registry marks measures covering the same concept from different sources. They are deliberately kept as separate series and are not interchangeable; the `duplicate_note` explains how they differ.
 
 ---
@@ -251,12 +289,12 @@ Machine-readable records of what's in the repo and what's known about it. These 
 |---|---|
 | `chronic_disease` | `cancer`, `cardiovascular_metabolic`, `musculoskeletal`, `neurological`, `other_chronic_conditions`, `respiratory_disease` |
 | `environmental_health` | `air_and_water_quality`, `other_environmental_hazards` |
-| `infectious_disease` | none |
-| `injury_and_violence` | none |
-| `maternal_and_infant_health` | none |
-| `mental_health` | none |
+| `infectious_disease` | `hiv_and_sexually_transmitted_infections`, `respiratory_infections`, `vaccine_preventable_disease` |
+| `injury_and_violence` | `firearm_injury`, `motor_vehicle_crashes`, `suicide_and_self_harm`, `unintentional_injury`, `violence_and_crime` |
+| `maternal_and_infant_health` | `birth_outcomes_and_fertility`, `infant_and_child_mortality` |
+| `mental_health` | `mental_health_care_access`, `mental_health_conditions`, `mental_health_status`, `social_connection` |
 | `overall_health_status_and_mortality` | `length_and_quality_of_life`, `mortality_data_and_completeness` |
-| `population_demographics` | none |
+| `population_demographics` | `age_structure`, `disability`, `population_size_and_density`, `race_and_ethnicity`, `sex` |
 | `preventive_care` | `clinical_screenings`, `immunizations`, `nutrition_and_exercise`, `sexual_and_reproductive_health` |
 | `social_determinants_of_health` | `economic_stability`, `education_access_and_quality`, `health_care_access_and_quality`, `neighborhood_and_built_environment`, `social_and_community_context` |
 | `substance_abuse` | `alcohol_use`, `drug_use_and_overdose`, `tobacco_use` |

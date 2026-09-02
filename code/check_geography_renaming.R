@@ -47,20 +47,25 @@ if (length(ct_old) == 0 || length(ct_new) == 0) {
   )
 }
 
-renaming_events <- list(
-  list(state = "CT", label = "legacy counties vs. planning regions (2022)",
-       generations = list(ct_old, ct_new)),
-  list(state = "AK", label = "Prince of Wales-Outer Ketchikan -> Prince of Wales-Hyder (2008)",
-       generations = list("02201", "02198")),
-  list(state = "AK", label = "Skagway-Yakutat-Angoon (pre-1992) -> Skagway-Hoonah-Angoon (1992) -> Skagway, Hoonah-Angoon (2007)",
-       generations = list("02231", "02232", c("02230", "02105"))),
-  list(state = "AK", label = "Valdez-Cordova -> Chugach, Copper River (2019)",
-       generations = list("02261", c("02063", "02066"))),
-  list(state = "AK", label = "Wade Hampton -> Kusilvak (renamed 2015)",
-       generations = list("02270", "02158")),
-  list(state = "AK", label = "Wrangell-Petersburg -> Wrangell, Petersburg (2008)",
-       generations = list("02280", c("02195", "02275")))
-)
+# The events come from GEOGRAPHY_LINEAGE in geography_helpers.R, which is also
+# what generate_geography_manifest.R publishes as activeFrom / activeThrough /
+# supersededBy / supersedes. Deriving both from one table is the point: a
+# lineage this check knows about but the manifest does not would ship retired
+# geographies to consumers as though they were current, and the reverse would
+# let a real double-count through. Do not re-list the events here.
+renaming_events <- lapply(GEOGRAPHY_LINEAGE, function(event) {
+  list(
+    state = event$state,
+    label = event$label,
+    generations = lapply(event$generations, function(codes) {
+      unlist(lapply(codes, function(c) {
+        if (identical(c, "CT_LEGACY_COUNTIES")) ct_old
+        else if (identical(c, "CT_PLANNING_REGIONS")) ct_new
+        else c
+      }), use.names = FALSE)
+    })
+  )
+})
 
 load_county_data <- function(state_abbr, fips_codes) {
   state_folder <- state_folder_names %>%
