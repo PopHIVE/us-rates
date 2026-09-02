@@ -331,6 +331,30 @@ Corollary for new sources: **never map a direct pull onto a compiler's measure
 id.** Give it its own prefix and let `duplicate_group` in the registry record
 that the two describe the same concept.
 
+### Adding a duplicate_group
+
+Group on measured values, never on names — measures that look alike from their
+ids are routinely methodologically distinct. The screen is: compare the two
+across every county and year they both cover, on the year with the most
+overlap. One concept correlates near 1 across counties even when its members
+use different units, because county-to-county variation is the concept's own
+signal.
+
+Two failure modes of that screen, both live in this catalog:
+
+* **Counts all correlate with population.** `acs_POP_I` (infants) and
+  `acs_POP_J` (juveniles) reach r = 0.997 and are plainly different concepts.
+  For counts, only a value ratio near 1 is evidence.
+* **Low-variance shares fail it while being identical.** Female share is ~50%
+  in every county, so `chr_female` and `pep_pct_female` correlate at just
+  0.945 — with a value ratio of 1.000. Judge those on ratio.
+
+Record what the check found in `duplicate_note`, with the numbers, and where a
+pair is deliberately *not* grouped, say so in the block comment above
+`duplicate_groups` in `code/build_measure_registry.R` so it is not
+re-litigated. Grouping is not merging: members stay separate series and are
+never interchangeable.
+
 ## Compiler credit
 
 `compiler_first_year`, `compiler_last_year`, and `compiler_citation` on the
@@ -391,12 +415,46 @@ definitional change looks identical to a scale error at that resolution. Before
 "fixing" one, check the raw upstream archive: if the stored values match what
 the publisher published, the fix is to label the break, not to alter the data.
 `flagged_root_causes` in `qa_audit.R` carries the written diagnosis for each
-finding already triaged this way.
+finding already triaged this way, and the `status` column separates the two
+kinds: `auto-detected` is a machine guess awaiting triage, `flagged` is a
+diagnosis someone confirmed against source.
 
-That table only annotates findings that already exist, so a real break that
-trips no threshold — a few percent, rather than the 50x jump check — has no
-machine-readable home today. Those are recorded in the measure's
-`long_description` instead.
+A flagged entry is emitted whether or not its check still fires. That matters
+because the jump check's gates (below) are tuned to suppress ratio noise, and
+one verified break — `chr_drinking_water_violations`, whose pre-2016 era is a
+genuine near-zero proportion — does not clear them. Verified diagnoses are not
+re-suppressed by a heuristic; add the entry and it stays reported.
+
+A real break that trips no threshold at all — a few percent, rather than the
+50x jump check — still has no machine-readable home. Those are recorded in the
+measure's `long_description` instead.
+
+### Why the jump check has two gates
+
+A bare ratio test does not work, and the reason generalises. A ratio blows up on
+a near-zero denominator, so any measure reaching down toward zero — a hazard
+index, a sparse case count, a segregation index in a county with almost no
+minority population — throws jumps of thousands of x that mean nothing. Run
+bare, the check found nothing but that, and a check with no true positives
+trains its reader to skip it.
+
+So a jump is reported only if it clears both:
+
+* **Magnitude** — the jumps' median low end, measured against the measure's own
+  median *positive* value, is at least `LOW_END_FLOOR`. Moving out of an
+  ordinary reading is interesting; moving out of a thousandth of typical is
+  arithmetic on noise. (Median over positives, not over all values: several of
+  these series are mostly zeros, which would put the reference at 0 and admit
+  everything.)
+* **Breadth** — at least `MIN_GEOGRAPHIES` distinct geographies show it. Unit
+  mixing is systemic; one county jumping once is a data-quality incident.
+
+Neither gate works alone, and neither proves a series is clean — a measure
+dropped here may still carry two units, it just has not shown it in a way this
+check can distinguish. Signed measures are excluded from the check outright,
+since a ratio is undefined across zero; filtering them to their positive half
+hides every break in the negative half and manufactures findings out of
+ordinary zero-crossings.
 
 ## Watch for a silent rescale when a source updates
 
