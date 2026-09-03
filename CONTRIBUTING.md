@@ -349,11 +349,52 @@ Two failure modes of that screen, both live in this catalog:
   in every county, so `chr_female` and `pep_pct_female` correlate at just
   0.945 — with a value ratio of 1.000. Judge those on ratio.
 
-Record what the check found in `duplicate_note`, with the numbers, and where a
-pair is deliberately *not* grouped, say so in the block comment above
-`duplicate_groups` in `code/build_measure_registry.R` so it is not
-re-litigated. Grouping is not merging: members stay separate series and are
-never interchangeable.
+Declare the group on each member in `measure_info.json` — `duplicate_group` with
+the group name, `duplicate_note` recording what the check found, with the
+numbers. Both are validated at build time in `code/build_measure_registry.R`: a
+group of one, a group name colliding with a measure id, and a grouped measure
+with no note each fail the build. They are declared there rather than in the
+build script because `measure_info.json` is the file consumers read; a group
+declared anywhere else cannot be displayed.
+
+Grouping is not merging: members stay separate series and are never
+interchangeable.
+
+**Pairs deliberately *not* grouped**, so they are not re-litigated:
+
+* `chr_dentists` / `ahrf_dentists` and `chr_primary_care_physicians` /
+  `ahrf_pcp` — r = −0.18 and −0.16. One is a population-per-provider ratio, the
+  other a provider count. Inverses of each other, not the same measure.
+* `chr_unemployment` / `acs_UMP` — r = 0.638. A rolling 5-year survey estimate
+  against a point-in-time administrative rate; too weak to call one concept.
+* `chr_income_inequality` / `acs_GNI` — ratio 0.100. A percentile ratio against
+  a Gini index: different statistics. `acs_OWS` is the right counterpart.
+* `acs_PCT_P` / `pep_pct_aian` (ratio 3.9) and `acs_PCT_P1` / `pep_pct_nhpi`
+  (ratio 1.4) — the ACS shares are non-Hispanic-alone and the PEP shares are
+  not, so for these two groups the ACS member counts a different population.
+  The other four race groups match at ratio 1.0–1.1 and are grouped.
+
+### Setting display_status
+
+Every measure declares one in `measure_info.json`, never omitted — absent and
+`primary` are different things to a consumer, the same reason
+`us-rates-geographies.json` publishes `retired` on every entry.
+
+| Value | When |
+|---|---|
+| `primary` | The default: a live measure, safe to present. |
+| `qa-only` | A pipeline diagnostic rather than a health outcome, kept because it is useful for judging how provisional a count is — `nchs_pct_complete`, `nchs_overdose_pct_pending`. |
+| `historical` | The upstream is gone, so the series is closed and will never gain another year. |
+
+`historical` is a labelling problem, not a staleness one: nothing in a value
+from 2015 says it is the last one, so a closed series presented beside live ones
+reads as current. Label rather than delete — the observations are real, and
+deleting the three Dartmouth Atlas measures would have destroyed 53,078 of them.
+Record *why* the series closed in that measure's `long_description`, including
+each ending separately where there is more than one: CHR&R stopped publishing
+those three after its 2018 release, **and** the Dartmouth Atlas itself has since
+been discontinued, so there is no upstream to migrate to and no ticket to
+re-source them.
 
 ## Compiler credit
 
@@ -455,6 +496,55 @@ check can distinguish. Signed measures are excluded from the check outright,
 since a ratio is undefined across zero; filtering them to their positive half
 hides every break in the negative half and manufactures findings out of
 ordinary zero-crossings.
+
+### Why the zero-run check needs three gates
+
+A **closure** leaves a trailing run of zeros — the county had a hospital, lost
+it, and reports zero from then on. A zero run with positive values on *both*
+sides is a different shape entirely, and it is impossible on its own: a county
+cannot lose every hospital and then regain them. The check needs no external
+reference data to make that judgement, which is what makes it worth running.
+
+But "impossible" only holds at scale, so the check gates three times:
+
+* **Run length** ≥ `MIN_ZERO_RUN`. A one- or two-period gap is a plausible
+  reporting lapse.
+* **Breadth** ≥ `MIN_RUN_GEOGRAPHIES`, for the same reason the jump check has
+  it — one county is an incident, many is a mechanism.
+* **Bracket magnitude** ≥ `MIN_BRACKET_VALUE`. This is the gate that does the
+  real work. A county with a single rural hospital that closes and is replaced
+  years later moves `1 → 0 → 1` legitimately, and that is what most of the
+  shape actually is: 44 of 51 `ahrf_hospitals` runs are bracketed by 1. Losing
+  **two or more** and later recovering is the shape that does not happen.
+
+Scope is an explicit list of **stock** counts, and it has to be, because the
+distinction is semantic and no field we hold encodes it. A bracketed zero run is
+ordinary in an *incidence* count — a county records measles cases, then none for
+six years, then cases again — so running this over `jhu_measles_cases` or the
+`nhtsa_` death counts would report real epidemiology as a defect. The
+`acs_POP_*` race and age subgroups are excluded for a related reason: they are
+5-year survey *estimates* of small subpopulations, and a rural county estimating
+zero Native Hawaiian residents in one vintage and four in the next is sampling
+behaviour. Including them produced 105 findings, every one of that kind.
+
+**What the check actually caught, and the lesson in it.** Every surviving
+finding is an `ahrf_` count, and the cause is not in this pipeline. AHRF
+*retroactively reassigns* facilities between geographies in later editions.
+Verified on Henrico County VA (`51087`) against raw HRSA bytes: for the same
+data year, 1996, the 1999 edition reads `016` for Henrico and `000` for Richmond
+City (`51760`), while the 2005 edition reads `000` for Henrico and `016` for
+Richmond City. The 16 Richmond-area hospitals moved from the county to the
+independent city. The 1990-vintage variable was left alone by that revision and
+still reads `019` for Henrico in both editions — the control that proves a
+reassignment rather than a layout shift.
+
+The general form is worth remembering when adding any multi-edition source:
+**assembling a series as one point per edition is only safe if the source never
+revises earlier years.** Where it does, the series has to be built by *data*
+year, taking the newest edition that covers each year. Note the constraint that
+makes this non-trivial for AHRF: the recent CSV editions carry only two years
+each, so the deep history exists only in the older fixed-width editions and the
+series cannot simply be rebuilt from the latest one.
 
 ## Watch for a silent rescale when a source updates
 

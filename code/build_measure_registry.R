@@ -38,30 +38,48 @@ info <- fromJSON(
 )
 info[["_sources"]] <- NULL
 
+# `[[` throughout, never `$`. R's `$` partial-matches on lists, so on an entry
+# holding vintage_release but no vintage, `.x$vintage` silently returns the
+# RELEASE year -- a wrong value, not a missing one. That is live in this schema:
+# `vintage` is a prefix of vintage_min, vintage_max and vintage_release, and the
+# 19 retired and state-suffixed chr_ measures carry a release with no data year.
+# It surfaced as a type error only because map_chr refuses an integer; a numeric
+# field would have taken the wrong number without a word. `[[` matches exactly.
 measures <- tibble(measure_id = names(info)) %>%
   mutate(
     entry       = map(measure_id, ~ info[[.x]]),
-    category    = map_chr(entry, ~ .x$category    %||% NA_character_),
-    subcategory = map_chr(entry, ~ .x$subcategory  %||% NA_character_),
-    measure_type = map_chr(entry, ~ .x$measure_type %||% NA_character_),
-    unit        = map_chr(entry, ~ .x$unit          %||% NA_character_),
-    scale       = map_chr(entry, ~ .x$scale         %||% NA_character_),
-    time_resolution = map_chr(entry, ~ .x$time_resolution %||% NA_character_),
+    category    = map_chr(entry, ~ .x[["category"]]    %||% NA_character_),
+    subcategory = map_chr(entry, ~ .x[["subcategory"]] %||% NA_character_),
+    measure_type = map_chr(entry, ~ .x[["measure_type"]] %||% NA_character_),
+    unit        = map_chr(entry, ~ .x[["unit"]]        %||% NA_character_),
+    scale       = map_chr(entry, ~ .x[["scale"]]       %||% NA_character_),
+    time_resolution = map_chr(entry, ~ .x[["time_resolution"]] %||% NA_character_),
     # True data years, distinct from the release year in `time`. CHR&R only so
     # far, and describes the most recent release; per-release truth lives in
     # tracker/measure_vintages.csv.
-    vintage     = map_chr(entry, ~ .x$vintage         %||% NA_character_),
-    vintage_min = map_int(entry, ~ as.integer(.x$vintage_min     %||% NA_integer_)),
-    vintage_max = map_int(entry, ~ as.integer(.x$vintage_max     %||% NA_integer_)),
-    vintage_release = map_int(entry, ~ as.integer(.x$vintage_release %||% NA_integer_)),
+    vintage     = map_chr(entry, ~ .x[["vintage"]]     %||% NA_character_),
+    vintage_min = map_int(entry, ~ as.integer(.x[["vintage_min"]]     %||% NA_integer_)),
+    vintage_max = map_int(entry, ~ as.integer(.x[["vintage_max"]]     %||% NA_integer_)),
+    vintage_release = map_int(entry, ~ as.integer(.x[["vintage_release"]] %||% NA_integer_)),
     vintage_lag = vintage_release - vintage_min,
     source_id   = map_chr(entry, ~ {
-      s <- .x$sources
+      s <- .x[["sources"]]
       if (is.null(s) || length(s) == 0) return(NA_character_)
-      paste(map_chr(s, ~ .x$id %||% NA_character_), collapse = "; ")
+      paste(map_chr(s, ~ .x[["id"]] %||% NA_character_), collapse = "; ")
     }),
-    n_sources   = map_int(entry, ~ length(.x$sources %||% list())),
-    compiled_via = map_chr(entry, ~ .x$compiled_via %||% NA_character_)
+    n_sources   = map_int(entry, ~ length(.x[["sources"]] %||% list())),
+    compiled_via = map_chr(entry, ~ .x[["compiled_via"]] %||% NA_character_),
+    # display_status, duplicate_group and duplicate_note are declared in
+    # measure_info.json rather than in vectors here, because measure_info.json
+    # is the file consumers actually read -- the County Explorer takes its
+    # catalog from it and never opens this registry. Declaring them here made
+    # both facts invisible downstream: three historical and two qa-only
+    # measures rendered as live, and the 32 duplicate groups could not be
+    # stacked at all, which is the whole point of having them. Validated
+    # below rather than trusted, since measure_info.json is hand-maintained.
+    display_status  = map_chr(entry, ~ .x[["display_status"]]  %||% NA_character_),
+    duplicate_group = map_chr(entry, ~ .x[["duplicate_group"]] %||% NA_character_),
+    duplicate_note  = map_chr(entry, ~ .x[["duplicate_note"]]  %||% NA_character_)
   ) %>%
   select(-entry)
 
@@ -268,243 +286,104 @@ conditional_county_ids <- c(
   registry$measure_id[str_starts(registry$measure_id, "wapo_")]
 )
 
-# nchs_pct_complete and nchs_overdose_pct_pending are data-completeness
-# diagnostics (percent of death records still pending investigation /
-# finalized), not health outcomes -- keep them out of the public measure
-# list rather than deleting them, since the underlying pipeline data is
-# still useful for judging how provisional a given month's counts are.
-qa_only_ids <- c("nchs_pct_complete", "nchs_overdose_pct_pending")
-
-# Measures whose upstream source is gone, so the series is closed and will
-# never gain another year. They are kept -- the observations are real and
-# historically useful -- but must not be presented next to live measures as
-# though they were current, which is a correctness problem rather than a
-# staleness one: nothing in a value from 2015 says it is the last one.
+# -----------------------------------------------------------------------------
+# Validate what measure_info.json declares. These three fields used to be
+# vectors in this file; they moved because consumers read measure_info.json and
+# not this registry, so anything declared only here never reached the display.
+# The file is hand-maintained, so the build checks it rather than trusting it.
 #
-# The three Dartmouth Atlas measures below reach us through CHR&R, so two
-# separate things ended and both are load-bearing. CHR&R stopped publishing
-# them after its 2018 release (2010 for chr_hospice_use, which appeared once),
-# and the Dartmouth Atlas itself has since been discontinued: "we will no
-# longer update Dartmouth Atlas tools or calculate new annual rates", with
-# historical rates ending at 2019 (dartmouthatlas.org). So there is no upstream
-# to migrate to and no prospect of a refresh -- the right treatment is a label,
-# not a deletion, and not a ticket to re-source them.
-historical_ids <- c(
-  "chr_diabetes_monitoring",
-  "chr_health_care_costs",
-  "chr_hospice_use"
-)
-
-# duplicate_group: which measures represent the same underlying concept, so
-# several pipelines reporting the same statistic can be recognized and
-# displayed together instead of looking like unrelated rows. Defaults to a
-# measure's own id (no group) until a cluster is manually confirmed -- don't
-# auto-group by name/prefix similarity, since measures that look alike from
-# their names are often methodologically distinct. Every member below has
-# been checked against actual values (not just descriptions) for at least
-# one geography/year before being added here; the note records what that
-# check found, since two members citing the same source can still differ
-# for very different reasons (final vs. provisional vintage, direct count
-# vs. statistical model, or just a lagged release).
+# display_status: "primary" unless a measure must not be presented as live.
+#   "qa-only" is a pipeline diagnostic rather than a health outcome
+#   (nchs_pct_complete, nchs_overdose_pct_pending). "historical" is a series
+#   whose upstream is gone, so it will never gain another year -- kept because
+#   the observations are real, labelled because nothing in a value from 2015
+#   says it is the last one. Each measure's own long_description carries why.
 #
-# The screening method, and the two traps in it, are in CONTRIBUTING.md under
-# "Adding a duplicate_group". Read that before extending this list.
-#
-# Pairs deliberately NOT grouped, so the next person does not re-litigate them:
-#   * chr_dentists / ahrf_dentists and chr_primary_care_physicians / ahrf_pcp --
-#     r = -0.18 and -0.16. One is a population-per-provider ratio, the other a
-#     provider count. Inverses of each other, not the same measure.
-#   * chr_unemployment / acs_UMP -- r = 0.638. A rolling 5-year survey estimate
-#     against a point-in-time administrative rate; too weak to call one concept.
-#   * chr_income_inequality / acs_GNI -- ratio 0.100. A percentile ratio against
-#     a Gini index: different statistics. acs_OWS is the right counterpart.
-#   * acs_PCT_P / pep_pct_aian (ratio 3.9) and acs_PCT_P1 / pep_pct_nhpi (ratio
-#     1.4) -- the ACS shares are non-Hispanic-alone and the PEP shares are not,
-#     so for these two groups the ACS member counts a different population. The
-#     other four race groups match at ratio 1.0-1.1 and are grouped.
-duplicate_groups <- list(
-  drug_overdose_mortality = c(
-    nchs_overdose_deaths = "raw provisional monthly count (VSRR)",
-    nchs_overdose_rate = "provisional annual crude rate (VSRR)",
-    nchs_rate_drug_overdose = "provisional quarterly age-adjusted rate (VSRR)",
-    chr_drug_overdose_deaths = "direct-count rate from NCHS Multiple Cause of Death files (final, not VSRR)",
-    chr_drug_overdose_deaths_modeled = "SMALL-AREA MODELED estimate, not a direct rate -- CHR&R's own smoothed/regression estimate for counties too small to compute a stable direct rate; spans ~11 to ~33 per 100,000 nationally vs. the other four depending on year"
-  ),
-  population_total = c(
-    chr_population = "Census PEP annual estimate, via CHR&R",
-    ahrf_population = "Census PEP annual estimate, via AHRF -- bit-identical to chr_population from 2023 on (checked CT 2023-2025); diverged 2011-2022, when AHRF was carrying a less-frequently-refreshed vintage",
-    acs_POP = "ACS 5-year survey-based estimate -- methodologically distinct from the PEP-based pair above (rolling 5-year survey vs. an annual administrative estimate), consistently close but never bit-identical to them (checked CT 2023-2024)",
-    pep_population = "the same Census PEP estimate pulled directly rather than through a compiler -- r = 0.9998 and ratio 1.002 against acs_POP, chr_population and ahrf_population across ~3,100 counties in 2023. This is the member with honest coverage for Connecticut's 9 planning regions, Alaska's Chugach and Copper River, and Puerto Rico's municipios, which CHR&R does not report"
-  ),
-  unemployment_rate = c(
-    chr_unemployment = "BLS LAUS annual county unemployment rate, via CHR&R",
-    bls_pct_unemployment = "the same BLS LAUS series pulled directly -- close but not bit-identical to chr_unemployment (checked CT 2025: 0.0376 vs. 0.04), most likely a different LAUS release vintage"
-  ),
-  severe_housing_problems = c(
-    chr_severe_housing_problems = "HUD CHAS severe-housing-problems rate, via CHR&R",
-    hud_pct_severe_housing_problems = "the same HUD CHAS definition pulled directly -- close but not bit-identical to chr_severe_housing_problems (checked CT 2022: 0.1744 vs. 0.1774), most likely a different CHAS release vintage"
-  ),
-  diabetes_prevalence = c(
-    chr_diabetes_prevalence = "CDC PLACES small-area MODEL estimate (multilevel regression + poststratification), not a direct survey tabulation",
-    brfss_diabetes = "direct BRFSS self-report survey tabulation -- consistently ~1-2 percentage points HIGHER than the PLACES model estimate every year checked (CT 2018-2022), a systematic gap, not noise"
-  ),
+# duplicate_group: which measures represent the same concept, so several
+#   pipelines reporting one statistic can be displayed together instead of
+#   looking like unrelated rows. Present only where a cluster was confirmed
+#   against measured values; absent means ungrouped, and defaults to the
+#   measure's own id below. Grouping is not merging -- members stay separate
+#   series. The screening method, its two failure modes, and the pairs
+#   deliberately NOT grouped are in CONTRIBUTING.md under "Adding a
+#   duplicate_group". Read that before adding one.
+# -----------------------------------------------------------------------------
 
-  # --- Air quality -----------------------------------------------------------
-  particulate_matter = c(
-    chr_air_pollution_particulate_matter = "CDC EPHT modeled PM2.5 surface, via CHR&R",
-    ahrf_pm25 = "the SAME CDC EPHT surface via AHRF, and the only bit-identical pair in this whole list: r = 1.0000 and every one of 3,115 county values matches exactly in 2023. Two compilers republishing one upstream product, so these carry no independent information about each other"
-  ),
+VALID_DISPLAY_STATUS <- c("primary", "qa-only", "historical")
 
-  # --- Demographic composition -----------------------------------------------
-  # Three pipelines report the same shares. chr_ and pep_ both rest on Census
-  # PEP, acs_ on the 5-year survey, so the ACS member is the methodologically
-  # distinct one in each group even where the values agree closely.
-  share_hispanic = c(
-    chr_hispanic = "Census PEP share, via CHR&R",
-    acs_PCT_H = "ACS 5-year survey share -- r = 0.997, ratio 1.003 against chr_hispanic (3,142 counties, 2019)",
-    pep_pct_hispanic = "the same PEP share pulled directly -- r = 0.996, ratio 1.07 against chr_hispanic (3,133 counties, 2023)"
-  ),
-  share_non_hispanic_black = c(
-    chr_non_hispanic_black = "Census PEP share, via CHR&R",
-    acs_PCT_B = "ACS 5-year survey share -- r = 0.998, ratio 1.014 against chr_non_hispanic_black (3,142 counties, 2019)",
-    pep_pct_nh_black = "the same PEP share pulled directly -- r = 0.999, ratio 1.018 against chr_non_hispanic_black (3,133 counties, 2023)"
-  ),
-  share_non_hispanic_white = c(
-    chr_non_hispanic_white = "Census PEP share, via CHR&R",
-    acs_PCT_W = "ACS 5-year survey share -- r = 0.998, ratio 1.001 against chr_non_hispanic_white (3,142 counties, 2019)",
-    pep_pct_nh_white = "the same PEP share pulled directly -- r = 0.998, ratio 0.993 against chr_non_hispanic_white (3,133 counties, 2023)"
-  ),
-  share_asian = c(
-    chr_asian = "Census PEP share, via CHR&R",
-    acs_PCT_A = "ACS 5-year survey share -- r = 0.976, ratio 1.10 against chr_asian (3,142 counties, 2019); the loosest fit of the four race groups grouped here",
-    pep_pct_asian = "the same PEP share pulled directly -- r = 0.998, ratio 1.05 against chr_asian (3,133 counties, 2023)"
-  ),
-  # No ACS member: see the header note -- acs_PCT_P is non-Hispanic-alone and
-  # runs ~4x smaller, which is a different population rather than a vintage gap.
-  share_american_indian_alaska_native = c(
-    chr_american_indian_or_alaska_native = "Census PEP share, via CHR&R",
-    pep_pct_aian = "the same PEP share pulled directly -- r = 0.999, ratio 1.038 (3,133 counties, 2023)"
-  ),
-  share_native_hawaiian_pacific_islander = c(
-    chr_native_hawaiian_or_other_pacific_islander = "Census PEP share, via CHR&R",
-    pep_pct_nhpi = "the same PEP share pulled directly -- r = 0.990, ratio 1.043 (3,133 counties, 2023)"
-  ),
-  share_age_65_and_older = c(
-    chr_65_and_older = "Census PEP share, via CHR&R",
-    acs_PCT_S = "ACS 5-year survey share -- r = 0.978, ratio 1.000 against chr_65_and_older (3,142 counties, 2019)",
-    pep_pct_65_older = "the same PEP share pulled directly -- r = 0.987, ratio 1.043 against chr_65_and_older (3,133 counties, 2023)"
-  ),
-  # No ACS member by construction: ACS splits this age range into acs_PCT_I
-  # (0-4) and acs_PCT_J (5-17), so neither alone is comparable.
-  share_under_18 = c(
-    chr_below_18_years_of_age = "Census PEP share, via CHR&R",
-    pep_pct_under_18 = "the same PEP share pulled directly -- r = 0.981, ratio 0.988 (3,133 counties, 2023)"
-  ),
-  # Grouped on ratio, not correlation: female share is ~50% in every county, so
-  # there is almost no variance for a correlation to detect (r = 0.90-0.95).
-  # The ratio is 1.000 between all three, which is the decisive evidence here.
-  share_female = c(
-    chr_female = "Census PEP share, via CHR&R",
-    acs_PCT_F = "ACS 5-year survey share -- ratio 1.000 against chr_female (3,142 counties, 2019)",
-    pep_pct_female = "the same PEP share pulled directly -- ratio 1.000 against chr_female (3,133 counties, 2023)"
-  ),
-
-  # --- Economic --------------------------------------------------------------
-  median_household_income = c(
-    chr_median_household_income = "Census SAIPE estimate, via CHR&R",
-    saipe_median_household_income = "the same SAIPE estimate pulled directly -- r = 0.955, ratio 1.022 against chr_median_household_income (3,142 counties, 2024)",
-    acs_INC = "ACS 5-year survey median -- r = 0.972, ratio 0.956 against chr_median_household_income (3,141 counties, 2019); a survey median rather than SAIPE's model-based estimate"
-  ),
-  children_in_poverty = c(
-    chr_children_in_poverty = "Census SAIPE child poverty rate, via CHR&R",
-    saipe_pct_children_poverty = "the same SAIPE rate pulled directly -- r = 0.936, ratio 0.940 (3,134 counties, 2024); the gap is release vintage, since CHR&R lags SAIPE by ~2 years"
-  ),
-  income_inequality = c(
-    chr_income_inequality = "ratio of household income at the 80th percentile to the 20th, via CHR&R",
-    acs_OWS = "ACS income QUINTILE SHARE ratio (S80/S20) -- r = 0.972 but ratio 3.18 (52 states, 2019). NOT interchangeable: a ratio of two percentile incomes and a ratio of two quintile income shares are different statistics that happen to move together. Grouped so they are not read as independent findings; see also acs_GNI, a Gini index, which is deliberately NOT in this group"
-  ),
-  severe_housing_cost_burden = c(
-    chr_severe_housing_cost_burden = "ACS-derived rate of households spending 50%+ of income on housing, via CHR&R",
-    acs_HBS = "the same ACS concept pulled directly -- r = 0.899, ratio 0.907 (3,141 counties, 2019)"
-  ),
-  homeownership = c(
-    chr_homeownership = "ACS-derived owner-occupied housing rate, via CHR&R",
-    acs_HUO = "the same ACS concept pulled directly -- r = 0.964, ratio 0.997 (3,142 counties, 2019)"
-  ),
-
-  # --- Insurance coverage ----------------------------------------------------
-  # Three separate groups, not one: all-ages, adults and children are distinct
-  # populations, and chr_uninsured vs chr_uninsured_adults differ by ratio 1.17.
-  uninsured_all_ages = c(
-    chr_uninsured = "Census SAHIE under-65 uninsured rate, via CHR&R",
-    sahie_pct_uninsured = "the same SAHIE rate pulled directly -- r = 0.932, ratio 0.947 (3,134 counties, 2024)"
-  ),
-  uninsured_adults = c(
-    chr_uninsured_adults = "Census SAHIE adult uninsured rate, via CHR&R",
-    sahie_pct_uninsured_adults = "the same SAHIE rate pulled directly -- r = 0.938, ratio 0.922 (3,134 counties, 2024)"
-  ),
-  uninsured_children = c(
-    chr_uninsured_children = "Census SAHIE child uninsured rate, via CHR&R",
-    sahie_pct_uninsured_children = "the same SAHIE rate pulled directly -- r = 0.863, ratio 1.074 (3,134 counties, 2024); the weakest of the three, as expected on the smallest denominator"
-  ),
-
-  # --- Education and connectivity --------------------------------------------
-  high_school_completion = c(
-    chr_high_school_completion = "ACS-derived share of adults 25+ with at least a high school diploma, via CHR&R",
-    acs_EDB = "the same ACS concept pulled directly -- r = 0.963, ratio 0.990 (3,141 counties, 2021)"
-  ),
-  broadband_access = c(
-    chr_broadband_access = "ACS-derived household broadband subscription rate, via CHR&R",
-    acs_BDB = "the same ACS concept pulled directly -- r = 0.936, ratio 1.063 (3,141 counties, 2021)"
-  ),
-
-  # --- Mortality: CHR&R county series vs. NCHS state series -------------------
-  # These pairs have NO county overlap -- the nchs_ members are state-level
-  # only -- so all four were verified across 204 state/territory rows for 2023
-  # rather than across counties.
-  homicide_mortality = c(
-    chr_homicides = "CHR&R county homicide rate, multi-year smoothed",
-    nchs_rate_homicide = "NCHS age-adjusted state homicide rate -- r = 0.929, ratio 1.224 (204 state rows, 2023); age adjustment plus CHR&R's smoothing accounts for the level gap"
-  ),
-  suicide_mortality = c(
-    chr_suicides = "CHR&R county suicide rate, multi-year smoothed",
-    nchs_rate_suicide = "NCHS age-adjusted state suicide rate -- r = 0.919, ratio 1.019 (204 state rows, 2023)"
-  ),
-  firearm_mortality = c(
-    chr_firearm_fatalities = "CHR&R county firearm fatality rate, multi-year smoothed",
-    nchs_rate_firearm_related_injury = "NCHS age-adjusted state firearm injury death rate -- r = 0.944, ratio 1.102 (204 state rows, 2023)"
-  ),
-  unintentional_injury_mortality = c(
-    chr_injury_deaths = "CHR&R county injury death rate, multi-year smoothed",
-    nchs_rate_unintentional_injuries = "NCHS age-adjusted state unintentional injury death rate -- r = 0.817, ratio 0.800 (204 state rows, 2023); the loosest pair here, since CHR&R's injury deaths include intentional causes that the NCHS unintentional series excludes"
-  ),
-  motor_vehicle_crash_mortality = c(
-    chr_motor_vehicle_crash_deaths = "CHR&R county motor vehicle crash death rate, multi-year smoothed",
-    nhtsa_fatality_rate = "NHTSA FARS annual fatality rate per 100,000 -- r = 0.916, ratio 0.663 at STATE level (51 states, 2010). At county level the same pair reaches only r = 0.212, because CHR&R's multi-year smoothing and FARS's single-year counts diverge sharply on small county denominators; judge this pair at state level"
-  ),
-
-  # --- Other -----------------------------------------------------------------
-  adult_obesity = c(
-    chr_adult_obesity = "CDC PLACES small-area model estimate, via CHR&R, stored 0-1",
-    brfss_obesity = "direct BRFSS survey tabulation, stored 0-100 -- r = 0.926 (52 states, 2018), ratio 107.8, which is the 100x scale difference plus the same systematic model-vs-survey gap seen in diabetes_prevalence. The scale mismatch between these two members is a live example of the percent-standard problem"
-  ),
-  urban_rural_composition = c(
-    chr_rural = "CHR&R share of population living in a rural area, from the decennial Census",
-    census_ur_pct_urban_pop = "Census urban share of population pulled directly -- r = -1.000 EXACTLY against chr_rural across 3,135 counties (2024), because the two are algebraic complements of one another. They carry the same information stated in opposite directions and must never be read as two independent findings. census_ur_pct_urban_hu is the housing-unit analogue and is deliberately left out, since its denominator is housing units rather than people"
+bad_status <- registry$measure_id[
+  is.na(registry$display_status) |
+    !registry$display_status %in% VALID_DISPLAY_STATUS
+]
+if (length(bad_status) > 0) {
+  stop(
+    "measure_info.json: ", length(bad_status),
+    " measure(s) missing or with an invalid display_status (expected one of ",
+    paste(VALID_DISPLAY_STATUS, collapse = ", "), "): ",
+    paste(head(bad_status, 10), collapse = ", ")
   )
-)
-
-flatten_groups <- function(groups) {
-  bind_rows(lapply(names(groups), function(g) {
-    tibble(
-      measure_id = names(groups[[g]]),
-      duplicate_group = g,
-      duplicate_note = unname(groups[[g]])
-    )
-  }))
 }
 
-group_lookup <- flatten_groups(duplicate_groups)
+# A group of one is a declaration error, not a group -- it means a member was
+# renamed or removed without its partner being revisited.
+lone_groups <- registry %>%
+  filter(!is.na(duplicate_group)) %>%
+  count(duplicate_group) %>%
+  filter(n < 2)
+if (nrow(lone_groups) > 0) {
+  stop(
+    "measure_info.json: duplicate_group with only one member: ",
+    paste(lone_groups$duplicate_group, collapse = ", ")
+  )
+}
+
+# A group name that collides with a measure id would be indistinguishable from
+# the ungrouped default assigned below.
+collisions <- intersect(
+  unique(na.omit(registry$duplicate_group)), registry$measure_id
+)
+if (length(collisions) > 0) {
+  stop(
+    "measure_info.json: duplicate_group name collides with a measure id: ",
+    paste(collisions, collapse = ", ")
+  )
+}
+
+# Attribution: a CHR&R measure must carry the edition it came from, in the file
+# consumers read. CHR&R is CC BY 4.0 with attribution required and its requested
+# citation names the edition, so a consumer composes it from
+# _sources.chr.restrictions plus this measure's vintage_release. Without it the
+# only year in measure_info.json is _sources.chr.date_accessed -- currently 2025
+# -- and falling back on that cites the 2025 edition for measures CHR&R last
+# published in 2010 or 2011. The compiler_* columns below carry the same fact,
+# but they exist only on this registry, which no consumer reads.
+# %in%, not ==: compiled_via is NA for every directly-ingested measure, and
+# `NA == "chr"` is NA, which subsets to NA rows rather than dropping them.
+missing_release <- registry$measure_id[
+  registry$compiled_via %in% "chr" & is.na(registry$vintage_release)
+]
+if (length(missing_release) > 0) {
+  stop(
+    "measure_info.json: ", length(missing_release),
+    " chr_ measure(s) with no vintage_release, so no edition can be cited: ",
+    paste(head(missing_release, 10), collapse = ", "),
+    ". The release year is in tracker/measure_vintages.csv."
+  )
+}
+
+# The note records what the value check found. A group without one cannot be
+# reviewed later, which is how name-based grouping creeps back in.
+missing_note <- registry$measure_id[
+  !is.na(registry$duplicate_group) &
+    (is.na(registry$duplicate_note) | registry$duplicate_note == "")
+]
+if (length(missing_note) > 0) {
+  stop(
+    "measure_info.json: grouped measure(s) with no duplicate_note: ",
+    paste(head(missing_note, 10), collapse = ", ")
+  )
+}
+
 
 registry <- registry %>%
   mutate(
@@ -528,11 +407,6 @@ registry <- registry %>%
       measure_id %in% conditional_county_ids ~ "conditional",
       TRUE ~ "Y"
     ),
-    display_status = case_when(
-      measure_id %in% qa_only_ids ~ "qa-only",
-      measure_id %in% historical_ids ~ "historical",
-      TRUE ~ "primary"
-    ),
     parity_flag = case_when(
       expected_national == "Y" & !actual_national ~ "expected_national_absent",
       expected_state == "Y" & !actual_state ~ "expected_state_absent",
@@ -540,7 +414,9 @@ registry <- registry %>%
       TRUE ~ NA_character_
     )
   ) %>%
-  left_join(group_lookup, by = "measure_id") %>%
+  # An ungrouped measure is its own concept, so n_concepts below counts it once.
+  # The registry therefore always carries a duplicate_group; measure_info.json
+  # omits it, where absent means ungrouped.
   mutate(duplicate_group = coalesce(duplicate_group, measure_id))
 
 # -----------------------------------------------------------------------------
@@ -619,11 +495,11 @@ registry <- registry %>%
   ) %>%
   arrange(measure_id)
 
-# n_concepts counts distinct duplicate_group values, not rows -- e.g. the
-# five drug_overdose_mortality measures above count as one concept. Most
-# measures don't have a confirmed group yet, so this undercounts the true
-# duplication in the catalog; it will keep dropping as more clusters like
-# that one are identified and added to duplicate_groups.
+# n_concepts counts distinct duplicate_group values, not rows -- e.g. the five
+# drug_overdose_mortality measures count as one concept. Most measures don't
+# have a confirmed group yet, so this undercounts the true duplication in the
+# catalog; it will keep dropping as more clusters are confirmed and declared in
+# measure_info.json. A drop is never measures being lost.
 n_concepts <- n_distinct(registry$duplicate_group)
 n_origins  <- n_distinct(registry$pipeline, na.rm = TRUE)
 
@@ -681,7 +557,7 @@ known_gaps <- c(
   nhtsa_single_vehicle = "roll-up needed; national aggregate not yet built",
   nhtsa_urban = "roll-up needed; national aggregate not yet built",
   epic_heat_ed_rate = "roll-up needed; national aggregate not yet built",
-  hud_pct_severe_housing_problems = "roll-up needed; also see duplicate_groups -- its chr_ counterpart has 10x the history, don't drop that one in favor of this",
+  hud_pct_severe_housing_problems = "roll-up needed; also see duplicate_group -- its chr_ counterpart has 10x the history, don't drop that one in favor of this",
   usda_pct_limited_access_low_income = "roll-up needed; national aggregate not yet built",
   nchs_deaths_all_cause = "roll-up needed; national aggregate not yet built",
   nchs_deaths_any_opioid = "roll-up needed; national aggregate not yet built",
