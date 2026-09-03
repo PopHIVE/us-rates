@@ -62,9 +62,9 @@ All data files use PopHIVE's **long format**: one row per `(geography, time, mea
 
 ```
 geography,time,measure,value
-01001,2022-12-31,chr_diabetes_prevalence,0.124
-01001,2022-12-31,chr_adult_smoking,0.208
-01001,2021-12-31,chr_diabetes_prevalence,0.121
+01001,2022-12-31,chr_diabetes_prevalence,11.2
+01001,2022-12-31,chr_adult_smoking,19.7
+01001,2021-12-31,chr_diabetes_prevalence,12.7
 ```
 
 Sparse measures simply have no row — missing data is never written as `NA`.
@@ -201,10 +201,13 @@ A measure pulled from a compiler carries the **compiler's** prefix, not the orig
     "long_description": "... from the Small Area Health Insurance Estimates (SAHIE) program.",
     "statement": "In {location}, {value} of the population under 65 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [{ "id": "chr" }, { "id": "census_sahie" }],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "uninsured_all_ages",
+    "duplicate_note": "Census SAHIE under-65 uninsured rate, via CHR&R"
   }
 }
 ```
@@ -217,16 +220,22 @@ A measure pulled from a compiler carries the **compiler's** prefix, not the orig
 | `short_description` / `long_description` | One sentence, and a fuller note including methodology and any comparability caveats |
 | `statement` | Display template — `{value}` is pre-formatted, so don't wrap it in `%` or `$` |
 | `measure_type` | `percent`, `number`, or `dollars` |
-| `scale` | Percents only: `0-1` or `0-100`, the scale the raw value is stored on |
+| `scale` | Percents only. **`0-100` is the standard** — a percent measure stores `18.44`, not `0.1844` — and every percent measure in the repo now declares it. `0-1` remains valid in the schema and the QA bounds check still honours it, so a future source that cannot be conformed can declare it honestly rather than silently |
 | `unit` | Optional label where `measure_type` isn't self-explanatory (e.g. `Micrograms per cubic meter`) |
 | `time_resolution` | `Week`, `Month`, or `Year` |
 | `sources` | Ordered source ids, **first is where PopHIVE pulls the measure from** — for a compiled measure that's the compiler, with the original producer following it |
 | `compiled_via` | Present when the measure comes through a compiler (`chr`, `ahrf`); always equals `sources[0]` |
+| `display_status` | `primary`, `historical`, or `qa-only` — **present on every measure**, so treat an absent value as an error rather than as `primary`. See [Tracker Files](#tracker-files) |
+| `duplicate_group` | Present only where a measure shares a concept with others; absent means ungrouped. `duplicate_note` records how this member differs from its siblings |
 | `vintage` fields | Optional; see [Data Vintage](#data-vintage) |
 
 ### Attribution
 
-`_sources[].restrictions` carries each source's terms, and `sources[0]` is who to credit. Most upstream federal sources are public domain, but the compilers are not — **County Health Rankings & Roadmaps is CC BY 4.0 and requires attribution**, and its own redistribution is bounded by the terms of its upstream sources, so a `chr_` measure can carry obligations beyond that citation. `tracker/measure_registry.csv` carries the required citation string per measure in `compiler_citation`.
+`_sources[].restrictions` carries each source's terms, and `sources[0]` is who to credit. Most upstream federal sources are public domain, but the compilers are not — **County Health Rankings & Roadmaps is CC BY 4.0 and requires attribution**, and its own redistribution is bounded by the terms of its upstream sources, so a `chr_` measure can carry obligations beyond that citation.
+
+**Everything needed to build the citation is in `measure_info.json`.** Take the wording from `_sources[compiled_via].restrictions` and the edition from the measure's own `vintage_release` — which every `chr_` measure carries, enforced at build time. Cite the edition the measure actually came from, **not the current one**: `chr_hospice_use` last appeared in CHR&R's 2010 release and must cite 2010. Reaching for `_sources.chr.date_accessed` instead would cite the 2025 edition for a measure not published since 2010.
+
+`tracker/measure_registry.csv` also carries a pre-composed `compiler_citation`, along with `compiler_first_year` / `compiler_last_year`, if you are already reading the registry — but it is a convenience, not the only route.
 
 ---
 
@@ -269,7 +278,7 @@ Machine-readable records of what's in the repo and what's known about it. These 
 
 **Check `qa_findings.csv` before treating a long series as continuous.** Some measures have genuine breaks where a publisher changed a definition, a denominator, or a unit mid-series — values either side are not comparable, and the values as stored are correct rather than something to be repaired. Where a break is known, it is also described in that measure's `long_description`.
 
-**Check `display_status` in the registry before presenting a measure.** Not every measure in the catalog is a live one, and nothing in a value itself says otherwise:
+**Check `display_status` before presenting a measure.** Not every measure in the catalog is a live one, and nothing in a value itself says otherwise. It is declared on every measure in `measure_info.json` — never omitted, so an absent field is a defect and not a `primary` — and copied onto the registry:
 
 | `display_status` | Meaning |
 |---|---|
@@ -279,7 +288,7 @@ Machine-readable records of what's in the repo and what's known about it. These 
 
 Each measure's own `long_description` says why it carries a non-`primary` status.
 
-`duplicate_group` in the registry marks measures covering the same concept from different sources. They are deliberately kept as separate series and are not interchangeable; the `duplicate_note` explains how they differ.
+`duplicate_group` marks measures covering the same concept from different sources, so a reader sees one concept rather than several unrelated-looking rows. Like `display_status`, it is declared in `measure_info.json` and copied onto the registry — but only where a cluster has been confirmed against measured values, so an absent `duplicate_group` means ungrouped. The registry fills that gap with the measure's own id, so counting distinct `duplicate_group` values gives the number of concepts in the catalog. Grouping is not merging: members are deliberately kept as separate series and are not interchangeable, and the `duplicate_note` on each records how it differs from its siblings.
 
 ---
 

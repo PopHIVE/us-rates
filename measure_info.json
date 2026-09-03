@@ -538,7 +538,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_poor_or_fair_health": {
     "id": "chr_poor_or_fair_health",
@@ -550,7 +551,7 @@
     "long_description": "Percentage of adults reporting fair or poor health (age-adjusted), based on self-reported health status from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported fair or poor health.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -564,7 +565,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_uninsured_adults": {
     "id": "chr_uninsured_adults",
@@ -576,7 +578,7 @@
     "long_description": "Percentage of adults under age 65 without health insurance, from the Small Area Health Insurance Estimates (SAHIE) program.",
     "statement": "In {location}, {value} of adults under 65 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -590,7 +592,10 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "uninsured_adults",
+    "duplicate_note": "Census SAHIE adult uninsured rate, via CHR&R"
   },
   "chr_primary_care_physicians": {
     "id": "chr_primary_care_physicians",
@@ -616,7 +621,8 @@
         "id": "ama_physician_masterfile"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_preventable_hospital_stays": {
     "id": "chr_preventable_hospital_stays",
@@ -642,7 +648,8 @@
         "id": "cms"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_adult_smoking": {
     "id": "chr_adult_smoking",
@@ -654,7 +661,7 @@
     "long_description": "Percentage of adults who are current smokers (age-adjusted), from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults were current smokers.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -668,7 +675,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_adult_obesity": {
     "id": "chr_adult_obesity",
@@ -680,7 +688,7 @@
     "long_description": "Percentage of the adult population (age 18 and older) that reports a body mass index (BMI) greater than or equal to 30 kg/m2 (age-adjusted), from the BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults were obese.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -694,7 +702,10 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "adult_obesity",
+    "duplicate_note": "CDC PLACES small-area model estimate, via CHR&R, stored 0-1"
   },
   "chr_teen_births": {
     "id": "chr_teen_births",
@@ -720,7 +731,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_homicides": {
     "id": "chr_homicides",
@@ -746,7 +758,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "homicide_mortality",
+    "duplicate_note": "CHR&R county homicide rate, multi-year smoothed"
   },
   "chr_high_school_graduation": {
     "id": "chr_high_school_graduation",
@@ -758,7 +773,7 @@
     "long_description": "Percentage of ninth-grade cohort that graduates in four years (on-time graduation rate), from EDFacts, U.S. Department of Education.",
     "statement": "In {location}, {value} of ninth-graders graduated within four years.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2021-2022",
     "vintage_min": 2021,
@@ -772,7 +787,8 @@
         "id": "edfacts"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_unemployment": {
     "id": "chr_unemployment",
@@ -784,7 +800,7 @@
     "long_description": "Percentage of population ages 16 and older unemployed but seeking work, from the Bureau of Labor Statistics Local Area Unemployment Statistics.",
     "statement": "In {location}, {value} of the labor force was unemployed.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -798,7 +814,10 @@
         "id": "bls_laus"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "unemployment_rate",
+    "duplicate_note": "BLS LAUS annual county unemployment rate, via CHR&R"
   },
   "bls_pct_unemployment": {
     "id": "bls_pct_unemployment",
@@ -810,13 +829,16 @@
     "long_description": "Annual average county unemployment rate pulled directly from the Bureau of Labor Statistics' Local Area Unemployment Statistics (LAUS) program (not seasonally adjusted -- county series never are). Direct-source companion to chr_unemployment, which uses the same LAUS rate series with no further CHR&R-side adjustment. LAUS estimates are re-benchmarked in later years against updated QCEW/population controls, so a value captured today will not always exactly match one captured earlier for the same reference year.",
     "statement": "In {location}, {value} of the labor force is unemployed.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "bls_laus"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "unemployment_rate",
+    "duplicate_note": "the same BLS LAUS series pulled directly -- close but not bit-identical to chr_unemployment (checked CT 2025: 0.0376 vs. 0.04), most likely a different LAUS release vintage"
   },
   "chr_children_in_poverty": {
     "id": "chr_children_in_poverty",
@@ -828,7 +850,7 @@
     "long_description": "Percentage of people under age 18 in poverty, from the U.S. Census Bureau Small Area Income and Poverty Estimates (SAIPE).",
     "statement": "In {location}, {value} of children lived in poverty.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023 & 2019",
     "vintage_min": 2019,
@@ -842,7 +864,10 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "children_in_poverty",
+    "duplicate_note": "Census SAIPE child poverty rate, via CHR&R"
   },
   "chr_poor_physical_health_days": {
     "id": "chr_poor_physical_health_days",
@@ -868,7 +893,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_low_birth_weight": {
     "id": "chr_low_birth_weight",
@@ -880,7 +906,7 @@
     "long_description": "Percentage of live births with low birth weight (< 2,500 grams), from the National Center for Health Statistics (NCHS) Natality files.",
     "statement": "In {location}, {value} of live births had low birth weight.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2017-2023",
     "vintage_min": 2017,
@@ -894,7 +920,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_motor_vehicle_crash_deaths": {
     "id": "chr_motor_vehicle_crash_deaths",
@@ -920,7 +947,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "motor_vehicle_crash_mortality",
+    "duplicate_note": "CHR&R county motor vehicle crash death rate, multi-year smoothed"
   },
   "nhtsa_fatalities": {
     "id": "nhtsa_fatalities",
@@ -938,7 +968,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_fatal_crashes": {
     "id": "nhtsa_fatal_crashes",
@@ -956,7 +987,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_fatality_rate": {
     "id": "nhtsa_fatality_rate",
@@ -974,7 +1006,10 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "motor_vehicle_crash_mortality",
+    "duplicate_note": "NHTSA FARS annual fatality rate per 100,000 -- r = 0.916, ratio 0.663 at STATE level (51 states, 2010). At county level the same pair reaches only r = 0.212, because CHR&R's multi-year smoothing and FARS's single-year counts diverge sharply on small county denominators; judge this pair at state level"
   },
   "nhtsa_single_vehicle": {
     "id": "nhtsa_single_vehicle",
@@ -992,7 +1027,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_rural": {
     "id": "nhtsa_rural",
@@ -1010,7 +1046,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_urban": {
     "id": "nhtsa_urban",
@@ -1028,7 +1065,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_pedestrian_involved": {
     "id": "nhtsa_pedestrian_involved",
@@ -1046,7 +1084,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nhtsa_cyclist_involved": {
     "id": "nhtsa_cyclist_involved",
@@ -1064,7 +1103,8 @@
       {
         "id": "nhtsa_fars"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "chr_poor_mental_health_days": {
     "id": "chr_poor_mental_health_days",
@@ -1090,7 +1130,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_income_inequality": {
     "id": "chr_income_inequality",
@@ -1116,7 +1157,10 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "income_inequality",
+    "duplicate_note": "ratio of household income at the 80th percentile to the 20th, via CHR&R"
   },
   "chr_sexually_transmitted_infections": {
     "id": "chr_sexually_transmitted_infections",
@@ -1142,7 +1186,8 @@
         "id": "cdc_nchhstp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_excessive_drinking": {
     "id": "chr_excessive_drinking",
@@ -1154,7 +1199,7 @@
     "long_description": "Percentage of adults reporting binge or heavy drinking (age-adjusted), from the BRFSS. Binge drinking is defined as consuming 4+ drinks for women or 5+ drinks for men on a single occasion. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported excessive drinking.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1168,7 +1213,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_mammography_screening": {
     "id": "chr_mammography_screening",
@@ -1180,7 +1226,7 @@
     "long_description": "Percentage of female Medicare enrollees ages 65-74 who received an annual mammography screening, from the CMS Mapping Medicare Disparities Tool. Formerly sourced from the Dartmouth Atlas of Health Care prior to a methodology change.",
     "statement": "In {location}, {value} of eligible female Medicare enrollees received mammography screening.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1194,7 +1240,8 @@
         "id": "cms"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_population": {
     "id": "chr_population",
@@ -1220,7 +1267,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "population_total",
+    "duplicate_note": "Census PEP annual estimate, via CHR&R"
   },
   "chr_below_18_years_of_age": {
     "id": "chr_below_18_years_of_age",
@@ -1232,7 +1282,7 @@
     "long_description": "Percentage of population below 18 years of age, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population was under 18 years old.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1246,7 +1296,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_under_18",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_65_and_older": {
     "id": "chr_65_and_older",
@@ -1258,7 +1311,7 @@
     "long_description": "Percentage of population ages 65 and older, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population was 65 or older.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1272,7 +1325,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_age_65_and_older",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_non_hispanic_black": {
     "id": "chr_non_hispanic_black",
@@ -1284,7 +1340,7 @@
     "long_description": "Percentage of population identifying as non-Hispanic Black or African American, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as non-Hispanic Black or African American.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1298,7 +1354,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_black",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_american_indian_or_alaska_native": {
     "id": "chr_american_indian_or_alaska_native",
@@ -1310,7 +1369,7 @@
     "long_description": "Percentage of population identifying as American Indian or Alaska Native, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as American Indian or Alaska Native.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1324,7 +1383,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_american_indian_alaska_native",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_hispanic": {
     "id": "chr_hispanic",
@@ -1336,7 +1398,7 @@
     "long_description": "Percentage of population identifying as Hispanic, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Hispanic.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1350,7 +1412,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_hispanic",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_female": {
     "id": "chr_female",
@@ -1362,7 +1427,7 @@
     "long_description": "Percentage of population identifying as female, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as female.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1376,7 +1441,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_female",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_rural": {
     "id": "chr_rural",
@@ -1388,7 +1456,7 @@
     "long_description": "Percentage of population living in a census-defined rural area, from the U.S. Census Bureau.",
     "statement": "In {location}, {value} of the population lived in rural areas.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2020",
     "vintage_min": 2020,
@@ -1402,7 +1470,10 @@
         "id": "census_decennial"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "urban_rural_composition",
+    "duplicate_note": "CHR&R share of population living in a rural area, from the decennial Census"
   },
   "chr_not_proficient_in_english": {
     "id": "chr_not_proficient_in_english",
@@ -1414,7 +1485,7 @@
     "long_description": "Percentage of population aged 5 and over who reported speaking English less than well, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of residents ages 5+ reported limited English proficiency.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -1428,7 +1499,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_diabetes_prevalence": {
     "id": "chr_diabetes_prevalence",
@@ -1440,7 +1512,7 @@
     "long_description": "Percentage of adults aged 18 and above with diagnosed diabetes (age-adjusted), from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation. Population base changed at the 2025 release: releases 2011-2024 cover adults aged 20 and above, releases 2025 onward adults aged 18 and above, so values either side are not directly comparable. The change is stated only in CHR&R's description text -- format_type stays 1 and the vintage advances normally -- so tracker/measure_vintages.csv's description_changed is the only signal that catches it.",
     "statement": "In {location}, {value} of adults had diagnosed diabetes.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1454,7 +1526,10 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "diabetes_prevalence",
+    "duplicate_note": "CDC PLACES small-area MODEL estimate (multilevel regression + poststratification), not a direct survey tabulation"
   },
   "chr_hiv_prevalence": {
     "id": "chr_hiv_prevalence",
@@ -1480,7 +1555,8 @@
         "id": "cdc_nchhstp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_mental_health_providers": {
     "id": "chr_mental_health_providers",
@@ -1506,7 +1582,8 @@
         "id": "cms_nppes"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_median_household_income": {
     "id": "chr_median_household_income",
@@ -1531,7 +1608,10 @@
         "id": "census_saipe"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "median_household_income",
+    "duplicate_note": "Census SAIPE estimate, via CHR&R"
   },
   "chr_children_eligible_for_free_or_reduced_price_lunch": {
     "id": "chr_children_eligible_for_free_or_reduced_price_lunch",
@@ -1543,7 +1623,7 @@
     "long_description": "Percentage of children enrolled in public schools that are eligible for free or reduced price lunch, from the National Center for Education Statistics (NCES).",
     "statement": "In {location}, {value} of public school children were eligible for free or reduced price lunch.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022-2023",
     "vintage_min": 2022,
@@ -1557,7 +1637,8 @@
         "id": "nces"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_driving_alone_to_work": {
     "id": "chr_driving_alone_to_work",
@@ -1569,7 +1650,7 @@
     "long_description": "Percentage of the workforce that drives alone to work, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of workers drove alone to work.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -1583,7 +1664,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_some_college": {
     "id": "chr_some_college",
@@ -1595,7 +1677,7 @@
     "long_description": "Percentage of adults ages 25-44 with some post-secondary education, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of adults ages 25-44 had some post-secondary education.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -1609,7 +1691,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_physical_inactivity": {
     "id": "chr_physical_inactivity",
@@ -1621,7 +1704,7 @@
     "long_description": "Percentage of adults age 18 and over reporting no leisure-time physical activity (age-adjusted), from the BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported no leisure-time physical activity.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1635,7 +1718,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_native_hawaiian_or_other_pacific_islander": {
     "id": "chr_native_hawaiian_or_other_pacific_islander",
@@ -1647,7 +1731,7 @@
     "long_description": "Percentage of population identifying as Native Hawaiian or Other Pacific Islander, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Native Hawaiian or Other Pacific Islander.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1661,7 +1745,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_native_hawaiian_pacific_islander",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_asian": {
     "id": "chr_asian",
@@ -1673,7 +1760,7 @@
     "long_description": "Percentage of population identifying as Asian, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Asian.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1687,7 +1774,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_asian",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_children_in_single_parent_households": {
     "id": "chr_children_in_single_parent_households",
@@ -1699,7 +1789,7 @@
     "long_description": "Percentage of children that live in a household headed by a single parent, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of children lived in single-parent households.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -1713,7 +1803,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_limited_access_to_healthy_foods": {
     "id": "chr_limited_access_to_healthy_foods",
@@ -1725,7 +1816,7 @@
     "long_description": "Percentage of the population that is low-income (at or below 200% of the federal poverty threshold) and does not live close to a grocery store (more than 10 miles in rural areas, more than 1 mile in non-rural areas), from the USDA Food Environment Atlas.",
     "statement": "In {location}, {value} of the population had limited access to healthy foods.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019",
     "vintage_min": 2019,
@@ -1739,7 +1830,8 @@
         "id": "usda_fara"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "usda_pct_limited_access_low_income": {
     "id": "usda_pct_limited_access_low_income",
@@ -1751,13 +1843,14 @@
     "long_description": "Percentage of the county population that is both low-income (at or below 200% of the federal poverty line) and has limited access to a grocery store, pulled directly from the USDA Economic Research Service's Food Environment Atlas (variable PCT_LACCESS_LOWI19) -- USDA's own county-level aggregation of tract-level data from the Food Access Research Atlas. Direct-source companion to chr_limited_access_to_healthy_foods -- County Health Rankings & Roadmaps uses this same 2019 vintage, which the source has not refreshed since. Three Alaska boroughs (Chugach 02063, Copper River 02066, Valdez-Cordova 02261) are NA due to a FIPS reorganization.",
     "statement": "In {location}, {value} of the population is low-income with limited access to healthy food.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "usda_fara"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "chr_uninsured": {
     "id": "chr_uninsured",
@@ -1769,7 +1862,7 @@
     "long_description": "Percentage of population under age 65 without health insurance, from the Small Area Health Insurance Estimates (SAHIE) program.",
     "statement": "In {location}, {value} of the population under 65 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1783,7 +1876,10 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "uninsured_all_ages",
+    "duplicate_note": "Census SAHIE under-65 uninsured rate, via CHR&R"
   },
   "chr_dentists": {
     "id": "chr_dentists",
@@ -1809,7 +1905,8 @@
         "id": "cms_nppes"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_uninsured_children": {
     "id": "chr_uninsured_children",
@@ -1821,7 +1918,7 @@
     "long_description": "Percentage of children under age 19 without health insurance, from the Small Area Health Insurance Estimates (SAHIE) program.",
     "statement": "In {location}, {value} of children under 19 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -1835,7 +1932,10 @@
         "id": "census_sahie"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "uninsured_children",
+    "duplicate_note": "Census SAHIE child uninsured rate, via CHR&R"
   },
   "chr_drinking_water_violations": {
     "id": "chr_drinking_water_violations",
@@ -1860,7 +1960,8 @@
         "id": "epa_sdwis"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_air_pollution_particulate_matter": {
     "id": "chr_air_pollution_particulate_matter",
@@ -1886,7 +1987,10 @@
         "id": "cdc_epht"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "particulate_matter",
+    "duplicate_note": "CDC EPHT modeled PM2.5 surface, via CHR&R"
   },
   "chr_non_hispanic_white": {
     "id": "chr_non_hispanic_white",
@@ -1898,7 +2002,7 @@
     "long_description": "Percentage of population identifying as non-Hispanic white, from the U.S. Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as non-Hispanic white.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2023",
     "vintage_min": 2023,
@@ -1912,7 +2016,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_white",
+    "duplicate_note": "Census PEP share, via CHR&R"
   },
   "chr_premature_age_adjusted_mortality": {
     "id": "chr_premature_age_adjusted_mortality",
@@ -1938,7 +2045,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_child_mortality": {
     "id": "chr_child_mortality",
@@ -1964,7 +2072,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_infant_mortality": {
     "id": "chr_infant_mortality",
@@ -1990,7 +2099,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_other_primary_care_providers": {
     "id": "chr_other_primary_care_providers",
@@ -2016,7 +2126,8 @@
         "id": "cms_nppes"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_access_to_exercise_opportunities": {
     "id": "chr_access_to_exercise_opportunities",
@@ -2028,7 +2139,7 @@
     "long_description": "Percentage of population with adequate access to locations for physical activity (parks, recreation centers, fitness facilities), from Esri ArcGIS Business Analyst and ArcGIS Online, the YMCA, and U.S. Census TIGER/Line Shapefiles. Business Analyst's point-of-interest data is itself licensed from commercial vendors (Esri has offered Data Axle, SafeGraph, and Foursquare as configurable options); which specific vendor feeds this particular extract is not independently confirmed.",
     "statement": "In {location}, {value} of the population had access to exercise opportunities.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2024, 2022",
     "vintage_min": 2022,
@@ -2042,7 +2153,8 @@
         "id": "esri_tiger_ymca"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_food_environment_index": {
     "id": "chr_food_environment_index",
@@ -2068,7 +2180,8 @@
         "id": "usda_fea"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_alcohol_impaired_driving_deaths": {
     "id": "chr_alcohol_impaired_driving_deaths",
@@ -2080,7 +2193,7 @@
     "long_description": "Percentage of driving deaths with alcohol involvement, from the Fatality Analysis Reporting System (FARS).",
     "statement": "In {location}, {value} of driving deaths involved alcohol.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2018-2022",
     "vintage_min": 2018,
@@ -2094,7 +2207,8 @@
         "id": "nhtsa_fars"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_injury_deaths": {
     "id": "chr_injury_deaths",
@@ -2120,7 +2234,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "unintentional_injury_mortality",
+    "duplicate_note": "CHR&R county injury death rate, multi-year smoothed"
   },
   "chr_severe_housing_problems": {
     "id": "chr_severe_housing_problems",
@@ -2132,7 +2249,7 @@
     "long_description": "Percentage of households with at least 1 of 4 housing problems: overcrowding, high housing costs, lack of kitchen facilities, or lack of plumbing facilities, from Comprehensive Housing Affordability Strategy (CHAS) data, a HUD-commissioned special tabulation of American Community Survey (ACS) data.",
     "statement": "In {location}, {value} of households had severe housing problems.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2017-2021",
     "vintage_min": 2017,
@@ -2146,7 +2263,10 @@
         "id": "hud_chas"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "severe_housing_problems",
+    "duplicate_note": "HUD CHAS severe-housing-problems rate, via CHR&R"
   },
   "hud_pct_severe_housing_problems": {
     "id": "hud_pct_severe_housing_problems",
@@ -2158,13 +2278,16 @@
     "long_description": "Percentage of occupied housing units (owner + renter) with 1 or more of 4 severe housing problems: lacks complete kitchen facilities, lacks complete plumbing facilities, more than 1.5 persons per room, or cost burden greater than 50%, computed directly from HUD's Comprehensive Housing Affordability Strategy (CHAS) data, a custom tabulation of ACS data. Direct-source companion to chr_severe_housing_problems. Released on the ACS 5-year cycle with no fixed schedule.",
     "statement": "In {location}, {value} of households have a severe housing problem.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "hud_chas"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "severe_housing_problems",
+    "duplicate_note": "the same HUD CHAS definition pulled directly -- close but not bit-identical to chr_severe_housing_problems (checked CT 2022: 0.1744 vs. 0.1774), most likely a different CHAS release vintage"
   },
   "chr_long_commute_driving_alone": {
     "id": "chr_long_commute_driving_alone",
@@ -2176,7 +2299,7 @@
     "long_description": "Among workers who commute in their car alone, the percentage that commute more than 30 minutes, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of solo car commuters had commutes longer than 30 minutes.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2190,7 +2313,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_drug_overdose_deaths": {
     "id": "chr_drug_overdose_deaths",
@@ -2216,7 +2340,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "drug_overdose_mortality",
+    "duplicate_note": "direct-count rate from NCHS Multiple Cause of Death files (final, not VSRR)"
   },
   "chr_food_insecurity": {
     "id": "chr_food_insecurity",
@@ -2228,7 +2355,7 @@
     "long_description": "Percentage of population who lack adequate access to food, from Feeding America's Map the Meal Gap, which models county estimates from the Census Bureau's Current Population Survey Food Security Supplement combined with local ACS and BLS demographic/economic data and NielsenIQ local food cost data, rather than an independent county-level survey.",
     "statement": "In {location}, {value} of the population experienced food insecurity.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2242,7 +2369,8 @@
         "id": "feeding_america"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_social_associations": {
     "id": "chr_social_associations",
@@ -2268,7 +2396,8 @@
         "id": "census_cbp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_residential_segregation_black_white": {
     "id": "chr_residential_segregation_black_white",
@@ -2294,7 +2423,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_insufficient_sleep": {
     "id": "chr_insufficient_sleep",
@@ -2306,7 +2436,7 @@
     "long_description": "Percentage of adults who report fewer than 7 hours of sleep on average (age-adjusted), from the BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported getting fewer than 7 hours of sleep.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2320,7 +2450,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_frequent_physical_distress": {
     "id": "chr_frequent_physical_distress",
@@ -2332,7 +2463,7 @@
     "long_description": "Percentage of adults reporting 14 or more days of poor physical health per month (age-adjusted), from the BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported frequent physical distress.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2346,7 +2477,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_frequent_mental_distress": {
     "id": "chr_frequent_mental_distress",
@@ -2358,7 +2490,7 @@
     "long_description": "Percentage of adults reporting 14 or more days of poor mental health per month (age-adjusted), from the BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported frequent mental distress.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2372,7 +2504,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_life_expectancy": {
     "id": "chr_life_expectancy",
@@ -2398,7 +2531,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_firearm_fatalities": {
     "id": "chr_firearm_fatalities",
@@ -2424,7 +2558,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "firearm_mortality",
+    "duplicate_note": "CHR&R county firearm fatality rate, multi-year smoothed"
   },
   "chr_disconnected_youth": {
     "id": "chr_disconnected_youth",
@@ -2436,7 +2573,7 @@
     "long_description": "Percentage of teens and young adults ages 16-19 who are neither working nor in school, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of youth ages 16-19 were disconnected (not working or in school).",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2450,7 +2587,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_gender_pay_gap": {
     "id": "chr_gender_pay_gap",
@@ -2476,7 +2614,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_homeownership": {
     "id": "chr_homeownership",
@@ -2488,7 +2627,7 @@
     "long_description": "Percentage of owner-occupied housing units, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of housing units were owner-occupied.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2502,7 +2641,10 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "homeownership",
+    "duplicate_note": "ACS-derived owner-occupied housing rate, via CHR&R"
   },
   "chr_severe_housing_cost_burden": {
     "id": "chr_severe_housing_cost_burden",
@@ -2514,7 +2656,7 @@
     "long_description": "Percentage of households that spend 50% or more of their household income on housing, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of households spent more than half their income on housing.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2528,7 +2670,10 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "severe_housing_cost_burden",
+    "duplicate_note": "ACS-derived rate of households spending 50%+ of income on housing, via CHR&R"
   },
   "chr_flu_vaccinations": {
     "id": "chr_flu_vaccinations",
@@ -2540,7 +2685,7 @@
     "long_description": "Percentage of fee-for-service (FFS) Medicare enrollees who had an annual flu vaccination, from the CMS Mapping Medicare Disparities Tool. Formerly sourced from the Dartmouth Atlas of Health Care prior to a methodology change.",
     "statement": "In {location}, {value} of Medicare enrollees received a flu vaccination.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2554,7 +2699,8 @@
         "id": "cms"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_traffic_volume": {
     "id": "chr_traffic_volume",
@@ -2580,7 +2726,8 @@
         "id": "epa_ejscreen"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_reading_scores": {
     "id": "chr_reading_scores",
@@ -2606,7 +2753,8 @@
         "id": "seda"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_math_scores": {
     "id": "chr_math_scores",
@@ -2632,7 +2780,8 @@
         "id": "seda"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_suicides": {
     "id": "chr_suicides",
@@ -2658,7 +2807,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "suicide_mortality",
+    "duplicate_note": "CHR&R county suicide rate, multi-year smoothed"
   },
   "chr_broadband_access": {
     "id": "chr_broadband_access",
@@ -2670,7 +2822,7 @@
     "long_description": "Percentage of households with broadband internet connection, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of households had broadband internet access.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2684,7 +2836,10 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "broadband_access",
+    "duplicate_note": "ACS-derived household broadband subscription rate, via CHR&R"
   },
   "chr_school_segregation": {
     "id": "chr_school_segregation",
@@ -2710,7 +2865,8 @@
         "id": "nces"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_high_school_completion": {
     "id": "chr_high_school_completion",
@@ -2722,7 +2878,7 @@
     "long_description": "Percentage of adults ages 25 and over with a high school diploma or equivalent, from the U.S. Census Bureau American Community Survey (ACS).",
     "statement": "In {location}, {value} of adults ages 25+ had a high school diploma or equivalent.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2019-2023",
     "vintage_min": 2019,
@@ -2736,7 +2892,10 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "high_school_completion",
+    "duplicate_note": "ACS-derived share of adults 25+ with at least a high school diploma, via CHR&R"
   },
   "chr_school_funding_adequacy": {
     "id": "chr_school_funding_adequacy",
@@ -2762,7 +2921,8 @@
         "id": "sfid"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_living_wage": {
     "id": "chr_living_wage",
@@ -2788,7 +2948,8 @@
         "id": "living_wage_institute"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_child_care_cost_burden": {
     "id": "chr_child_care_cost_burden",
@@ -2800,7 +2961,7 @@
     "long_description": "Child care costs for a household with two children as a percent of median household income, from The Living Wage Institute (child care cost figures, originally reported by state agencies to the U.S. Department of Labor's Women's Bureau National Database of Childcare Prices, supplemented by Child Care Aware of America's price-of-care reports for states requiring imputation) and the Small Area Income and Poverty Estimates (household income).",
     "statement": "In {location}, child care for two children cost {value} of median household income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2024 & 2023",
     "vintage_min": 2023,
@@ -2814,7 +2975,8 @@
         "id": "living_wage_institute"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_child_care_centers": {
     "id": "chr_child_care_centers",
@@ -2840,7 +3002,8 @@
         "id": "hifld"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_voter_turnout": {
     "id": "chr_voter_turnout",
@@ -2852,7 +3015,7 @@
     "long_description": "Percentage of citizen population aged 18 or older who voted in the 2020 U.S. Presidential election, from the MIT Election Data + Science Lab (votes cast, compiled from totals reported by state and local election officials rather than tabulated independently) and the American Community Survey (ACS) five-year estimates (citizen voting-age population denominator).",
     "statement": "In {location}, {value} of eligible citizens voted in the 2020 presidential election.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2020 & 2016",
     "vintage_min": 2016,
@@ -2866,7 +3029,8 @@
         "id": "medsl"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_census_participation": {
     "id": "chr_census_participation",
@@ -2878,7 +3042,7 @@
     "long_description": "Percentage of all households that self-responded to the 2020 census (by internet, paper questionnaire or telephone), from the U.S. Census Bureau.",
     "statement": "In {location}, {value} of households self-responded to the 2020 census.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2020",
     "vintage_min": 2020,
@@ -2892,7 +3056,8 @@
         "id": "census_oqm"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_access_to_parks": {
     "id": "chr_access_to_parks",
@@ -2904,7 +3069,7 @@
     "long_description": "Percentage of the population living within a half mile of a park, from ArcGIS Online and U.S. Census TIGER/Line Shapefiles. Formerly sourced from the Trust for Public Land's ParkScore index.",
     "statement": "In {location}, {value} of the population lived within half a mile of a park.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2024 & 2020",
     "vintage_min": 2020,
@@ -2918,7 +3083,8 @@
         "id": "esri_tiger_ymca"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_disability_functional_limitations": {
     "id": "chr_disability_functional_limitations",
@@ -2930,7 +3096,7 @@
     "long_description": "Percentage of adults reporting any of six specific functional limitations (hearing, vision, cognitive, ambulatory, self-care, or independent living difficulties), from the Behavioral Risk Factor Surveillance System (BRFSS). County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported functional limitations.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -2944,7 +3110,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_library_access": {
     "id": "chr_library_access",
@@ -2970,7 +3137,8 @@
         "id": "imls"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_adverse_climate_events": {
     "id": "chr_adverse_climate_events",
@@ -2996,7 +3164,8 @@
         "id": "noaa_fema"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_feelings_of_loneliness": {
     "id": "chr_feelings_of_loneliness",
@@ -3008,7 +3177,7 @@
     "long_description": "Percentage of adults reporting that they always, usually or sometimes feel lonely, from the CDC BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported feelings of loneliness.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -3022,7 +3191,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_lack_of_social_and_emotional_support": {
     "id": "chr_lack_of_social_and_emotional_support",
@@ -3034,7 +3204,7 @@
     "long_description": "Percentage of adults reporting that they sometimes, rarely, or never get the social and emotional support they need, from the CDC BRFSS. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported lacking adequate social and emotional support.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2022",
     "vintage_min": 2022,
@@ -3048,7 +3218,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "census_ur_pct_urban_pop": {
     "id": "census_ur_pct_urban_pop",
@@ -3060,13 +3231,16 @@
     "long_description": "Proportion of a county's 2020 Census population living within Census-defined urban areas (urbanized areas and urban clusters combined). Derived from the 2020 Census Urban Area to County Relationship File by summing each county's urban-area population share across all intersecting urban areas. Counties with no urban area are assigned 0. Values are 2020 Census vintage and do not vary by year.",
     "statement": "In {location}, {value} of the population lives in urban areas.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_ua_county"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "urban_rural_composition",
+    "duplicate_note": "Census urban share of population pulled directly -- r = -1.000 EXACTLY against chr_rural across 3,135 counties (2024), because the two are algebraic complements of one another. They carry the same information stated in opposite directions and must never be read as two independent findings. census_ur_pct_urban_hu is the housing-unit analogue and is deliberately left out, since its denominator is housing units rather than people"
   },
   "census_ur_pct_urban_land": {
     "id": "census_ur_pct_urban_land",
@@ -3078,13 +3252,14 @@
     "long_description": "Proportion of a county's total land area that falls within Census-defined urban areas (urbanized areas and urban clusters combined). Derived from the 2020 Census Urban Area to County Relationship File. Counties with no urban area are assigned 0. Values are 2020 Census vintage and do not vary by year.",
     "statement": "In {location}, {value} of the land area is classified as urban.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_ua_county"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "census_ur_pct_urban_hu": {
     "id": "census_ur_pct_urban_hu",
@@ -3096,13 +3271,14 @@
     "long_description": "Proportion of a county's 2020 Census housing units located within Census-defined urban areas (urbanized areas and urban clusters combined). Derived from the 2020 Census Urban Area to County Relationship File. Counties with no urban area are assigned 0. Values are 2020 Census vintage and do not vary by year.",
     "statement": "In {location}, {value} of housing units are in urban areas.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_ua_county"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "epic_diabetes_hba1c": {
     "id": "epic_diabetes_hba1c",
@@ -3120,7 +3296,8 @@
       {
         "id": "epic"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "epic_obesity_bmi": {
     "id": "epic_obesity_bmi",
@@ -3138,7 +3315,8 @@
       {
         "id": "epic"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "brfss_diabetes": {
     "id": "brfss_diabetes",
@@ -3156,7 +3334,10 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "diabetes_prevalence",
+    "duplicate_note": "direct BRFSS self-report survey tabulation -- consistently ~1-2 percentage points HIGHER than the PLACES model estimate every year checked (CT 2018-2022), a systematic gap, not noise"
   },
   "brfss_obesity": {
     "id": "brfss_obesity",
@@ -3174,7 +3355,10 @@
       {
         "id": "brfss"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "adult_obesity",
+    "duplicate_note": "direct BRFSS survey tabulation, stored 0-100 -- r = 0.926 (52 states, 2018), ratio 107.8, which is the 100x scale difference plus the same systematic model-vs-survey gap seen in diabetes_prevalence. The scale mismatch between these two members is a live example of the percent-standard problem"
   },
   "wapo_mmr_coverage": {
     "id": "wapo_mmr_coverage",
@@ -3192,7 +3376,8 @@
       {
         "id": "wapo"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "healthmap_mmr_coverage": {
     "id": "healthmap_mmr_coverage",
@@ -3210,7 +3395,8 @@
       {
         "id": "healthmap"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_overdose_deaths": {
     "id": "nchs_overdose_deaths",
@@ -3227,7 +3413,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "drug_overdose_mortality",
+    "duplicate_note": "raw provisional monthly count (VSRR)"
   },
   "nchs_overdose_pct_pending": {
     "id": "nchs_overdose_pct_pending",
@@ -3245,7 +3434,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "qa-only"
   },
   "nchs_pct_complete": {
     "id": "nchs_pct_complete",
@@ -3263,7 +3453,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "qa-only"
   },
   "nchs_rate_all_causes": {
     "id": "nchs_rate_all_causes",
@@ -3281,7 +3472,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_alzheimer_disease": {
     "id": "nchs_rate_alzheimer_disease",
@@ -3299,7 +3491,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_cancer": {
     "id": "nchs_rate_cancer",
@@ -3317,7 +3510,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_chronic_liver_disease_and_cirrhosis": {
     "id": "nchs_rate_chronic_liver_disease_and_cirrhosis",
@@ -3335,7 +3529,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_chronic_lower_respiratory_diseases": {
     "id": "nchs_rate_chronic_lower_respiratory_diseases",
@@ -3353,7 +3548,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_covid_19": {
     "id": "nchs_rate_covid_19",
@@ -3371,7 +3567,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_diabetes": {
     "id": "nchs_rate_diabetes",
@@ -3389,7 +3586,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_drug_overdose": {
     "id": "nchs_rate_drug_overdose",
@@ -3407,7 +3605,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "drug_overdose_mortality",
+    "duplicate_note": "provisional quarterly age-adjusted rate (VSRR)"
   },
   "nchs_rate_falls_ages_65_and_over": {
     "id": "nchs_rate_falls_ages_65_and_over",
@@ -3425,7 +3626,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_firearm_related_injury": {
     "id": "nchs_rate_firearm_related_injury",
@@ -3443,7 +3645,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "firearm_mortality",
+    "duplicate_note": "NCHS age-adjusted state firearm injury death rate -- r = 0.944, ratio 1.102 (204 state rows, 2023)"
   },
   "nchs_rate_heart_disease": {
     "id": "nchs_rate_heart_disease",
@@ -3461,7 +3666,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_hiv_disease": {
     "id": "nchs_rate_hiv_disease",
@@ -3479,7 +3685,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_homicide": {
     "id": "nchs_rate_homicide",
@@ -3497,7 +3704,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "homicide_mortality",
+    "duplicate_note": "NCHS age-adjusted state homicide rate -- r = 0.929, ratio 1.224 (204 state rows, 2023); age adjustment plus CHR&R's smoothing accounts for the level gap"
   },
   "nchs_rate_hypertension": {
     "id": "nchs_rate_hypertension",
@@ -3515,7 +3725,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_influenza_and_pneumonia": {
     "id": "nchs_rate_influenza_and_pneumonia",
@@ -3533,7 +3744,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_kidney_disease": {
     "id": "nchs_rate_kidney_disease",
@@ -3551,7 +3763,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_parkinson_disease": {
     "id": "nchs_rate_parkinson_disease",
@@ -3569,7 +3782,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_pneumonitis_due_to_solids_and_liquids": {
     "id": "nchs_rate_pneumonitis_due_to_solids_and_liquids",
@@ -3587,7 +3801,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_stroke": {
     "id": "nchs_rate_stroke",
@@ -3605,7 +3820,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_rate_suicide": {
     "id": "nchs_rate_suicide",
@@ -3623,7 +3839,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "suicide_mortality",
+    "duplicate_note": "NCHS age-adjusted state suicide rate -- r = 0.919, ratio 1.019 (204 state rows, 2023)"
   },
   "nchs_rate_unintentional_injuries": {
     "id": "nchs_rate_unintentional_injuries",
@@ -3641,7 +3860,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "unintentional_injury_mortality",
+    "duplicate_note": "NCHS age-adjusted state unintentional injury death rate -- r = 0.817, ratio 0.800 (204 state rows, 2023); the loosest pair here, since CHR&R's injury deaths include intentional causes that the NCHS unintentional series excludes"
   },
   "cms_acute_myocardial_infarction": {
     "id": "cms_acute_myocardial_infarction",
@@ -3659,7 +3881,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_adhd": {
     "id": "cms_adhd",
@@ -3677,7 +3900,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_alcohol_use_disorder": {
     "id": "cms_alcohol_use_disorder",
@@ -3695,7 +3919,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_alzheimers": {
     "id": "cms_alzheimers",
@@ -3713,7 +3938,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_anemia": {
     "id": "cms_anemia",
@@ -3731,7 +3957,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_anxiety": {
     "id": "cms_anxiety",
@@ -3749,7 +3976,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_asthma": {
     "id": "cms_asthma",
@@ -3767,7 +3995,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_atrial_fibrilation": {
     "id": "cms_atrial_fibrilation",
@@ -3785,7 +4014,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_bipolar": {
     "id": "cms_bipolar",
@@ -3803,7 +4033,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_chronic_kidney": {
     "id": "cms_chronic_kidney",
@@ -3821,7 +4052,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_colorectal_breast_prostate_lung_cancer": {
     "id": "cms_colorectal_breast_prostate_lung_cancer",
@@ -3839,7 +4071,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_copd": {
     "id": "cms_copd",
@@ -3857,7 +4090,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_depression": {
     "id": "cms_depression",
@@ -3875,7 +4109,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_depressive_disorder": {
     "id": "cms_depressive_disorder",
@@ -3893,7 +4128,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_diabetes": {
     "id": "cms_diabetes",
@@ -3911,7 +4147,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_drug_use_disorder": {
     "id": "cms_drug_use_disorder",
@@ -3929,7 +4166,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_glaucoma": {
     "id": "cms_glaucoma",
@@ -3947,7 +4185,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_heart_failure_non_ischemic": {
     "id": "cms_heart_failure_non_ischemic",
@@ -3965,7 +4204,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_hip_pelvic_fracture": {
     "id": "cms_hip_pelvic_fracture",
@@ -3983,7 +4223,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_hyperlidipemia": {
     "id": "cms_hyperlidipemia",
@@ -4001,7 +4242,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_hypertension": {
     "id": "cms_hypertension",
@@ -4019,7 +4261,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_ischemic_heart_disease": {
     "id": "cms_ischemic_heart_disease",
@@ -4037,7 +4280,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_obesity": {
     "id": "cms_obesity",
@@ -4055,7 +4299,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_opioid_use_disorder_dx_px_based": {
     "id": "cms_opioid_use_disorder_dx_px_based",
@@ -4073,7 +4318,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_opioid_use_disorder_overarching": {
     "id": "cms_opioid_use_disorder_overarching",
@@ -4091,7 +4337,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_osteoporosis": {
     "id": "cms_osteoporosis",
@@ -4109,7 +4356,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_parkinsons": {
     "id": "cms_parkinsons",
@@ -4127,7 +4375,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_ptsd": {
     "id": "cms_ptsd",
@@ -4145,7 +4394,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_rheumoatoid_arthritis": {
     "id": "cms_rheumoatoid_arthritis",
@@ -4163,7 +4413,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_schizophrenia": {
     "id": "cms_schizophrenia",
@@ -4181,7 +4432,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_schizophrenia_other_psychotic": {
     "id": "cms_schizophrenia_other_psychotic",
@@ -4199,7 +4451,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_stroke_ischemic_attack": {
     "id": "cms_stroke_ischemic_attack",
@@ -4217,7 +4470,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_tobacco_use_disorder": {
     "id": "cms_tobacco_use_disorder",
@@ -4235,7 +4489,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_annual_wellness": {
     "id": "cms_scrn_prvnt_annual_wellness",
@@ -4253,7 +4508,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_cardiovascular_disease": {
     "id": "cms_scrn_prvnt_cardiovascular_disease",
@@ -4271,7 +4527,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_colorectal_cancer": {
     "id": "cms_scrn_prvnt_colorectal_cancer",
@@ -4289,7 +4546,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_depression": {
     "id": "cms_scrn_prvnt_depression",
@@ -4307,7 +4565,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_diabetes": {
     "id": "cms_scrn_prvnt_diabetes",
@@ -4325,7 +4584,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_influenza_vaccine": {
     "id": "cms_scrn_prvnt_influenza_vaccine",
@@ -4343,7 +4603,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_mammogram": {
     "id": "cms_scrn_prvnt_mammogram",
@@ -4361,7 +4622,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_pap_test": {
     "id": "cms_scrn_prvnt_pap_test",
@@ -4379,7 +4641,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_pelvic_exam": {
     "id": "cms_scrn_prvnt_pelvic_exam",
@@ -4397,7 +4660,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_pneumococcal_vaccine": {
     "id": "cms_scrn_prvnt_pneumococcal_vaccine",
@@ -4415,7 +4679,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_prostate_cancer": {
     "id": "cms_scrn_prvnt_prostate_cancer",
@@ -4433,7 +4698,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "cms_scrn_prvnt_sti": {
     "id": "cms_scrn_prvnt_sti",
@@ -4451,7 +4717,8 @@
       {
         "id": "cms"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_1_dose_mmr": {
     "id": "nis_1_dose_mmr",
@@ -4469,7 +4736,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_1_dose_varicella": {
     "id": "nis_1_dose_varicella",
@@ -4487,7 +4755,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_combined_7_series": {
     "id": "nis_combined_7_series",
@@ -4505,7 +4774,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_dtap_1_dose": {
     "id": "nis_dtap_1_dose",
@@ -4523,7 +4793,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_dtap_2_doses": {
     "id": "nis_dtap_2_doses",
@@ -4541,7 +4812,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_dtap_3_doses": {
     "id": "nis_dtap_3_doses",
@@ -4559,7 +4831,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_dtap_4_doses": {
     "id": "nis_dtap_4_doses",
@@ -4577,7 +4850,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_a_1_dose": {
     "id": "nis_hep_a_1_dose",
@@ -4595,7 +4869,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_a_2_doses": {
     "id": "nis_hep_a_2_doses",
@@ -4613,7 +4888,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_1_dose": {
     "id": "nis_hep_b_1_dose",
@@ -4631,7 +4907,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_1_dose_1_day": {
     "id": "nis_hep_b_1_dose_1_day",
@@ -4649,7 +4926,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_1_dose_2_day": {
     "id": "nis_hep_b_1_dose_2_day",
@@ -4667,7 +4945,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_1_dose_3_day_birth_dose": {
     "id": "nis_hep_b_1_dose_3_day_birth_dose",
@@ -4685,7 +4964,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_2_doses": {
     "id": "nis_hep_b_2_doses",
@@ -4703,7 +4983,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hep_b_3_doses": {
     "id": "nis_hep_b_3_doses",
@@ -4721,7 +5002,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hib_1_dose": {
     "id": "nis_hib_1_dose",
@@ -4739,7 +5021,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hib_2_doses": {
     "id": "nis_hib_2_doses",
@@ -4757,7 +5040,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hib_3_doses": {
     "id": "nis_hib_3_doses",
@@ -4775,7 +5059,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hib_full_series": {
     "id": "nis_hib_full_series",
@@ -4793,7 +5078,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_hib_primary_series": {
     "id": "nis_hib_primary_series",
@@ -4811,7 +5097,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_pcv_1_dose": {
     "id": "nis_pcv_1_dose",
@@ -4829,7 +5116,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_pcv_2_doses": {
     "id": "nis_pcv_2_doses",
@@ -4847,7 +5135,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_pcv_3_doses": {
     "id": "nis_pcv_3_doses",
@@ -4865,7 +5154,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_pcv_4_doses": {
     "id": "nis_pcv_4_doses",
@@ -4883,7 +5173,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_polio_1_dose": {
     "id": "nis_polio_1_dose",
@@ -4901,7 +5192,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_polio_2_doses": {
     "id": "nis_polio_2_doses",
@@ -4919,7 +5211,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_polio_3_doses": {
     "id": "nis_polio_3_doses",
@@ -4937,7 +5230,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nis_rotavirus": {
     "id": "nis_rotavirus",
@@ -4955,7 +5249,8 @@
       {
         "id": "nis"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_dtap": {
     "id": "svv_dtap",
@@ -4973,7 +5268,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_hep_b": {
     "id": "svv_hep_b",
@@ -4991,7 +5287,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_mmr": {
     "id": "svv_mmr",
@@ -5009,7 +5306,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_polio": {
     "id": "svv_polio",
@@ -5027,7 +5325,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_varicella": {
     "id": "svv_varicella",
@@ -5045,7 +5344,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_exempt_full": {
     "id": "svv_exempt_full",
@@ -5063,7 +5363,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_exempt_medical": {
     "id": "svv_exempt_medical",
@@ -5081,7 +5382,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "svv_exempt_personal": {
     "id": "svv_exempt_personal",
@@ -5099,7 +5401,8 @@
       {
         "id": "svv"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "exempt_mmr_medical": {
     "id": "exempt_mmr_medical",
@@ -5117,7 +5420,8 @@
       {
         "id": "fattah"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "exempt_mmr_nonmedical": {
     "id": "exempt_mmr_nonmedical",
@@ -5135,7 +5439,8 @@
       {
         "id": "fattah"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_deaths_all_cause": {
     "id": "nchs_deaths_all_cause",
@@ -5152,7 +5457,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_deaths_any_opioid": {
     "id": "nchs_deaths_any_opioid",
@@ -5169,7 +5475,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_deaths_cocaine": {
     "id": "nchs_deaths_cocaine",
@@ -5186,7 +5493,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_deaths_heroin": {
     "id": "nchs_deaths_heroin",
@@ -5203,7 +5511,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_deaths_methadone": {
     "id": "nchs_deaths_methadone",
@@ -5220,7 +5529,8 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_AGE": {
     "id": "acs_AGE",
@@ -5238,7 +5548,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_BDB": {
     "id": "acs_BDB",
@@ -5250,13 +5561,16 @@
     "long_description": "Proportion of occupied housing units that have a broadband (high-speed) internet subscription, derived from ACS Table B28002. Includes cable, fiber, DSL, satellite, and fixed wireless connections.",
     "statement": "In {location}, {value} of households have a broadband internet subscription.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "broadband_access",
+    "duplicate_note": "the same ACS concept pulled directly -- r = 0.936, ratio 1.063 (3,141 counties, 2021)"
   },
   "acs_BTH": {
     "id": "acs_BTH",
@@ -5268,13 +5582,14 @@
     "long_description": "Proportion of women aged 15–50 years who gave birth in the past 12 months, derived from ACS Table B13002. Used as an approximation of the general fertility rate.",
     "statement": "In {location}, {value} of women aged 15–50 gave birth in the past year.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_DCY": {
     "id": "acs_DCY",
@@ -5286,13 +5601,14 @@
     "long_description": "Proportion of the population aged 16-19 who are not enrolled in school and not employed (sometimes called 'disconnected youth' or 'opportunity youth'), derived from ACS Table B14005.",
     "statement": "In {location}, {value} of youth aged 16–24 are neither in school nor employed.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_DEP": {
     "id": "acs_DEP",
@@ -5310,7 +5626,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_DIS": {
     "id": "acs_DIS",
@@ -5322,13 +5639,14 @@
     "long_description": "Proportion of the civilian noninstitutionalized population with any disability (hearing, vision, cognitive, ambulatory, self-care, or independent living), derived from ACS Subject Table S1810. Note: not available for all geographies or all vintage years.",
     "statement": "In {location}, {value} of the population has a disability.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_EDB": {
     "id": "acs_EDB",
@@ -5340,13 +5658,16 @@
     "long_description": "Proportion of the population aged 25 and older who have completed high school (including equivalency), derived from ACS Table B15002. Includes all levels of educational attainment at or above high school.",
     "statement": "In {location}, {value} of adults aged 25+ have at least a high school diploma.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "high_school_completion",
+    "duplicate_note": "the same ACS concept pulled directly -- r = 0.963, ratio 0.990 (3,141 counties, 2021)"
   },
   "acs_EDC": {
     "id": "acs_EDC",
@@ -5358,13 +5679,14 @@
     "long_description": "Proportion of the population aged 25 and older who have some college, an associate degree, a bachelor's degree, or a graduate/professional degree, derived from ACS Table B15002.",
     "statement": "In {location}, {value} of adults aged 25+ have attended college or obtained a higher degree.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_GNI": {
     "id": "acs_GNI",
@@ -5382,7 +5704,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_GRP": {
     "id": "acs_GRP",
@@ -5394,13 +5717,14 @@
     "long_description": "Proportion of the total population residing in group quarters (e.g., correctional facilities, college dormitories, nursing facilities, military barracks), derived from ACS Tables B26001 and B01001.",
     "statement": "In {location}, {value} of the population lives in group quarters.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HBS": {
     "id": "acs_HBS",
@@ -5412,13 +5736,16 @@
     "long_description": "Proportion of occupied housing units where gross housing costs (rent or owner costs) exceed 50% of household income, derived from ACS Tables B25070 (renters) and B25091 (owners). Severe cost burden is a standard HUD threshold indicating serious housing affordability stress.",
     "statement": "In {location}, {value} of households are severely cost-burdened, spending 50%+ of income on housing.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "severe_housing_cost_burden",
+    "duplicate_note": "the same ACS concept pulled directly -- r = 0.899, ratio 0.907 (3,141 counties, 2019)"
   },
   "acs_HBU": {
     "id": "acs_HBU",
@@ -5430,13 +5757,14 @@
     "long_description": "Proportion of occupied housing units where gross housing costs (rent or owner costs) exceed 30% of household income, derived from ACS Tables B25070 (renters) and B25091 (owners). Cost burden at 30% is the standard HUD threshold indicating housing affordability stress.",
     "statement": "In {location}, {value} of households are cost-burdened, spending 30%+ of income on housing.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HTA": {
     "id": "acs_HTA",
@@ -5448,13 +5776,14 @@
     "long_description": "Proportion of family households that are headed by a single parent (male or female householder, no spouse present) with children under 18, derived from ACS Table B11012.",
     "statement": "In {location}, {value} of family households are headed by a single parent.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HTJ": {
     "id": "acs_HTJ",
@@ -5466,13 +5795,14 @@
     "long_description": "Proportion of occupied housing units with more than 1 person per room (a standard indicator of housing crowding), derived from ACS Table B25014.",
     "statement": "In {location}, {value} of housing units are crowded (more than 1 person per room).",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HUF": {
     "id": "acs_HUF",
@@ -5484,13 +5814,14 @@
     "long_description": "Proportion of occupied housing units that lack complete plumbing facilities (hot and cold running water, a bathtub or shower, and a flush toilet), derived from ACS Table B25048.",
     "statement": "In {location}, {value} of housing units lack complete plumbing facilities.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HUG": {
     "id": "acs_HUG",
@@ -5502,13 +5833,14 @@
     "long_description": "Proportion of occupied housing units with no telephone service available (neither landline nor cellular), derived from ACS Table B25043.",
     "statement": "In {location}, {value} of households have no telephone service.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HUN": {
     "id": "acs_HUN",
@@ -5520,13 +5852,14 @@
     "long_description": "Proportion of all housing units that are mobile homes, manufactured homes, or trailers, derived from ACS Table B25024.",
     "statement": "In {location}, {value} of housing units are mobile homes.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_HUO": {
     "id": "acs_HUO",
@@ -5538,13 +5871,16 @@
     "long_description": "Proportion of occupied housing units that are owner-occupied (homeownership rate), derived from ACS Table B25003.",
     "statement": "In {location}, {value} of occupied housing units are owner-occupied.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "homeownership",
+    "duplicate_note": "the same ACS concept pulled directly -- r = 0.964, ratio 0.997 (3,142 counties, 2019)"
   },
   "acs_INB": {
     "id": "acs_INB",
@@ -5561,7 +5897,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INC": {
     "id": "acs_INC",
@@ -5578,7 +5915,10 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "median_household_income",
+    "duplicate_note": "ACS 5-year survey median -- r = 0.972, ratio 0.956 against chr_median_household_income (3,141 counties, 2019); a survey median rather than SAIPE's model-based estimate"
   },
   "acs_INL": {
     "id": "acs_INL",
@@ -5590,13 +5930,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the lowest income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the lowest income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INM": {
     "id": "acs_INM",
@@ -5608,13 +5949,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the second income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the second income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INN": {
     "id": "acs_INN",
@@ -5626,13 +5968,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the third (middle) income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the middle income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INO": {
     "id": "acs_INO",
@@ -5644,13 +5987,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the fourth income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the fourth income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INP": {
     "id": "acs_INP",
@@ -5662,13 +6006,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the highest income quintile, derived from ACS Table B19082.",
     "statement": "In {location}, the highest income quintile receives {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_INQ": {
     "id": "acs_INQ",
@@ -5680,13 +6025,14 @@
     "long_description": "Proportion of total aggregate household income received by households in the top 5%, derived from ACS Table B19082.",
     "statement": "In {location}, the top 5% of households receive {value} of total income.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_LEQ": {
     "id": "acs_LEQ",
@@ -5698,13 +6044,14 @@
     "long_description": "Proportion of the population aged 5 and older who speak a language other than English at home and speak English less than 'very well' (limited English proficiency), derived from ACS Table B16004.",
     "statement": "In {location}, {value} of residents aged 5+ have limited English proficiency.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_MCD": {
     "id": "acs_MCD",
@@ -5716,13 +6063,14 @@
     "long_description": "Proportion of the civilian noninstitutionalized population with Medicaid or other means-tested public health insurance coverage, derived from ACS Subject Table S2704. Note: not available for all geographies or all vintage years.",
     "statement": "In {location}, {value} of the population is covered by Medicaid.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_MCR": {
     "id": "acs_MCR",
@@ -5734,13 +6082,14 @@
     "long_description": "Proportion of the civilian noninstitutionalized population with Medicare health insurance coverage, derived from ACS Subject Table S2704. Note: not available for all geographies or all vintage years.",
     "statement": "In {location}, {value} of the population is covered by Medicare.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_OWS": {
     "id": "acs_OWS",
@@ -5758,7 +6107,10 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "income_inequality",
+    "duplicate_note": "ACS income QUINTILE SHARE ratio (S80/S20) -- r = 0.972 but ratio 3.18 (52 states, 2019). NOT interchangeable: a ratio of two percentile incomes and a ratio of two quintile income shares are different statistics that happen to move together. Grouped so they are not read as independent findings; see also acs_GNI, a Gini index, which is deliberately NOT in this group"
   },
   "acs_PCI": {
     "id": "acs_PCI",
@@ -5775,7 +6127,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_A": {
     "id": "acs_PCT_A",
@@ -5787,13 +6140,16 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic Asian alone, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Non-Hispanic Asian.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_asian",
+    "duplicate_note": "ACS 5-year survey share -- r = 0.976, ratio 1.10 against chr_asian (3,142 counties, 2019); the loosest fit of the four race groups grouped here"
   },
   "acs_PCT_B": {
     "id": "acs_PCT_B",
@@ -5805,13 +6161,16 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic Black or African American alone, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Non-Hispanic Black or African American.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_black",
+    "duplicate_note": "ACS 5-year survey share -- r = 0.998, ratio 1.014 against chr_non_hispanic_black (3,142 counties, 2019)"
   },
   "acs_PCT_F": {
     "id": "acs_PCT_F",
@@ -5823,13 +6182,16 @@
     "long_description": "Share of the resident population identifying as female, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is female.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_female",
+    "duplicate_note": "ACS 5-year survey share -- ratio 1.000 against chr_female (3,142 counties, 2019)"
   },
   "acs_PCT_H": {
     "id": "acs_PCT_H",
@@ -5841,13 +6203,16 @@
     "long_description": "Share of the resident population identifying as Hispanic or Latino of any race, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Hispanic or Latino.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_hispanic",
+    "duplicate_note": "ACS 5-year survey share -- r = 0.997, ratio 1.003 against chr_hispanic (3,142 counties, 2019)"
   },
   "acs_PCT_I": {
     "id": "acs_PCT_I",
@@ -5859,13 +6224,14 @@
     "long_description": "Share of the resident population aged 0–4 years, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is aged 0–4 years.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_J": {
     "id": "acs_PCT_J",
@@ -5877,13 +6243,14 @@
     "long_description": "Share of the resident population aged 5–17 years, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is aged 5–17 years.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_M": {
     "id": "acs_PCT_M",
@@ -5895,13 +6262,14 @@
     "long_description": "Share of the resident population identifying as male, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is male.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_O": {
     "id": "acs_PCT_O",
@@ -5913,13 +6281,14 @@
     "long_description": "Share of the resident population aged 40–64 years, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is aged 40–64 years.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_P": {
     "id": "acs_PCT_P",
@@ -5931,13 +6300,14 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic American Indian and Alaska Native alone, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Non-Hispanic American Indian and Alaska Native.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_P1": {
     "id": "acs_PCT_P1",
@@ -5949,13 +6319,14 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic Native Hawaiian and Other Pacific Islander alone, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Non-Hispanic Native Hawaiian and Other Pacific Islander.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_Q": {
     "id": "acs_PCT_Q",
@@ -5967,13 +6338,14 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic and of two or more races, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population identifies as Non-Hispanic two or more races.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PCT_S": {
     "id": "acs_PCT_S",
@@ -5985,13 +6357,16 @@
     "long_description": "Share of the resident population aged 65 years and older, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is aged 65 and older.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_age_65_and_older",
+    "duplicate_note": "ACS 5-year survey share -- r = 0.978, ratio 1.000 against chr_65_and_older (3,142 counties, 2019)"
   },
   "acs_PCT_W": {
     "id": "acs_PCT_W",
@@ -6003,13 +6378,16 @@
     "long_description": "Share of the resident population identifying as Non-Hispanic White alone, derived from ACS Table B03002.",
     "statement": "In {location}, {value} of the population is Non-Hispanic White.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_white",
+    "duplicate_note": "ACS 5-year survey share -- r = 0.998, ratio 1.001 against chr_non_hispanic_white (3,142 counties, 2019)"
   },
   "acs_PCT_Y": {
     "id": "acs_PCT_Y",
@@ -6021,13 +6399,14 @@
     "long_description": "Share of the resident population aged 18–39 years, derived from ACS Table B01001.",
     "statement": "In {location}, {value} of the population is aged 18–39 years.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP": {
     "id": "acs_POP",
@@ -6045,7 +6424,10 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "population_total",
+    "duplicate_note": "ACS 5-year survey-based estimate -- methodologically distinct from the PEP-based pair above (rolling 5-year survey vs. an annual administrative estimate), consistently close but never bit-identical to them (checked CT 2023-2024)"
   },
   "acs_POP_A": {
     "id": "acs_POP_A",
@@ -6063,7 +6445,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_B": {
     "id": "acs_POP_B",
@@ -6081,7 +6464,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_F": {
     "id": "acs_POP_F",
@@ -6099,7 +6483,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_H": {
     "id": "acs_POP_H",
@@ -6117,7 +6502,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_I": {
     "id": "acs_POP_I",
@@ -6135,7 +6521,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_J": {
     "id": "acs_POP_J",
@@ -6153,7 +6540,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_M": {
     "id": "acs_POP_M",
@@ -6171,7 +6559,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_O": {
     "id": "acs_POP_O",
@@ -6189,7 +6578,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_P": {
     "id": "acs_POP_P",
@@ -6207,7 +6597,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_P1": {
     "id": "acs_POP_P1",
@@ -6225,7 +6616,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_Q": {
     "id": "acs_POP_Q",
@@ -6243,7 +6635,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_S": {
     "id": "acs_POP_S",
@@ -6261,7 +6654,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_W": {
     "id": "acs_POP_W",
@@ -6279,7 +6673,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POP_Y": {
     "id": "acs_POP_Y",
@@ -6297,7 +6692,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_POV": {
     "id": "acs_POV",
@@ -6309,13 +6705,14 @@
     "long_description": "Proportion of the population with family income below the federal poverty threshold, derived from ACS Table B17001.",
     "statement": "In {location}, {value} of the population lives below the poverty level.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PUB": {
     "id": "acs_PUB",
@@ -6327,13 +6724,14 @@
     "long_description": "Proportion of workers aged 16 and older who use public transportation (excluding taxicab) as their primary means of commuting to work, derived from ACS Table B08301.",
     "statement": "In {location}, {value} of workers commute primarily by public transportation.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PVA": {
     "id": "acs_PVA",
@@ -6345,13 +6743,14 @@
     "long_description": "Proportion of the population with income below 50% of the federal poverty threshold (deep poverty), derived from ACS Table C17002.",
     "statement": "In {location}, {value} of the population is in deep poverty (below 50% of the poverty level).",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PVB": {
     "id": "acs_PVB",
@@ -6363,13 +6762,14 @@
     "long_description": "Proportion of the population with income below 150% of the federal poverty threshold, derived from ACS Table C17002.",
     "statement": "In {location}, {value} of the population has income below 150% of the poverty level.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_PVC": {
     "id": "acs_PVC",
@@ -6381,13 +6781,14 @@
     "long_description": "Proportion of the population with income below 200% of the federal poverty threshold, derived from ACS Table C17002.",
     "statement": "In {location}, {value} of the population has income below 200% of the poverty level.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_REX": {
     "id": "acs_REX",
@@ -6405,7 +6806,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_SNP": {
     "id": "acs_SNP",
@@ -6417,13 +6819,14 @@
     "long_description": "Proportion of households that received Supplemental Nutrition Assistance Program (SNAP, formerly food stamps) benefits in the past 12 months, derived from ACS Table B22003.",
     "statement": "In {location}, {value} of households receive SNAP benefits.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_UMP": {
     "id": "acs_UMP",
@@ -6435,13 +6838,14 @@
     "long_description": "Proportion of the civilian labor force (aged 16+) that is unemployed and actively seeking work, derived from ACS Table B23001. The numerator includes unemployed civilians; the denominator includes all civilians in the labor force.",
     "statement": "In {location}, {value} of the civilian labor force is unemployed.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_UNS": {
     "id": "acs_UNS",
@@ -6453,13 +6857,14 @@
     "long_description": "Proportion of the civilian noninstitutionalized population with no health insurance coverage of any type, derived from ACS Table B27001.",
     "statement": "In {location}, {value} of the population is uninsured.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_VAL": {
     "id": "acs_VAL",
@@ -6476,7 +6881,8 @@
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "acs_WWN": {
     "id": "acs_WWN",
@@ -6488,13 +6894,14 @@
     "long_description": "Proportion of occupied housing units with no internet subscription of any kind, derived from ACS Table B28002.",
     "statement": "In {location}, {value} of households have no internet access.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "acs5"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "chr_access_to_healthy_foods": {
     "id": "chr_access_to_healthy_foods",
@@ -6506,7 +6913,7 @@
     "long_description": "Percentage of the population with access to a healthy food outlet (grocery stores and produce stands/farmers' markets), from the U.S. Census Bureau's County Business Patterns. This was CHR's original 2010-2012 measure of food access (2010-2011 editions used the Zip Code Business Patterns variant for AK and HI); it was superseded by the differently-defined Limited Access to Healthy Foods measure starting in 2012.",
     "statement": "In {location}, {value} of the population had access to healthy foods.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2009",
     "vintage_min": 2009,
@@ -6520,7 +6927,8 @@
         "id": "census_cbp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_access_to_recreational_facilities": {
     "id": "chr_access_to_recreational_facilities",
@@ -6546,7 +6954,8 @@
         "id": "census_cbp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_air_pollution_ozone_days": {
     "id": "chr_air_pollution_ozone_days",
@@ -6572,7 +6981,8 @@
         "id": "cdc_epht"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_air_pollution_particulate_matter_days": {
     "id": "chr_air_pollution_particulate_matter_days",
@@ -6598,7 +7008,8 @@
         "id": "cdc_epht"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_alcohol_related_hospitalizations": {
     "id": "chr_alcohol_related_hospitalizations",
@@ -6621,7 +7032,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_binge_drinking": {
     "id": "chr_binge_drinking",
@@ -6633,7 +7045,7 @@
     "long_description": "Percentage of adults who report binge drinking in the past 30 days, from the BRFSS via County Health Rankings & Roadmaps. A component of the combined Excessive Drinking measure. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults reported binge drinking in the past 30 days.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2003-2009",
     "vintage_min": 2003,
@@ -6647,7 +7059,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_child_abuse": {
     "id": "chr_child_abuse",
@@ -6670,7 +7083,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_college_degrees": {
     "id": "chr_college_degrees",
@@ -6682,7 +7096,7 @@
     "long_description": "Percentage of the population age 25 and over with a 4-year college degree or higher, from the American Community Survey (ACS) via County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults age 25+ had a 4-year college degree or higher.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -6692,7 +7106,9 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2010
   },
   "chr_contaminants_in_municipal_water_wi": {
     "id": "chr_contaminants_in_municipal_water_wi",
@@ -6704,7 +7120,7 @@
     "long_description": "Percentage of municipal water users exposed to a maximum contaminant limit (MCL) violation, a Wisconsin-specific supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of municipal water users were exposed to a contaminant limit violation.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2010",
     "vintage_min": 2010,
@@ -6715,7 +7131,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_could_not_see_doctor_due_to_cost": {
     "id": "chr_could_not_see_doctor_due_to_cost",
@@ -6727,7 +7144,7 @@
     "long_description": "Percentage of adults who could not see a doctor in the past 12 months because of cost, from the BRFSS via County Health Rankings & Roadmaps. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults could not see a doctor in the past year due to cost.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2006-2012",
     "vintage_min": 2006,
@@ -6741,7 +7158,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_covid_19_age_adjusted_mortality": {
     "id": "chr_covid_19_age_adjusted_mortality",
@@ -6767,7 +7185,8 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_diabetes_monitoring": {
     "id": "chr_diabetes_monitoring",
@@ -6779,7 +7198,7 @@
     "long_description": "Percentage of diabetic Medicare enrollees ages 65-75 who receive an annual HbA1c monitoring test, from the Dartmouth Atlas of Health Care via County Health Rankings & Roadmaps. This series is closed and will never gain another year. CHR&R last published the measure in its 2018 release, which carried 2014 data, and dropped it thereafter. The Dartmouth Atlas has since been discontinued outright -- \"we will no longer update Dartmouth Atlas tools or calculate new annual rates\" -- with its historical rates ending at 2019, so there is no successor source to migrate to. Values are retained for historical comparison; do not read the most recent one as current.",
     "statement": "In {location}, {value} of diabetic Medicare enrollees ages 65-75 received HbA1c monitoring.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2014",
     "vintage_min": 2014,
@@ -6793,7 +7212,8 @@
         "id": "dartmouth_atlas"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "historical"
   },
   "chr_did_not_get_needed_health_care": {
     "id": "chr_did_not_get_needed_health_care",
@@ -6805,7 +7225,7 @@
     "long_description": "Percentage of population that did not receive needed health care in the past year for any reason, from County Health Rankings & Roadmaps. Broader than the cost-specific chr_could_not_see_doctor_due_to_cost measure.",
     "statement": "In {location}, {value} of the population did not get needed health care in the past year.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2012, 2014,",
     "vintage_min": 2012,
@@ -6816,7 +7236,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_drug_arrests": {
     "id": "chr_drug_arrests",
@@ -6838,7 +7259,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_drug_overdose_deaths_modeled": {
     "id": "chr_drug_overdose_deaths_modeled",
@@ -6864,7 +7286,10 @@
         "id": "nchs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "duplicate_group": "drug_overdose_mortality",
+    "duplicate_note": "SMALL-AREA MODELED estimate, not a direct rate -- CHR&R's own smoothed/regression estimate for counties too small to compute a stable direct rate; spans ~11 to ~33 per 100,000 nationally vs. the other four depending on year"
   },
   "chr_fast_food_restaurants": {
     "id": "chr_fast_food_restaurants",
@@ -6876,7 +7301,7 @@
     "long_description": "Percentage of all restaurants in the county that are fast-food establishments, from the U.S. Census Bureau's County Business Patterns.",
     "statement": "In {location}, {value} of restaurants were fast-food establishments.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2010",
     "vintage_min": 2010,
@@ -6890,7 +7315,8 @@
         "id": "census_cbp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_hate_crimes": {
     "id": "chr_hate_crimes",
@@ -6913,7 +7339,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_health_care_costs": {
     "id": "chr_health_care_costs",
@@ -6938,7 +7365,8 @@
         "id": "dartmouth_atlas"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "historical"
   },
   "chr_high_housing_costs": {
     "id": "chr_high_housing_costs",
@@ -6950,7 +7378,7 @@
     "long_description": "Percentage of households with housing costs greater than or equal to 30% of household income, from the American Community Survey (ACS) five-year estimates. Distinct from Severe Housing Cost Burden, which uses a 50%+ threshold.",
     "statement": "In {location}, {value} of households spent 30% or more of income on housing.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2007-2011",
     "vintage_min": 2007,
@@ -6964,7 +7392,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_hospice_use": {
     "id": "chr_hospice_use",
@@ -6976,7 +7405,7 @@
     "long_description": "Percentage of chronically ill Medicare enrollees in hospice care during the last 6 months of life, from the Dartmouth Atlas of Health Care via County Health Rankings & Roadmaps. This series is closed and will never gain another year. CHR&R published the measure once, in its 2010 release, and stated no underlying data year for it: its row in measure_vintages.csv exists but carries vintage = NA, and it has no measure-level vintage field at all. Render the 2010 release year and say the data year was not stated -- never a blank date. The Dartmouth Atlas has since been discontinued outright -- \"we will no longer update Dartmouth Atlas tools or calculate new annual rates\" -- with its historical rates ending at 2019, so there is no successor source to migrate to. Values are retained for historical comparison; do not read the most recent one as current.",
     "statement": "In {location}, {value} of chronically ill Medicare enrollees were in hospice care at end of life.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -6986,7 +7415,9 @@
         "id": "dartmouth_atlas"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "historical",
+    "vintage_release": 2010
   },
   "chr_illiteracy": {
     "id": "chr_illiteracy",
@@ -6998,7 +7429,7 @@
     "long_description": "Percentage of the population age 16 and older that lacks basic prose literacy skills, from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of the population age 16+ lacked basic prose literacy skills.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2003",
     "vintage_min": 2003,
@@ -7009,7 +7440,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_inadequate_social_support": {
     "id": "chr_inadequate_social_support",
@@ -7021,7 +7453,7 @@
     "long_description": "Percentage of adults without adequate social/emotional support, from the BRFSS via County Health Rankings & Roadmaps. Predecessor name for what is now chr_lack_of_social_and_emotional_support. County-level estimates are produced via CDC's PLACES project (multilevel regression and poststratification small-area estimation combining BRFSS survey data with Census and ACS demographic data), not raw county-level survey tabulation.",
     "statement": "In {location}, {value} of adults lacked adequate social/emotional support.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2005-2010",
     "vintage_min": 2005,
@@ -7035,7 +7467,8 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_juvenile_arrests": {
     "id": "chr_juvenile_arrests",
@@ -7061,7 +7494,8 @@
         "id": "ojjdp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_lead_poisoned_children": {
     "id": "chr_lead_poisoned_children",
@@ -7073,7 +7507,7 @@
     "long_description": "Prevalence of elevated blood lead levels among children under age 6, a Wisconsin-specific supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of children under 6 had elevated blood lead levels.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2010",
     "vintage_min": 2010,
@@ -7084,7 +7518,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_liquor_store_density": {
     "id": "chr_liquor_store_density",
@@ -7106,7 +7541,9 @@
         "id": "census_cbp"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_local_health_department_staffing": {
     "id": "chr_local_health_department_staffing",
@@ -7129,7 +7566,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_municipal_water_wi": {
     "id": "chr_municipal_water_wi",
@@ -7141,7 +7579,7 @@
     "long_description": "Percentage of the population on a municipal water system, a Wisconsin-specific supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of the population was on a municipal water system.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2011",
     "vintage_min": 2011,
@@ -7152,7 +7590,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_population_growth": {
     "id": "chr_population_growth",
@@ -7164,7 +7603,7 @@
     "long_description": "Percentage change in population since the last decennial US Census, from County Health Rankings & Roadmaps.",
     "statement": "In {location}, the population changed by {value} since the last decennial census.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "vintage": "2018, 2010",
     "vintage_min": 2010,
@@ -7175,7 +7614,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_residential_segregation_non_white_white": {
     "id": "chr_residential_segregation_non_white_white",
@@ -7201,7 +7641,8 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_single_parent_households": {
     "id": "chr_single_parent_households",
@@ -7213,7 +7654,7 @@
     "long_description": "Percentage of children that live in a household headed by a single parent, from the American Community Survey (ACS) via County Health Rankings & Roadmaps. This is CHR's original 2010 name for what is now chr_children_in_single_parent_households.",
     "statement": "In {location}, {value} of children lived in single-parent households.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7223,7 +7664,9 @@
         "id": "acs"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2010
   },
   "chr_violent_crime": {
     "id": "chr_violent_crime",
@@ -7249,7 +7692,8 @@
         "id": "fbi_ucr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_w_2_enrollment": {
     "id": "chr_w_2_enrollment",
@@ -7271,7 +7715,8 @@
         "id": "chr"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary"
   },
   "chr_excessive_drinking_fl": {
     "id": "chr_excessive_drinking_fl",
@@ -7283,7 +7728,7 @@
     "long_description": "Percentage of adults who engage in heavy or binge drinking, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults reported heavy or binge drinking.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7293,7 +7738,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_adequate_social_emotional_support_fl": {
     "id": "chr_adequate_social_emotional_support_fl",
@@ -7305,7 +7752,7 @@
     "long_description": "Percentage of adults who always or usually receive the social and emotional support they need, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults received adequate social and emotional support.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7315,7 +7762,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_adult_smoking_fl": {
     "id": "chr_adult_smoking_fl",
@@ -7327,7 +7776,7 @@
     "long_description": "Percentage of adults who are current smokers, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults were current smokers.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7337,7 +7786,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_overweight_or_obese_adults_fl": {
     "id": "chr_overweight_or_obese_adults_fl",
@@ -7349,7 +7800,7 @@
     "long_description": "Percentage of adults who are overweight or obese, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults were overweight or obese.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7359,7 +7810,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_fruit_and_vegetable_consumption_fl": {
     "id": "chr_fruit_and_vegetable_consumption_fl",
@@ -7371,7 +7824,7 @@
     "long_description": "Percentage of adults who consume at least five servings of fruits and vegetables a day, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults consumed at least five servings of fruits and vegetables daily.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7381,7 +7834,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_adults_who_have_a_personal_doctor_fl": {
     "id": "chr_adults_who_have_a_personal_doctor_fl",
@@ -7393,7 +7848,7 @@
     "long_description": "Percentage of adults who have a personal doctor, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults had a personal doctor.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7403,7 +7858,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_adults_engaging_in_moderate_physical_activity_fl": {
     "id": "chr_adults_engaging_in_moderate_physical_activity_fl",
@@ -7415,7 +7872,7 @@
     "long_description": "Percentage of adults who meet moderate physical activity recommendations, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults met moderate physical activity recommendations.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7425,7 +7882,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_insured_adults_fl": {
     "id": "chr_insured_adults_fl",
@@ -7437,7 +7896,7 @@
     "long_description": "Percentage of adults with any type of health care insurance coverage, a Florida Department of Health BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults had health care insurance coverage.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7447,7 +7906,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_binge_drinking_ny": {
     "id": "chr_binge_drinking_ny",
@@ -7459,7 +7920,7 @@
     "long_description": "Percentage of adults who report binge drinking in the past 30 days, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults reported binge drinking in the past 30 days.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7469,7 +7930,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_dental_visit_within_the_past_year_ny": {
     "id": "chr_dental_visit_within_the_past_year_ny",
@@ -7481,7 +7944,7 @@
     "long_description": "Percentage of population that had a dental visit in the past year, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of the population had a dental visit in the past year.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7491,7 +7954,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_fair_or_poor_health_ny": {
     "id": "chr_fair_or_poor_health_ny",
@@ -7503,7 +7968,7 @@
     "long_description": "Percentage of adults reporting fair or poor health (age-adjusted), a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults reported fair or poor health.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7513,7 +7978,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_excessive_drinking_ny": {
     "id": "chr_excessive_drinking_ny",
@@ -7525,7 +7992,7 @@
     "long_description": "Percentage of adults who engage in heavy or binge drinking, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults reported heavy or binge drinking.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7535,7 +8002,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_no_leisure_time_physical_activity_ny": {
     "id": "chr_no_leisure_time_physical_activity_ny",
@@ -7547,7 +8016,7 @@
     "long_description": "Percentage of adults age 20 and over reporting no leisure-time physical activity, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults reported no leisure-time physical activity.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7557,7 +8026,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_obese_adults_ny": {
     "id": "chr_obese_adults_ny",
@@ -7569,7 +8040,7 @@
     "long_description": "Percentage of adults who are obese, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults were obese.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7579,7 +8050,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "chr_adult_smoking_ny": {
     "id": "chr_adult_smoking_ny",
@@ -7591,7 +8064,7 @@
     "long_description": "Percentage of adults who are current smokers, a New York State Department of Health Expanded BRFSS supplemental measure from County Health Rankings & Roadmaps.",
     "statement": "In {location}, {value} of adults were current smokers.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
@@ -7601,7 +8074,9 @@
         "id": "brfss"
       }
     ],
-    "compiled_via": "chr"
+    "compiled_via": "chr",
+    "display_status": "primary",
+    "vintage_release": 2011
   },
   "ahrf_hpsa_prim_care": {
     "id": "ahrf_hpsa_prim_care",
@@ -7620,7 +8095,8 @@
         "id": "ahrf"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_hpsa_dental": {
     "id": "ahrf_hpsa_dental",
@@ -7639,7 +8115,8 @@
         "id": "ahrf"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_hpsa_mental_health": {
     "id": "ahrf_hpsa_mental_health",
@@ -7658,7 +8135,8 @@
         "id": "ahrf"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_rural_urban_code": {
     "id": "ahrf_rural_urban_code",
@@ -7680,7 +8158,8 @@
         "id": "usda_ers"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_pcp": {
     "id": "ahrf_pcp",
@@ -7702,7 +8181,8 @@
         "id": "ama_physician_masterfile"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_md_all": {
     "id": "ahrf_md_all",
@@ -7724,7 +8204,8 @@
         "id": "ama_physician_masterfile"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_psych": {
     "id": "ahrf_psych",
@@ -7746,7 +8227,8 @@
         "id": "ama_physician_masterfile"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_dentists": {
     "id": "ahrf_dentists",
@@ -7768,7 +8250,8 @@
         "id": "ada_masterfile"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_hospitals": {
     "id": "ahrf_hospitals",
@@ -7790,7 +8273,8 @@
         "id": "aha_annual_survey"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_critical_access_hosp": {
     "id": "ahrf_critical_access_hosp",
@@ -7812,7 +8296,8 @@
         "id": "aha_annual_survey"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_population": {
     "id": "ahrf_population",
@@ -7834,7 +8319,10 @@
         "id": "census_pep"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary",
+    "duplicate_group": "population_total",
+    "duplicate_note": "Census PEP annual estimate, via AHRF -- bit-identical to chr_population from 2023 on (checked CT 2023-2025); diverged 2011-2022, when AHRF was carrying a less-frequently-refreshed vintage"
   },
   "ahrf_good_air_pct": {
     "id": "ahrf_good_air_pct",
@@ -7856,7 +8344,8 @@
         "id": "epa_airdata"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_pm25": {
     "id": "ahrf_pm25",
@@ -7878,7 +8367,10 @@
         "id": "cdc_epht"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary",
+    "duplicate_group": "particulate_matter",
+    "duplicate_note": "the SAME CDC EPHT surface via AHRF, and the only bit-identical pair in this whole list: r = 1.0000 and every one of 3,115 county values matches exactly in 2023. Two compilers republishing one upstream product, so these carry no independent information about each other"
   },
   "ahrf_pop_density": {
     "id": "ahrf_pop_density",
@@ -7900,7 +8392,8 @@
         "id": "census_decennial"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_medicare_per_capita": {
     "id": "ahrf_medicare_per_capita",
@@ -7922,7 +8415,8 @@
         "id": "cms_geo_variation"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "ahrf_ed_per_1k_medicare": {
     "id": "ahrf_ed_per_1k_medicare",
@@ -7944,7 +8438,8 @@
         "id": "cms_geo_variation"
       }
     ],
-    "compiled_via": "ahrf"
+    "compiled_via": "ahrf",
+    "display_status": "primary"
   },
   "noaa_heat_risk_score": {
     "id": "noaa_heat_risk_score",
@@ -7962,7 +8457,8 @@
       {
         "id": "noaa_wpc_heatrisk"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "jhu_measles_cases": {
     "id": "jhu_measles_cases",
@@ -7979,7 +8475,8 @@
       {
         "id": "jhu_measles"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "ww_measles_detection_rate": {
     "id": "ww_measles_detection_rate",
@@ -7997,7 +8494,8 @@
       {
         "id": "wastewater_measles"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "epic_heat_ed_rate": {
     "id": "epic_heat_ed_rate",
@@ -8015,7 +8513,8 @@
       {
         "id": "epic"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nssp_pct_ed_visits_rsv": {
     "id": "nssp_pct_ed_visits_rsv",
@@ -8033,7 +8532,8 @@
       {
         "id": "cdc_nssp"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nssp_pct_ed_visits_covid": {
     "id": "nssp_pct_ed_visits_covid",
@@ -8051,7 +8551,8 @@
       {
         "id": "cdc_nssp"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nssp_pct_ed_visits_flu": {
     "id": "nssp_pct_ed_visits_flu",
@@ -8069,7 +8570,8 @@
       {
         "id": "cdc_nssp"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "delphi_doc_covid_smooth": {
     "id": "delphi_doc_covid_smooth",
@@ -8087,7 +8589,8 @@
       {
         "id": "delphi_doctor_visits"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "delphi_hospital_covid_smooth": {
     "id": "delphi_hospital_covid_smooth",
@@ -8105,7 +8608,8 @@
       {
         "id": "delphi_hospital_admissions"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "delphi_hospital_flu_smooth": {
     "id": "delphi_hospital_flu_smooth",
@@ -8123,7 +8627,8 @@
       {
         "id": "delphi_hospital_admissions"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "wapo_met_herd_immunity_prepandemic": {
     "id": "wapo_met_herd_immunity_prepandemic",
@@ -8141,7 +8646,8 @@
       {
         "id": "wapo"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "wapo_met_herd_immunity_postpandemic": {
     "id": "wapo_met_herd_immunity_postpandemic",
@@ -8159,7 +8665,8 @@
       {
         "id": "wapo"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "nchs_overdose_rate": {
     "id": "nchs_overdose_rate",
@@ -8177,7 +8684,10 @@
       {
         "id": "nchs"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "drug_overdose_mortality",
+    "duplicate_note": "provisional annual crude rate (VSRR)"
   },
   "epic_diabetes_dx_ccw": {
     "id": "epic_diabetes_dx_ccw",
@@ -8195,7 +8705,8 @@
       {
         "id": "epic"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "epic_obesity_dx_ccw": {
     "id": "epic_obesity_dx_ccw",
@@ -8213,7 +8724,8 @@
       {
         "id": "epic"
       }
-    ]
+    ],
+    "display_status": "primary"
   },
   "pep_population": {
     "id": "pep_population",
@@ -8231,7 +8743,10 @@
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "population_total",
+    "duplicate_note": "the same Census PEP estimate pulled directly rather than through a compiler -- r = 0.9998 and ratio 1.002 against acs_POP, chr_population and ahrf_population across ~3,100 counties in 2023. This is the member with honest coverage for Connecticut's 9 planning regions, Alaska's Chugach and Copper River, and Puerto Rico's municipios, which CHR&R does not report"
   },
   "pep_pct_65_older": {
     "id": "pep_pct_65_older",
@@ -8243,13 +8758,16 @@
     "long_description": "Share of residents aged 65 and older, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population was 65 or older.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_age_65_and_older",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.987, ratio 1.043 against chr_65_and_older (3,133 counties, 2023)"
   },
   "pep_pct_under_18": {
     "id": "pep_pct_under_18",
@@ -8261,13 +8779,16 @@
     "long_description": "Share of residents under 18, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population was under 18 years old.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_under_18",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.981, ratio 0.988 (3,133 counties, 2023)"
   },
   "pep_pct_female": {
     "id": "pep_pct_female",
@@ -8279,13 +8800,16 @@
     "long_description": "Share of residents who are female, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as female.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_female",
+    "duplicate_note": "the same PEP share pulled directly -- ratio 1.000 against chr_female (3,133 counties, 2023)"
   },
   "pep_pct_aian": {
     "id": "pep_pct_aian",
@@ -8297,13 +8821,16 @@
     "long_description": "Share of residents identifying as American Indian or Alaska Native alone, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as American Indian or Alaska Native.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_american_indian_alaska_native",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.999, ratio 1.038 (3,133 counties, 2023)"
   },
   "pep_pct_asian": {
     "id": "pep_pct_asian",
@@ -8315,13 +8842,16 @@
     "long_description": "Share of residents identifying as Asian alone, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Asian.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_asian",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.998, ratio 1.05 against chr_asian (3,133 counties, 2023)"
   },
   "pep_pct_nhpi": {
     "id": "pep_pct_nhpi",
@@ -8333,13 +8863,16 @@
     "long_description": "Share of residents identifying as Native Hawaiian or Other Pacific Islander alone, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Native Hawaiian or Other Pacific Islander.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_native_hawaiian_pacific_islander",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.990, ratio 1.043 (3,133 counties, 2023)"
   },
   "pep_pct_nh_black": {
     "id": "pep_pct_nh_black",
@@ -8351,13 +8884,16 @@
     "long_description": "Share of residents identifying as Black or African American alone, not Hispanic or Latino, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as non-Hispanic Black or African American.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_black",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.999, ratio 1.018 against chr_non_hispanic_black (3,133 counties, 2023)"
   },
   "pep_pct_nh_white": {
     "id": "pep_pct_nh_white",
@@ -8369,13 +8905,16 @@
     "long_description": "Share of residents identifying as White alone, not Hispanic or Latino, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as non-Hispanic white.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_non_hispanic_white",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.998, ratio 0.993 against chr_non_hispanic_white (3,133 counties, 2023)"
   },
   "pep_pct_hispanic": {
     "id": "pep_pct_hispanic",
@@ -8387,13 +8926,16 @@
     "long_description": "Share of residents identifying as Hispanic or Latino of any race, direct from the Census Bureau's Population Estimates Program.",
     "statement": "In {location}, {value} of the population identified as Hispanic.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_pep"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "share_hispanic",
+    "duplicate_note": "the same PEP share pulled directly -- r = 0.996, ratio 1.07 against chr_hispanic (3,133 counties, 2023)"
   },
   "saipe_pct_children_poverty": {
     "id": "saipe_pct_children_poverty",
@@ -8405,13 +8947,16 @@
     "long_description": "Share of children under 18 living below the federal poverty level, direct from the Census Bureau's Small Area Income and Poverty Estimates.",
     "statement": "In {location}, {value} of children lived in poverty.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_saipe"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "children_in_poverty",
+    "duplicate_note": "the same SAIPE rate pulled directly -- r = 0.936, ratio 0.940 (3,134 counties, 2024); the gap is release vintage, since CHR&R lags SAIPE by ~2 years"
   },
   "saipe_median_household_income": {
     "id": "saipe_median_household_income",
@@ -8428,7 +8973,10 @@
       {
         "id": "census_saipe"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "median_household_income",
+    "duplicate_note": "the same SAIPE estimate pulled directly -- r = 0.955, ratio 1.022 against chr_median_household_income (3,142 counties, 2024)"
   },
   "sahie_pct_uninsured": {
     "id": "sahie_pct_uninsured",
@@ -8440,13 +8988,16 @@
     "long_description": "Share of the population without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
     "statement": "In {location}, {value} of the population under 65 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "uninsured_all_ages",
+    "duplicate_note": "the same SAHIE rate pulled directly -- r = 0.932, ratio 0.947 (3,134 counties, 2024)"
   },
   "sahie_pct_uninsured_adults": {
     "id": "sahie_pct_uninsured_adults",
@@ -8458,13 +9009,16 @@
     "long_description": "Share of adults aged 18-64 without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
     "statement": "In {location}, {value} of adults under 65 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "uninsured_adults",
+    "duplicate_note": "the same SAHIE rate pulled directly -- r = 0.938, ratio 0.922 (3,134 counties, 2024)"
   },
   "sahie_pct_uninsured_children": {
     "id": "sahie_pct_uninsured_children",
@@ -8476,13 +9030,16 @@
     "long_description": "Share of children under 19 without health insurance, direct from the Census Bureau's Small Area Health Insurance Estimates.",
     "statement": "In {location}, {value} of children under 19 lacked health insurance.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_sahie"
       }
-    ]
+    ],
+    "display_status": "primary",
+    "duplicate_group": "uninsured_children",
+    "duplicate_note": "the same SAHIE rate pulled directly -- r = 0.863, ratio 1.074 (3,134 counties, 2024); the weakest of the three, as expected on the smallest denominator"
   },
   "oqm_self_response_rate": {
     "id": "oqm_self_response_rate",
@@ -8494,12 +9051,13 @@
     "long_description": "Share of households that self-responded to the 2020 Census, direct from the Census Bureau's Operational Quality Metrics.",
     "statement": "In {location}, {value} of households self-responded to the 2020 census.",
     "measure_type": "percent",
-    "scale": "0-1",
+    "scale": "0-100",
     "time_resolution": "Year",
     "sources": [
       {
         "id": "census_oqm"
       }
-    ]
+    ],
+    "display_status": "primary"
   }
 }

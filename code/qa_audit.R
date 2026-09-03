@@ -52,8 +52,12 @@ info[["_sources"]] <- NULL
 measure_meta <- tibble(measure_id = names(info)) %>%
   mutate(
     entry = map(measure_id, ~ info[[.x]]),
-    scale = map_chr(entry, ~ .x$scale %||% NA_character_),
-    unit  = map_chr(entry, ~ .x$unit  %||% NA_character_)
+    # `[[`, not `$` -- see the note in build_measure_registry.R. Neither of
+    # these two is a prefix of another field today, so `$` happened to be
+    # correct here, but only by accident: adding a "unit_label" or "scale_type"
+    # would silently redirect these to it.
+    scale = map_chr(entry, ~ .x[["scale"]] %||% NA_character_),
+    unit  = map_chr(entry, ~ .x[["unit"]]  %||% NA_character_)
   ) %>%
   select(-entry)
 
@@ -65,6 +69,27 @@ measure_meta <- tibble(measure_id = names(info)) %>%
 
 flagged_root_causes <- tribble(
   ~measure_id, ~finding_type, ~flagged_detail,
+
+  "ahrf_hospitals", "bracketed_zero_run", paste0(
+    "NOT a parsing defect and NOT a coverage gap -- the pipeline reads the correct bytes, and the ",
+    "zeros are in the source. AHRF retroactively REASSIGNS a county's facilities between editions, ",
+    "and because the series is assembled one point per edition, a reassignment upstream lands as an ",
+    "impossible cliff. Verified on Henrico County VA (51087) against raw HRSA bytes from two ",
+    "editions: for the SAME data year, 1996, the 1999 edition reads 016 for Henrico and 000 for ",
+    "Richmond City (51760), while the 2005 edition reads 000 for Henrico and 016 for Richmond City. ",
+    "The 16 Richmond-area hospitals moved from the county to the independent city. That is why the ",
+    "us-rates series reads 16, 17, then zero for 2001-2009, then 2. The 1990-vintage variable was ",
+    "left alone by the revision and still reads 019 for Henrico in both editions, which is the ",
+    "control that proves the reassignment rather than a layout shift. ",
+    "SEPARATELY, the wider ahrf_hospitals zero rate is NOT a defect at all: 685 of 3,143 counties ",
+    "(21.8%) report zero, against a published 691 of 3,142 (22.0%), the county values sum exactly ",
+    "to the national total every year, and critical-access never exceeds total in 81,750 rows. ",
+    "Those zeros are real rural counties. Do not 'fix' them. ",
+    "The remaining work is upstream and is a design change, not a patch: AHRF must be assembled by ",
+    "DATA year taking the newest edition that covers each year, rather than one point per edition. ",
+    "Note the newest CSV editions carry only two years each, so the deep history exists only in the ",
+    "older fixed-width editions -- the series cannot simply be rebuilt from the latest one."
+  ),
 
   "ahrf_md_all", "mixed_units_within_series", paste0(
     "The century-pivot bug that originally caused this is fixed and reflected in the data ",
@@ -118,18 +143,19 @@ flagged_root_causes <- tribble(
 
   "chr_high_school_graduation", "scale_bounds_violation", paste0(
     "NOT a pipeline defect -- an upstream artifact in CHR&R's 2010 release, so the values stand as ",
-    "published. Exactly 2 observations exceed the declared 0-1 scale, both in the 2010 release and ",
-    "both in Pennsylvania: Huntingdon County (42061) at 1.0075047 and Beaver County (42007) at ",
-    "1.0074137. Verified against the raw CHR&R ingest ",
+    "published. Exactly 2 observations exceed the declared scale, both in the 2010 release and ",
+    "both in Pennsylvania: Huntingdon County (42061) at 100.75047 and Beaver County (42007) at ",
+    "100.74137 (1.0075047 and 1.0074137 before the 2026-09 move to the 0-100 standard). ",
+    "Verified against the raw CHR&R ingest ",
     "(Ingest/data/county_health_rankings/standard/data_county.csv.gz), which holds those two values ",
     "to the digit -- us-rates stores what CHR&R published and introduces no rounding or rescaling. ",
-    "Every other release year is capped: the maximum is exactly 1.0000 for 2011-2020 and exactly ",
-    "0.9950 from 2021 on, so the overshoot is confined to the one edition. A cohort graduation rate ",
+    "Every other release year is capped: the maximum is exactly 100 for 2011-2020 and exactly ",
+    "99.50 from 2021 on, so the overshoot is confined to the one edition. A cohort graduation rate ",
     "can exceed 100% when the graduate count includes students outside the modeled cohort ",
     "denominator (transfers in, or a denominator estimated rather than counted), which is the ",
     "general mechanism for an over-100% rate; the specific method behind the 2010 edition has not ",
     "been confirmed. Two observations out of 3,120 in that year. Do not clamp the values and do not ",
-    "widen the declared scale to accommodate them -- 0-1 is the correct declaration for the measure, ",
+    "widen the declared scale to accommodate them -- 0-100 is the correct declaration for the measure, ",
     "and the standing rule is to label the break rather than repair the data."
   )
 )
@@ -381,6 +407,7 @@ jump_findings <- jump_candidates %>%
 message("Checking scale magnitude against declared scale...")
 
 MAGNITUDE_CEILING <- 1
+MIN_MAGNITUDE_OBS <- 100
 
 magnitude_findings <- all_rates %>%
   inner_join(measure_meta, by = c("measure" = "measure_id")) %>%
@@ -392,6 +419,16 @@ magnitude_findings <- all_rates %>%
     median_value = median(value),
     .groups = "drop"
   ) %>%
+  # Two gates beyond the ceiling, both about whether the series can answer the
+  # question at all. A measure whose every value is 0 carries no information
+  # about its scale -- 0 is 0 on both conventions -- and a handful of
+  # observations cannot establish a maximum. Without these, the check reports
+  # dead and near-empty series (chr_population_growth, chr_lead_poisoned_children,
+  # chr_municipal_water_wi at 4 observations) as scale defects forever, which is
+  # how a check trains its reader to skip it. The case this check exists for,
+  # the ACS income shares, clears both easily: thousands of observations with a
+  # maximum of 0.0888.
+  filter(max_value > 0, n_obs >= MIN_MAGNITUDE_OBS) %>%
   filter(max_value <= MAGNITUDE_CEILING) %>%
   transmute(
     measure_id = measure,
@@ -410,8 +447,137 @@ magnitude_findings <- all_rates %>%
     )
   )
 
+# -----------------------------------------------------------------------------
+# Check 5: zero-runs bracketed by positive values in a stock count.
+#
+# A closure leaves a TRAILING run of zeros -- the county had a hospital, lost
+# it, and reports zero from then on. A zero run with positive values on BOTH
+# sides is a different animal: a county cannot lose every hospital and then
+# regain them years later. That shape is a defect by construction, and needs no
+# external reference data to judge, which is what makes it checkable here.
+#
+# Found by the ahrf_hospitals audit: 63 counties carry such a run, 51 of them
+# three years or longer, clustered on runs beginning in 2000-2002. Henrico
+# County VA (51087) is the clearest -- 16, 17, then zero for 2001-2009, then 2.
+# The cause is NOT a parsing error. AHRF retroactively reassigned the Richmond
+# hospitals from Henrico County to Richmond City between editions: for data
+# year 1996 the 1999 edition reads 016 for Henrico and the 2005 edition reads
+# 000 for Henrico and 016 for Richmond City. Since the pipeline contributes one
+# point per edition, a retroactive reassignment upstream lands as an impossible
+# cliff in the assembled series. See CONTRIBUTING.md.
+#
+# SCOPE -- stock counts only, and the list is explicit because the distinction
+# is semantic and cannot be derived from any field we hold. A bracketed zero
+# run is perfectly ordinary in an INCIDENCE count: a county records measles
+# cases, then none for six years, then cases again. Running this check over
+# jhu_measles_cases or the nhtsa_ death counts would report real epidemiology
+# as a defect. It is only impossible for a persistent stock -- facilities,
+# providers, population -- which is why those are named one by one.
+# -----------------------------------------------------------------------------
+
+message("Checking for bracketed zero-runs in stock counts...")
+
+MIN_ZERO_RUN <- 3   # a 1-2 period gap is a plausible reporting lapse
+MIN_RUN_GEOGRAPHIES <- 3   # one county is an incident; many is a mechanism
+
+# Third gate, and the one that makes the finding an impossibility rather than
+# merely an oddity: the geography must have held at least this many units on
+# one side of the gap. A county with a single rural hospital that closes and is
+# replaced years later moves 1 -> 0 -> 1 legitimately, and that is what most of
+# the shape actually is -- 44 of 51 ahrf_hospitals runs are bracketed by 1.
+# Losing TWO or more and later recovering is the shape that does not happen on
+# its own. Measured across the AHRF counts, this gate keeps 109 runs of 608.
+#
+# Deliberate blind spot: it also drops the 1 -> 0 -> 1 reassignment cases, such
+# as Berkeley County SC, whose hospital is credited to neighbouring Dorchester.
+# Those are real, but indistinguishable here from a genuine single-facility
+# lapse, so they need a source-level check rather than a shape-level one.
+MIN_BRACKET_VALUE <- 2
+
+stock_count_ids <- c(
+  # AHRF facility and provider inventories
+  "ahrf_hospitals", "ahrf_critical_access_hosp", "ahrf_md_all", "ahrf_pcp",
+  "ahrf_psych", "ahrf_dentists",
+  # Total-population stocks. These should never fire -- a county's population
+  # is never zero -- which is exactly why they are worth watching.
+  "ahrf_population", "chr_population", "pep_population", "acs_POP"
+)
+# NOT the acs_POP_* race and age subgroup counts. Those are 5-year survey
+# ESTIMATES of small subpopulations, so a rural county estimating zero Native
+# Hawaiian residents in one vintage and four in the next is ordinary sampling
+# behaviour, not a defect. Including them produced 105 findings across six
+# measures, every one of that kind.
+
+zero_runs <- all_rates %>%
+  filter(measure %in% stock_count_ids, !is.na(value)) %>%
+  arrange(measure, geography, time) %>%
+  group_by(measure, geography) %>%
+  # Runs alternate zero / positive, so numbering the changes gives each run an
+  # id. A zero run that is neither the first nor the last run in a geography is
+  # therefore bracketed by positive runs on both sides.
+  mutate(
+    is_zero = value == 0,
+    run_id  = cumsum(is_zero != lag(is_zero, default = first(is_zero)))
+  ) %>%
+  group_by(measure, geography, run_id) %>%
+  summarise(
+    is_zero    = first(is_zero),
+    n_periods  = n(),
+    max_value  = max(value),
+    first_time = min(time),
+    last_time  = max(time),
+    .groups    = "drop"
+  ) %>%
+  group_by(measure, geography) %>%
+  mutate(
+    run_index = row_number(),
+    n_runs    = n(),
+    # Runs alternate, so for a zero run these are the positive runs on either
+    # side of the gap.
+    bracket   = pmax(lag(max_value), lead(max_value), na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  filter(
+    is_zero, run_index > 1, run_index < n_runs,
+    n_periods >= MIN_ZERO_RUN,
+    bracket >= MIN_BRACKET_VALUE
+  )
+
+zero_run_findings <- zero_runs %>%
+  group_by(measure) %>%
+  arrange(desc(n_periods), .by_group = TRUE) %>%
+  summarise(
+    n_geographies = n_distinct(geography),
+    n_runs        = n(),
+    longest       = max(n_periods),
+    example_geo   = first(geography),
+    example_span  = paste0(first(first_time), " to ", first(last_time)),
+    example_held  = first(bracket),
+    .groups       = "drop"
+  ) %>%
+  filter(n_geographies >= MIN_RUN_GEOGRAPHIES) %>%
+  transmute(
+    measure_id = measure,
+    finding_type = "bracketed_zero_run",
+    severity = "high",
+    detail = paste0(
+      n_runs, " zero-run(s) of ", MIN_ZERO_RUN, "+ periods across ",
+      n_geographies, " geograph", if_else(n_geographies == 1, "y", "ies"),
+      " sit between positive values on both sides, in geographies that held ",
+      MIN_BRACKET_VALUE, "+ units -- longest is ", longest,
+      " periods (e.g. ", example_geo, ", ", example_span, ", which held ",
+      example_held, "). A stock count ",
+      "cannot fall to zero and recover, so this is not a closure. The usual ",
+      "cause is upstream: a source that reassigns a value between geographies ",
+      "in a later edition, while the series is assembled one point per ",
+      "edition. Compare the SAME data year as published by two different ",
+      "editions before concluding the pipeline is at fault."
+    )
+  )
+
 findings <- bind_rows(
-  bounds_findings, inversion_findings, jump_findings, magnitude_findings
+  bounds_findings, inversion_findings, jump_findings, magnitude_findings,
+  zero_run_findings
 ) %>%
   mutate(status = "auto-detected")
 
@@ -439,3 +605,41 @@ dir.create(tracker_dir, recursive = TRUE, showWarnings = FALSE)
 vroom_write(findings, file.path(tracker_dir, "qa_findings.csv"), delim = ",")
 
 message("\nComplete. Written to tracker/qa_findings.csv")
+
+# -----------------------------------------------------------------------------
+# Fail the build on an untriaged scale-magnitude mismatch.
+#
+# Findings are normally advisory -- this script exits 0 with them, because most
+# want human triage and several are permanent, source-side facts. Check 4 is the
+# exception, and deliberately so: a whole measure sitting an order of magnitude
+# below its declared scale is not a judgement call, it is a declaration and a
+# dataset that disagree, and it is exactly what a half-applied scale conversion
+# looks like. Values 100x wrong that stay inside their declared range are the
+# one error class no consumer can see and no other check catches.
+#
+# Concretely: if a us-rates refresh ever reads Ingest data that is still on 0-1
+# while measure_info.json declares 0-100 -- the window between conforming the
+# two repos, or an Ingest project that silently reverts -- this stops it instead
+# of writing a quietly wrong dataset.
+#
+# Only "auto-detected" is fatal. A flagged finding has been looked at and judged,
+# which is the whole point of flagging, so it must not block the pipeline. Bounds
+# violations stay advisory: wapo_mmr_coverage genuinely exceeds 100 upstream, and
+# that is a source defect to carry, not a reason to refuse to build.
+# -----------------------------------------------------------------------------
+fatal <- findings %>%
+  filter(finding_type == "scale_magnitude_mismatch", status == "auto-detected")
+
+if (nrow(fatal) > 0) {
+  stop(
+    "SCALE MISMATCH -- refusing to complete. ", nrow(fatal),
+    " measure(s) declare a scale their values contradict: ",
+    paste(head(fatal$measure_id, 10), collapse = ", "),
+    if (nrow(fatal) > 10) paste0(" (and ", nrow(fatal) - 10, " more)") else "",
+    ".\nThis is what a half-applied percent conversion looks like. Check that ",
+    "the Ingest project feeding these measures is on the same scale ",
+    "measure_info.json declares, then re-run. If the declaration is the wrong ",
+    "half, fix it there. See tracker/qa_findings.csv for the detail, and ",
+    "CONTRIBUTING.md for the 0-100 standard."
+  )
+}
