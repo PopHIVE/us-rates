@@ -7033,7 +7033,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_binge_drinking": {
     "id": "chr_binge_drinking",
@@ -7084,7 +7085,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_college_degrees": {
     "id": "chr_college_degrees",
@@ -7132,7 +7134,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_could_not_see_doctor_due_to_cost": {
     "id": "chr_could_not_see_doctor_due_to_cost",
@@ -7237,7 +7240,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_drug_arrests": {
     "id": "chr_drug_arrests",
@@ -7260,7 +7264,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_drug_overdose_deaths_modeled": {
     "id": "chr_drug_overdose_deaths_modeled",
@@ -7340,7 +7345,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_health_care_costs": {
     "id": "chr_health_care_costs",
@@ -7519,7 +7525,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_liquor_store_density": {
     "id": "chr_liquor_store_density",
@@ -7567,7 +7574,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_municipal_water_wi": {
     "id": "chr_municipal_water_wi",
@@ -7591,7 +7599,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_population_growth": {
     "id": "chr_population_growth",
@@ -7716,7 +7725,8 @@
       }
     ],
     "compiled_via": "chr",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "chr_excessive_drinking_fl": {
     "id": "chr_excessive_drinking_fl",
@@ -7740,7 +7750,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_adequate_social_emotional_support_fl": {
     "id": "chr_adequate_social_emotional_support_fl",
@@ -7764,7 +7775,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_adult_smoking_fl": {
     "id": "chr_adult_smoking_fl",
@@ -7788,7 +7800,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_overweight_or_obese_adults_fl": {
     "id": "chr_overweight_or_obese_adults_fl",
@@ -7812,7 +7825,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_fruit_and_vegetable_consumption_fl": {
     "id": "chr_fruit_and_vegetable_consumption_fl",
@@ -7836,7 +7850,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_adults_who_have_a_personal_doctor_fl": {
     "id": "chr_adults_who_have_a_personal_doctor_fl",
@@ -7860,7 +7875,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_adults_engaging_in_moderate_physical_activity_fl": {
     "id": "chr_adults_engaging_in_moderate_physical_activity_fl",
@@ -7884,7 +7900,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_insured_adults_fl": {
     "id": "chr_insured_adults_fl",
@@ -7908,7 +7925,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_binge_drinking_ny": {
     "id": "chr_binge_drinking_ny",
@@ -7932,7 +7950,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_dental_visit_within_the_past_year_ny": {
     "id": "chr_dental_visit_within_the_past_year_ny",
@@ -7956,7 +7975,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_fair_or_poor_health_ny": {
     "id": "chr_fair_or_poor_health_ny",
@@ -7980,7 +8000,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_excessive_drinking_ny": {
     "id": "chr_excessive_drinking_ny",
@@ -8004,7 +8025,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_no_leisure_time_physical_activity_ny": {
     "id": "chr_no_leisure_time_physical_activity_ny",
@@ -8028,7 +8050,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_obese_adults_ny": {
     "id": "chr_obese_adults_ny",
@@ -8052,7 +8075,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "chr_adult_smoking_ny": {
     "id": "chr_adult_smoking_ny",
@@ -8076,7 +8100,8 @@
     ],
     "compiled_via": "chr",
     "display_status": "primary",
-    "vintage_release": 2011
+    "vintage_release": 2011,
+    "chartable": false
   },
   "ahrf_hpsa_prim_care": {
     "id": "ahrf_hpsa_prim_care",
@@ -8096,7 +8121,8 @@
       }
     ],
     "compiled_via": "ahrf",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "ahrf_hpsa_dental": {
     "id": "ahrf_hpsa_dental",
@@ -8116,7 +8142,8 @@
       }
     ],
     "compiled_via": "ahrf",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "ahrf_hpsa_mental_health": {
     "id": "ahrf_hpsa_mental_health",
@@ -8136,7 +8163,8 @@
       }
     ],
     "compiled_via": "ahrf",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "ahrf_rural_urban_code": {
     "id": "ahrf_rural_urban_code",
@@ -8159,7 +8187,8 @@
       }
     ],
     "compiled_via": "ahrf",
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "ahrf_pcp": {
     "id": "ahrf_pcp",
@@ -8458,7 +8487,8 @@
         "id": "noaa_wpc_heatrisk"
       }
     ],
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "jhu_measles_cases": {
     "id": "jhu_measles_cases",
@@ -8647,7 +8677,8 @@
         "id": "wapo"
       }
     ],
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "wapo_met_herd_immunity_postpandemic": {
     "id": "wapo_met_herd_immunity_postpandemic",
@@ -8666,7 +8697,8 @@
         "id": "wapo"
       }
     ],
-    "display_status": "primary"
+    "display_status": "primary",
+    "chartable": false
   },
   "nchs_overdose_rate": {
     "id": "nchs_overdose_rate",
