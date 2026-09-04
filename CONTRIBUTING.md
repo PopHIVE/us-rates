@@ -374,6 +374,45 @@ interchangeable.
   not, so for these two groups the ACS member counts a different population.
   The other four race groups match at ratio 1.0–1.1 and are grouped.
 
+### Marking a measure not chartable
+
+Set `"chartable": false` in `measure_info.json` to suppress **both** charts on
+the explore page for that measure. Declare it only where it applies; absence
+means chartable, the same convention `duplicate_group` uses.
+
+Three things earn it, and each was reviewed measure by measure:
+
+* **The value is not a quantity** — a classification, designation code, or 0/1
+  flag, where the midpoint of two values means nothing.
+* **A single-state supplement** — covers one state's counties, so a comparison
+  reads as national when it is not.
+* **A fragment** — too few counties for a chart to carry meaning.
+
+**Classify from the definition, never from the values.** A data-driven screen
+looks tempting -- "few distinct small integers means a code" -- and it is wrong
+here. `cms_asthma` shows 12 distinct integers, `cms_schizophrenia` 8, and
+`cms_acute_myocardial_infarction` 4, because CMS publishes whole percentages;
+they are ordinary rates, coarsely rounded. Fifteen `cms_` measures would be
+misclassified by that rule.
+
+**Do not infer it from coverage either.** A rule of "county-only means do not
+chart" was tried and was wrong: it caught `census_ur_pct_urban_pop` (3,221
+counties across 52 states) and `epic_heat_ed_rate` (3,110 across 50), which
+chart perfectly well and merely lack a state roll-up.
+
+Two borderline cases were deliberately left chartable:
+
+* `chr_adverse_climate_events` — "count of thresholds met", 0–3. A genuine
+  count, so it behaves like a quantity.
+* `chr_drinking_water_violations` — a binary flag from the 2016 release onward
+  but a continuous proportion before it. The break is recorded in
+  `qa_findings.csv` and in the measure's `long_description` instead.
+
+`chartable` is a different question from `display_status`. `display_status` is
+*should this measure be shown at all*; `chartable` is *should it be drawn as a
+chart*. A `chartable: false` measure is still shown — as a value, without a
+graph.
+
 ### Setting display_status
 
 Every measure declares one in `measure_info.json`, never omitted — absent and

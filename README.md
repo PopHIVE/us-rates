@@ -288,6 +288,16 @@ Machine-readable records of what's in the repo and what's known about it. These 
 
 Each measure's own `long_description` says why it carries a non-`primary` status.
 
+**Check `chartable` before drawing any chart for a measure.** 32 measures carry `"chartable": false` in `measure_info.json`, meaning **show no charts at all** — neither the time series nor the county-comparison dots. Show the value on its own instead. An absent value means chartable, so only the exceptions are declared.
+
+They fall into three groups, all reviewed measure by measure:
+
+| Group | Count | Why |
+|---|---|---|
+| Not a quantity | 7 | The value is a code, not an amount: `ahrf_rural_urban_code` (RUCC 1–9), the three `ahrf_hpsa_*` designations (`0=none, 1=whole county, 2=partial`), `noaa_heat_risk_score` (0–4 category), and the two `wapo_met_herd_immunity_*` flags. A county reading `7` for rurality is more rural than one reading `3`, but the midpoint of two categories is not a value, and a state "average rurality" of `4.6` does not exist. |
+| Single-state supplement | 17 | CHR&R's `_fl`, `_ny` and `_wi` extras cover one state's counties only, so a comparison would silently mean "other counties in that state". |
+| Fragment | 8 | Too few counties for a chart to say anything — `chr_drug_arrests` has 2, `chr_child_abuse` 3, `chr_w_2_enrollment` 6. |
+
 `duplicate_group` marks measures covering the same concept from different sources, so a reader sees one concept rather than several unrelated-looking rows. Like `display_status`, it is declared in `measure_info.json` and copied onto the registry — but only where a cluster has been confirmed against measured values, so an absent `duplicate_group` means ungrouped. The registry fills that gap with the measure's own id, so counting distinct `duplicate_group` values gives the number of concepts in the catalog. Grouping is not merging: members are deliberately kept as separate series and are not interchangeable, and the `duplicate_note` on each records how it differs from its siblings.
 
 ---

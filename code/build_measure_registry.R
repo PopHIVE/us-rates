@@ -77,6 +77,11 @@ measures <- tibble(measure_id = names(info)) %>%
     # measures rendered as live, and the 32 duplicate groups could not be
     # stacked at all, which is the whole point of having them. Validated
     # below rather than trusted, since measure_info.json is hand-maintained.
+    # chartable = FALSE means: show no charts for this measure -- neither the
+    # time series nor the county-comparison dots. Declared only where it
+    # applies, so absent means chartable, the same convention duplicate_group
+    # uses.
+    chartable = map_lgl(entry, ~ isTRUE(.x[["chartable"]] %||% TRUE)),
     display_status  = map_chr(entry, ~ .x[["display_status"]]  %||% NA_character_),
     duplicate_group = map_chr(entry, ~ .x[["duplicate_group"]] %||% NA_character_),
     duplicate_note  = map_chr(entry, ~ .x[["duplicate_note"]]  %||% NA_character_)
@@ -311,6 +316,27 @@ conditional_county_ids <- c(
 
 VALID_DISPLAY_STATUS <- c("primary", "qa-only", "historical")
 
+# value_kind answers "is arithmetic on this number meaningful?", which is a
+# different question from display_status ("should this be shown at all") and
+# from coverage ("what is there to compare against"). A measure can be a live,
+# primary measure with data at every level and still be uncomparable: rurality
+# is a 1-9 classification, so a state "average rurality" is not a quantity.
+#
+#   magnitude    a rate, count, percentage, index -- compare and aggregate
+#   ordinal      ordered categories as numbers (RUCC 1-9, HeatRisk 0-4);
+#                rank is meaningful, the mean of two categories is not
+#   categorical  unordered codes (HPSA designation 0/1/2)
+#   binary       a 0/1 indicator
+#
+# Consumer rule: anything other than "magnitude" must not be placed on a
+# cross-geography comparison chart, and must never be averaged into a state or
+# national figure.
+# `chartable` is declared per measure in measure_info.json, one measure at a
+# time, and is NOT derived. A derived rule was tried and was wrong: "county-only
+# means do not chart" caught census_ur_pct_urban_pop (3,221 counties across 52
+# states) and epic_heat_ed_rate (3,110 across 50), which chart perfectly well
+# and merely lack a state roll-up.
+
 bad_status <- registry$measure_id[
   is.na(registry$display_status) |
     !registry$display_status %in% VALID_DISPLAY_STATUS
@@ -480,6 +506,9 @@ registry <- registry %>%
   ) %>%
   select(-span_first, -span_last)
 
+# One field for consumers: FALSE if the value is not a quantity, or if there is
+# no state/national value to compare a county against. comparable_reason says
+# which, so the explorer can word the omission rather than silently drop a chart.
 registry <- registry %>%
   select(
     measure_id, source_id, n_sources, pipeline, via,
@@ -488,7 +517,7 @@ registry <- registry %>%
     compiler_first_year, compiler_last_year, compiler_citation,
     expected_national, expected_state, expected_county,
     actual_national, actual_state, actual_county,
-    parity_flag, display_status, duplicate_group, duplicate_note,
+    parity_flag, display_status, chartable, duplicate_group, duplicate_note,
     coverage_states,
     n_states_with_data, n_counties_with_data, n_states_with_county_data,
     n_observations, time_min, time_max
