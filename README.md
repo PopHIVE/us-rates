@@ -316,7 +316,7 @@ They fall into three groups, all reviewed measure by measure:
 | `population_demographics` | `age_structure`, `disability`, `population_size_and_density`, `race_and_ethnicity`, `sex` |
 | `preventive_care` | `clinical_screenings`, `immunizations`, `nutrition_and_exercise`, `sexual_and_reproductive_health` |
 | `social_determinants_of_health` | `economic_stability`, `education_access_and_quality`, `health_care_access_and_quality`, `neighborhood_and_built_environment`, `social_and_community_context` |
-| `substance_abuse` | `alcohol_use`, `drug_use_and_overdose`, `tobacco_use` |
+| `substance_use` | `alcohol_use`, `drug_use_and_overdose`, `tobacco_use` |
 
 ---
 
