@@ -1,0 +1,144 @@
+{
+  "counties": {
+    "02270": {
+      "name": "Wade Hampton Census Area",
+      "now_part_of": [
+        {
+          "fips": "02158",
+          "name": "Kusilvak Census Area",
+          "population": 8001,
+          "pct": 100.0
+        }
+      ],
+      "dominant_region": {
+        "fips": "02158",
+        "name": "Kusilvak Census Area",
+        "population": 8001,
+        "pct": 100.0
+      },
+      "ambiguous": false,
+      "change_type": "rename"
+    },
+    "02261": {
+      "name": "Valdez-Cordova Census Area",
+      "now_part_of": [
+        {
+          "fips": "02063",
+          "name": "Chugach Census Area",
+          "population": 6769,
+          "pct": 71.7
+        },
+        {
+          "fips": "02066",
+          "name": "Copper River Census Area",
+          "population": 2674,
+          "pct": 28.3
+        }
+      ],
+      "dominant_region": null,
+      "ambiguous": true,
+      "change_type": "split"
+    }
+  },
+  "regions": {
+    "02158": {
+      "name": "Kusilvak Census Area",
+      "made_from": [
+        {
+          "fips": "02270",
+          "name": "Wade Hampton Census Area",
+          "pct": 100.0
+        }
+      ],
+      "display_label": "Kusilvak Census Area (formerly Wade Hampton Census Area)"
+    },
+    "02063": {
+      "name": "Chugach Census Area",
+      "made_from": [
+        {
+          "fips": "02261",
+          "name": "Valdez-Cordova Census Area",
+          "pct": 71.7
+        }
+      ],
+      "display_label": "Chugach Census Area (part of former Valdez-Cordova Census Area)"
+    },
+    "02066": {
+      "name": "Copper River Census Area",
+      "made_from": [
+        {
+          "fips": "02261",
+          "name": "Valdez-Cordova Census Area",
+          "pct": 28.3
+        }
+      ],
+      "display_label": "Copper River Census Area (part of former Valdez-Cordova Census Area)"
+    }
+  },
+  "search_aliases": {
+    "wade hampton census area": {
+      "type": "legacy_geography",
+      "fips": "02270",
+      "resolves_to": [
+        {
+          "fips": "02158",
+          "name": "Kusilvak Census Area",
+          "population": 8001,
+          "pct": 100.0
+        }
+      ],
+      "ambiguous": false
+    },
+    "wade hampton": {
+      "type": "legacy_geography",
+      "fips": "02270",
+      "resolves_to": [
+        {
+          "fips": "02158",
+          "name": "Kusilvak Census Area",
+          "population": 8001,
+          "pct": 100.0
+        }
+      ],
+      "ambiguous": false
+    },
+    "valdez-cordova census area": {
+      "type": "legacy_geography",
+      "fips": "02261",
+      "resolves_to": [
+        {
+          "fips": "02063",
+          "name": "Chugach Census Area",
+          "population": 6769,
+          "pct": 71.7
+        },
+        {
+          "fips": "02066",
+          "name": "Copper River Census Area",
+          "population": 2674,
+          "pct": 28.3
+        }
+      ],
+      "ambiguous": true
+    },
+    "valdez-cordova": {
+      "type": "legacy_geography",
+      "fips": "02261",
+      "resolves_to": [
+        {
+          "fips": "02063",
+          "name": "Chugach Census Area",
+          "population": 6769,
+          "pct": 71.7
+        },
+        {
+          "fips": "02066",
+          "name": "Copper River Census Area",
+          "population": 2674,
+          "pct": 28.3
+        }
+      ],
+      "ambiguous": true
+    }
+  }
+}
