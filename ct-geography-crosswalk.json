@@ -1,0 +1,728 @@
+{
+  "counties": {
+    "09001": {
+      "name": "Fairfield County",
+      "town_count": 23,
+      "now_part_of": [
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 16,
+          "pct": 69.6
+        },
+        {
+          "fips": "09120",
+          "name": "Greater Bridgeport Planning Region",
+          "towns": 6,
+          "pct": 26.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 4.3
+        }
+      ],
+      "dominant_region": null,
+      "ambiguous": true
+    },
+    "09003": {
+      "name": "Hartford County",
+      "town_count": 29,
+      "now_part_of": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 26,
+          "pct": 89.7
+        },
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 2,
+          "pct": 6.9
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 3.4
+        }
+      ],
+      "dominant_region": {
+        "fips": "09110",
+        "name": "Capitol Planning Region",
+        "towns": 26,
+        "pct": 89.7
+      },
+      "ambiguous": false
+    },
+    "09005": {
+      "name": "Litchfield County",
+      "town_count": 26,
+      "now_part_of": [
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 19,
+          "pct": 73.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 5,
+          "pct": 19.2
+        },
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 2,
+          "pct": 7.7
+        }
+      ],
+      "dominant_region": null,
+      "ambiguous": true
+    },
+    "09007": {
+      "name": "Middlesex County",
+      "town_count": 15,
+      "now_part_of": [
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 15,
+          "pct": 100.0
+        }
+      ],
+      "dominant_region": {
+        "fips": "09130",
+        "name": "Lower Connecticut River Valley Planning Region",
+        "towns": 15,
+        "pct": 100.0
+      },
+      "ambiguous": false
+    },
+    "09009": {
+      "name": "New Haven County",
+      "town_count": 27,
+      "now_part_of": [
+        {
+          "fips": "09170",
+          "name": "South Central Connecticut Planning Region",
+          "towns": 15,
+          "pct": 55.6
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 12,
+          "pct": 44.4
+        }
+      ],
+      "dominant_region": null,
+      "ambiguous": true
+    },
+    "09011": {
+      "name": "New London County",
+      "town_count": 21,
+      "now_part_of": [
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 18,
+          "pct": 85.7
+        },
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 2,
+          "pct": 9.5
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 4.8
+        }
+      ],
+      "dominant_region": {
+        "fips": "09180",
+        "name": "Southeastern Connecticut Planning Region",
+        "towns": 18,
+        "pct": 85.7
+      },
+      "ambiguous": false
+    },
+    "09013": {
+      "name": "Tolland County",
+      "town_count": 13,
+      "now_part_of": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 12,
+          "pct": 92.3
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 7.7
+        }
+      ],
+      "dominant_region": {
+        "fips": "09110",
+        "name": "Capitol Planning Region",
+        "towns": 12,
+        "pct": 92.3
+      },
+      "ambiguous": false
+    },
+    "09015": {
+      "name": "Windham County",
+      "town_count": 15,
+      "now_part_of": [
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 14,
+          "pct": 93.3
+        },
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 6.7
+        }
+      ],
+      "dominant_region": {
+        "fips": "09150",
+        "name": "Northeastern Connecticut Planning Region",
+        "towns": 14,
+        "pct": 93.3
+      },
+      "ambiguous": false
+    }
+  },
+  "regions": {
+    "09120": {
+      "name": "Greater Bridgeport Planning Region",
+      "town_count": 6,
+      "made_from": [
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "towns": 6,
+          "pct": 100.0
+        }
+      ],
+      "display_label": "Greater Bridgeport Planning Region (Fairfield County)"
+    },
+    "09140": {
+      "name": "Naugatuck Valley Planning Region",
+      "town_count": 19,
+      "made_from": [
+        {
+          "fips": "09009",
+          "name": "New Haven County",
+          "towns": 12,
+          "pct": 63.2
+        },
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "towns": 5,
+          "pct": 26.3
+        },
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "towns": 1,
+          "pct": 5.3
+        },
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "towns": 1,
+          "pct": 5.3
+        }
+      ],
+      "display_label": "Naugatuck Valley Planning Region (New Haven + Litchfield + Fairfield + Hartford Counties)"
+    },
+    "09190": {
+      "name": "Western Connecticut Planning Region",
+      "town_count": 18,
+      "made_from": [
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "towns": 16,
+          "pct": 88.9
+        },
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "towns": 2,
+          "pct": 11.1
+        }
+      ],
+      "display_label": "Western Connecticut Planning Region (Fairfield + Litchfield Counties)"
+    },
+    "09110": {
+      "name": "Capitol Planning Region",
+      "town_count": 38,
+      "made_from": [
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "towns": 26,
+          "pct": 68.4
+        },
+        {
+          "fips": "09013",
+          "name": "Tolland County",
+          "towns": 12,
+          "pct": 31.6
+        }
+      ],
+      "display_label": "Capitol Planning Region (Hartford + Tolland Counties)"
+    },
+    "09160": {
+      "name": "Northwest Hills Planning Region",
+      "town_count": 21,
+      "made_from": [
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "towns": 19,
+          "pct": 90.5
+        },
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "towns": 2,
+          "pct": 9.5
+        }
+      ],
+      "display_label": "Northwest Hills Planning Region (Litchfield + Hartford Counties)"
+    },
+    "09130": {
+      "name": "Lower Connecticut River Valley Planning Region",
+      "town_count": 17,
+      "made_from": [
+        {
+          "fips": "09007",
+          "name": "Middlesex County",
+          "towns": 15,
+          "pct": 88.2
+        },
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "towns": 2,
+          "pct": 11.8
+        }
+      ],
+      "display_label": "Lower Connecticut River Valley Planning Region (Middlesex + New London Counties)"
+    },
+    "09170": {
+      "name": "South Central Connecticut Planning Region",
+      "town_count": 15,
+      "made_from": [
+        {
+          "fips": "09009",
+          "name": "New Haven County",
+          "towns": 15,
+          "pct": 100.0
+        }
+      ],
+      "display_label": "South Central Connecticut Planning Region (New Haven County)"
+    },
+    "09150": {
+      "name": "Northeastern Connecticut Planning Region",
+      "town_count": 16,
+      "made_from": [
+        {
+          "fips": "09015",
+          "name": "Windham County",
+          "towns": 14,
+          "pct": 87.5
+        },
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "towns": 1,
+          "pct": 6.2
+        },
+        {
+          "fips": "09013",
+          "name": "Tolland County",
+          "towns": 1,
+          "pct": 6.2
+        }
+      ],
+      "display_label": "Northeastern Connecticut Planning Region (Windham + New London + Tolland Counties)"
+    },
+    "09180": {
+      "name": "Southeastern Connecticut Planning Region",
+      "town_count": 19,
+      "made_from": [
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "towns": 18,
+          "pct": 94.7
+        },
+        {
+          "fips": "09015",
+          "name": "Windham County",
+          "towns": 1,
+          "pct": 5.3
+        }
+      ],
+      "display_label": "Southeastern Connecticut Planning Region (New London + Windham Counties)"
+    }
+  },
+  "search_aliases": {
+    "fairfield county": {
+      "type": "legacy_county",
+      "fips": "09001",
+      "resolves_to": [
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 16,
+          "pct": 69.6
+        },
+        {
+          "fips": "09120",
+          "name": "Greater Bridgeport Planning Region",
+          "towns": 6,
+          "pct": 26.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 4.3
+        }
+      ],
+      "ambiguous": true
+    },
+    "fairfield": {
+      "type": "legacy_county",
+      "fips": "09001",
+      "resolves_to": [
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 16,
+          "pct": 69.6
+        },
+        {
+          "fips": "09120",
+          "name": "Greater Bridgeport Planning Region",
+          "towns": 6,
+          "pct": 26.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 4.3
+        }
+      ],
+      "ambiguous": true
+    },
+    "hartford county": {
+      "type": "legacy_county",
+      "fips": "09003",
+      "resolves_to": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 26,
+          "pct": 89.7
+        },
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 2,
+          "pct": 6.9
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 3.4
+        }
+      ],
+      "ambiguous": false
+    },
+    "hartford": {
+      "type": "legacy_county",
+      "fips": "09003",
+      "resolves_to": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 26,
+          "pct": 89.7
+        },
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 2,
+          "pct": 6.9
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 1,
+          "pct": 3.4
+        }
+      ],
+      "ambiguous": false
+    },
+    "litchfield county": {
+      "type": "legacy_county",
+      "fips": "09005",
+      "resolves_to": [
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 19,
+          "pct": 73.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 5,
+          "pct": 19.2
+        },
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 2,
+          "pct": 7.7
+        }
+      ],
+      "ambiguous": true
+    },
+    "litchfield": {
+      "type": "legacy_county",
+      "fips": "09005",
+      "resolves_to": [
+        {
+          "fips": "09160",
+          "name": "Northwest Hills Planning Region",
+          "towns": 19,
+          "pct": 73.1
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 5,
+          "pct": 19.2
+        },
+        {
+          "fips": "09190",
+          "name": "Western Connecticut Planning Region",
+          "towns": 2,
+          "pct": 7.7
+        }
+      ],
+      "ambiguous": true
+    },
+    "middlesex county": {
+      "type": "legacy_county",
+      "fips": "09007",
+      "resolves_to": [
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 15,
+          "pct": 100.0
+        }
+      ],
+      "ambiguous": false
+    },
+    "middlesex": {
+      "type": "legacy_county",
+      "fips": "09007",
+      "resolves_to": [
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 15,
+          "pct": 100.0
+        }
+      ],
+      "ambiguous": false
+    },
+    "new haven county": {
+      "type": "legacy_county",
+      "fips": "09009",
+      "resolves_to": [
+        {
+          "fips": "09170",
+          "name": "South Central Connecticut Planning Region",
+          "towns": 15,
+          "pct": 55.6
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 12,
+          "pct": 44.4
+        }
+      ],
+      "ambiguous": true
+    },
+    "new haven": {
+      "type": "legacy_county",
+      "fips": "09009",
+      "resolves_to": [
+        {
+          "fips": "09170",
+          "name": "South Central Connecticut Planning Region",
+          "towns": 15,
+          "pct": 55.6
+        },
+        {
+          "fips": "09140",
+          "name": "Naugatuck Valley Planning Region",
+          "towns": 12,
+          "pct": 44.4
+        }
+      ],
+      "ambiguous": true
+    },
+    "new london county": {
+      "type": "legacy_county",
+      "fips": "09011",
+      "resolves_to": [
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 18,
+          "pct": 85.7
+        },
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 2,
+          "pct": 9.5
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 4.8
+        }
+      ],
+      "ambiguous": false
+    },
+    "new london": {
+      "type": "legacy_county",
+      "fips": "09011",
+      "resolves_to": [
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 18,
+          "pct": 85.7
+        },
+        {
+          "fips": "09130",
+          "name": "Lower Connecticut River Valley Planning Region",
+          "towns": 2,
+          "pct": 9.5
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 4.8
+        }
+      ],
+      "ambiguous": false
+    },
+    "tolland county": {
+      "type": "legacy_county",
+      "fips": "09013",
+      "resolves_to": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 12,
+          "pct": 92.3
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 7.7
+        }
+      ],
+      "ambiguous": false
+    },
+    "tolland": {
+      "type": "legacy_county",
+      "fips": "09013",
+      "resolves_to": [
+        {
+          "fips": "09110",
+          "name": "Capitol Planning Region",
+          "towns": 12,
+          "pct": 92.3
+        },
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 7.7
+        }
+      ],
+      "ambiguous": false
+    },
+    "windham county": {
+      "type": "legacy_county",
+      "fips": "09015",
+      "resolves_to": [
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 14,
+          "pct": 93.3
+        },
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 6.7
+        }
+      ],
+      "ambiguous": false
+    },
+    "windham": {
+      "type": "legacy_county",
+      "fips": "09015",
+      "resolves_to": [
+        {
+          "fips": "09150",
+          "name": "Northeastern Connecticut Planning Region",
+          "towns": 14,
+          "pct": 93.3
+        },
+        {
+          "fips": "09180",
+          "name": "Southeastern Connecticut Planning Region",
+          "towns": 1,
+          "pct": 6.7
+        }
+      ],
+      "ambiguous": false
+    }
+  }
+}
