@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "geographies": {
+    "09110": {
+      "legacy_geographies": [
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 89.7,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09013",
+          "name": "Tolland County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 92.3,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09120": {
+      "legacy_geographies": [
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 26.1,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09130": {
+      "legacy_geographies": [
+        {
+          "fips": "09007",
+          "name": "Middlesex County",
+          "relationship": "includes_all",
+          "percent_of_legacy": 100,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 9.5,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09140": {
+      "legacy_geographies": [
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 4.3,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 3.4,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 19.2,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09009",
+          "name": "New Haven County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 44.4,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09150": {
+      "legacy_geographies": [
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 4.8,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09013",
+          "name": "Tolland County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 7.7,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09015",
+          "name": "Windham County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 93.3,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09160": {
+      "legacy_geographies": [
+        {
+          "fips": "09003",
+          "name": "Hartford County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 6.9,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 73.1,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09170": {
+      "legacy_geographies": [
+        {
+          "fips": "09009",
+          "name": "New Haven County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 55.6,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09180": {
+      "legacy_geographies": [
+        {
+          "fips": "09011",
+          "name": "New London County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 85.7,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09015",
+          "name": "Windham County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 6.7,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "09190": {
+      "legacy_geographies": [
+        {
+          "fips": "09001",
+          "name": "Fairfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 69.6,
+          "percentage_basis": "towns"
+        },
+        {
+          "fips": "09005",
+          "name": "Litchfield County",
+          "relationship": "includes_part",
+          "percent_of_legacy": 7.7,
+          "percentage_basis": "towns"
+        }
+      ]
+    },
+    "02063": {
+      "legacy_geographies": [
+        {
+          "fips": "02261",
+          "name": "Valdez-Cordova Census Area",
+          "relationship": "includes_part",
+          "percent_of_legacy": 71.7,
+          "percentage_basis": "population"
+        }
+      ]
+    },
+    "02066": {
+      "legacy_geographies": [
+        {
+          "fips": "02261",
+          "name": "Valdez-Cordova Census Area",
+          "relationship": "includes_part",
+          "percent_of_legacy": 28.3,
+          "percentage_basis": "population"
+        }
+      ]
+    },
+    "02158": {
+      "legacy_geographies": [
+        {
+          "fips": "02270",
+          "name": "Wade Hampton Census Area",
+          "relationship": "same_area",
+          "percent_of_legacy": 100,
+          "percentage_basis": "population"
+        }
+      ]
+    }
+  }
+}
