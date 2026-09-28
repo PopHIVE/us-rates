@@ -140,9 +140,11 @@ bls_long <- vroom(
 
 # ACS5 (Metopio) national totals. Shares data_state.csv.gz with the
 # state-level pull in populate_state_rates.R -- national is the single
-# "00" row (Census ACS5 "us" geography level).
+# "00" row (Census ACS5 "us" geography level). Ingest split this out of
+# census/standard/ into its own ACS_estimates source to properly credit
+# Metopio as the redistributor.
 census_long <- vroom(
-  file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
+  file.path(INGEST_PATH, "ACS_estimates/standard/data_state.csv.gz"),
   show_col_types = FALSE
 ) %>%
   filter(geography == "00") %>%

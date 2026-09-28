@@ -136,8 +136,10 @@ census_direct_long <- bind_rows(
   pivot_longer(cols = -c(geography, time), names_to = "measure", values_to = "value") %>%
   filter(!is.na(value))
 
+# ACS5 (Metopio) estimates. Ingest split this out of census/standard/ into
+# its own ACS_estimates source to properly credit Metopio as the redistributor.
 census_long <- vroom(
-  file.path(INGEST_PATH, "census/standard/data_state.csv.gz"),
+  file.path(INGEST_PATH, "ACS_estimates/standard/data_state.csv.gz"),
   show_col_types = FALSE
 ) %>%
   filter(geography != "00") %>%

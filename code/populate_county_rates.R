@@ -69,9 +69,11 @@ chr_wide <- vroom(
   guess_max = Inf
 )
 
-# Read Census (wide format)
+# Read ACS5 (Metopio) estimates (wide format). Ingest split this out of
+# census/standard/ into its own ACS_estimates source to properly credit
+# Metopio as the redistributor.
 census_wide <- vroom(
-  file.path(INGEST_PATH, "census/standard/data_county.csv.gz"),
+  file.path(INGEST_PATH, "ACS_estimates/standard/data_county.csv.gz"),
   show_col_types = FALSE
 )
 
