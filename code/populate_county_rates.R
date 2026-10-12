@@ -582,10 +582,55 @@ delphi_hosp_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
+# CDC WONDER natality: total live births only, i.e. the row where every
+# breakdown is "Overall". CDC publishes county counts only for counties of
+# 100,000+; smaller counties are pooled per state into "Unidentified Counties"
+# under pseudo-FIPS SS999 (state FIPS + "999"). That is not a real county, so
+# those rows are dropped here rather than reaching the county folder loop.
+natality_long <- vroom(
+  file.path(INGEST_PATH, "cdc_wonder_natality/standard/data_county.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(
+    nchar(geography) == 5, !endsWith(geography, "999"),
+    age == "Overall", sex == "Overall", race_ethnicity == "Overall"
+  ) %>%
+  transmute(
+    geography,
+    time    = year_end(format(as.Date(time), "%Y")),
+    measure = "natality_births",
+    value   = natality_births
+  ) %>%
+  filter(!is.na(value))
+
+# CDC WONDER natality detail breakdowns: one measure per (dimension, category),
+# e.g. natality_delivery_cesarean; names come from resources/natality_detail_measures.csv. Each dimension is queried on its own,
+# so a count is never split by another breakdown. "Unknown" is a placeholder
+# and is not published as a measure. SS999 pooled-county rows are dropped, as
+# for natality_long above.
+natality_detail_long <- vroom(
+  file.path(INGEST_PATH, "cdc_wonder_natality/standard/data_county_detail.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(
+    nchar(geography) == 5, !endsWith(geography, "999"),
+    category != "Unknown", !is.na(natality_births)
+  ) %>%
+  inner_join(
+    vroom(file.path(REPO_ROOT, "resources/natality_detail_measures.csv"), show_col_types = FALSE),
+    by = c("dimension", "category")
+  ) %>%
+  transmute(
+    geography,
+    time    = year_end(format(as.Date(time), "%Y")),
+    measure = measure_id,
+    value   = natality_births
+  )
+
 combined <- bind_rows(
   chr_long, census_direct_long, census_long, epic_long,
   wapo_long, healthmap_long, exempt_long,
-  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long,
+  cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long, natality_long, natality_detail_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
   epic_dx_long, noaa_heat_long, jhu_measles_long,
   ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
