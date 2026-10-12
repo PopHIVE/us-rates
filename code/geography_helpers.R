@@ -66,6 +66,13 @@ territory_rates_filename <- function(state_abbr) {
 # Effective dates are the Census Bureau's, from its county-changes technical
 # documentation. Unknown dates are NA, never guessed.
 #
+# `type` is "rename" (the default: codes in different generations are the same
+# or successor area and must never both report a (measure, time)) or "absorbed"
+# (an area folded into counties that kept existing, so the old and new areas
+# legitimately both have data before the change; only data under the retired
+# code AFTER the change is wrong). For "absorbed" the successors were never
+# created by the event, so they get no `activeFrom`.
+#
 # Two limits on `supersededBy`:
 #   1. Connecticut's counties and planning regions do not nest -- regions were
 #      built from towns and several counties split across regions -- so each
@@ -119,6 +126,46 @@ GEOGRAPHY_LINEAGE <- list(
     label = "Valdez-Cordova -> Chugach, Copper River (2019)",
     generations = list("02261", c("02063", "02066")),
     effective = "2019-01-02"
+  ),
+  list(
+    state = "SD",
+    label = "Shannon -> Oglala Lakota (renamed 2015)",
+    generations = list("46113", "46102"),
+    effective = "2015-05-01"
+  ),
+  list(
+    state = "FL",
+    label = "Dade -> Miami-Dade (renamed 1997)",
+    generations = list("12025", "12086"),
+    effective = "1997-07-22"
+  ),
+  list(
+    state = "MT",
+    type = "absorbed",
+    label = "Yellowstone National Park annexed to Gallatin, Park (1997)",
+    generations = list("30113", c("30031", "30067")),
+    effective = "1997-11-07"
+  ),
+  list(
+    state = "VA",
+    type = "absorbed",
+    label = "South Boston city -> Halifax County (1995)",
+    generations = list("51780", "51083"),
+    effective = "1995-06-30"
+  ),
+  list(
+    state = "VA",
+    type = "absorbed",
+    label = "Clifton Forge city -> Alleghany County (2001)",
+    generations = list("51560", "51005"),
+    effective = "2001-07-01"
+  ),
+  list(
+    state = "VA",
+    type = "absorbed",
+    label = "Bedford city -> Bedford County (2013)",
+    generations = list("51515", "51019"),
+    effective = "2013-07-01"
   )
 )
 
@@ -149,6 +196,7 @@ geography_lineage_rows <- function(ct_old, ct_new) {
     n <- length(gens)
     # One boundary between each pair of consecutive generations.
     eff <- rep(as.character(event$effective), length.out = n - 1)
+    absorbed <- identical(event$type, "absorbed")
 
     dplyr::bind_rows(lapply(seq_len(n), function(i) {
       tibble::tibble(
@@ -156,7 +204,7 @@ geography_lineage_rows <- function(ct_old, ct_new) {
         # Any generation but the last has been superseded.
         retired = i < n,
         # Created at the boundary that ended the previous generation.
-        activeFrom = if (i == 1) NA_character_ else eff[i - 1],
+        activeFrom = if (i == 1 || absorbed) NA_character_ else eff[i - 1],
         # Retired at the boundary that started the next generation.
         activeThrough = if (i == n) NA_character_ else eff[i],
         supersededBy = if (i == n) list(character(0)) else list(gens[[i + 1]]),

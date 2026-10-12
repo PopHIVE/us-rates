@@ -57,6 +57,8 @@ renaming_events <- lapply(GEOGRAPHY_LINEAGE, function(event) {
   list(
     state = event$state,
     label = event$label,
+    type = if (is.null(event$type)) "rename" else event$type,
+    effective = event$effective,
     generations = lapply(event$generations, function(codes) {
       unlist(lapply(codes, function(c) {
         if (identical(c, "CT_LEGACY_COUNTIES")) ct_old
@@ -98,6 +100,34 @@ for (event in renaming_events) {
 
   if (nrow(data) == 0) {
     message(event$state, ": ", event$label, " - no data found yet, skipping.")
+    next
+  }
+
+  # An absorbed area and its successors legitimately share (measure, time)
+  # before the change, so the overlap test below does not apply. What is wrong
+  # is data under the retired code after the change. Warns rather than fails:
+  # CHR&R labels years by release, so a post-change label can still carry
+  # pre-change data. Review the list; it does not stop the build.
+  if (identical(event$type, "absorbed")) {
+    retired_code <- event$generations[[1]]
+    late <- data %>%
+      filter(fips %in% retired_code,
+             as.integer(format(time, "%Y")) > as.integer(substr(event$effective, 1, 4)))
+    if (nrow(late) > 0) {
+      message(
+        "\n", event$state, ": ", event$label, " - WARNING: ", nrow(late),
+        " row(s) under retired code(s) ", paste(retired_code, collapse = ", "),
+        " dated after ", event$effective, ", by source:"
+      )
+      print(
+        late %>%
+          group_by(source = sub("_.*", "", measure)) %>%
+          summarise(rows = n(), first = min(time), last = max(time), .groups = "drop"),
+        n = 20
+      )
+    } else {
+      message(event$state, ": ", event$label, " - OK, nothing under the retired code after the change.")
+    }
     next
   }
 
