@@ -547,12 +547,56 @@ ahrf_long <- vroom(
   filter(!(measure == "ahrf_rural_urban_code" & value %in% c(0, 99))) %>%
   select(geography, time, measure, value)
 
+# CDC WONDER natality: total live births only, i.e. the row where every
+# breakdown is "Overall". A state's Overall is summed from its infant-sex rows
+# upstream and is NA if either sex was suppressed (1-9 births), so suppressed
+# years drop out here rather than being imputed.
+natality_long <- vroom(
+  file.path(INGEST_PATH, "cdc_wonder_natality/standard/data_state.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(
+    nchar(geography) == 2, geography != "00",
+    age == "Overall", sex == "Overall", race_ethnicity == "Overall"
+  ) %>%
+  transmute(
+    geography,
+    time    = year_end(format(as.Date(time), "%Y")),
+    measure = "natality_births",
+    value   = natality_births
+  ) %>%
+  filter(!is.na(value))
+
+# CDC WONDER natality detail breakdowns: one measure per (dimension, category),
+# e.g. natality_delivery_cesarean; names come from resources/natality_detail_measures.csv. Each dimension is queried on its own,
+# so a count is never split by another breakdown. "Unknown" is a placeholder
+# and is not published as a measure.
+natality_detail_long <- vroom(
+  file.path(INGEST_PATH, "cdc_wonder_natality/standard/data_state_detail.csv.gz"),
+  show_col_types = FALSE
+) %>%
+  filter(
+    nchar(geography) == 2, geography != "00",
+    category != "Unknown", !is.na(natality_births)
+  ) %>%
+  inner_join(
+    vroom(file.path(REPO_ROOT, "resources/natality_detail_measures.csv"), show_col_types = FALSE),
+    by = c("dimension", "category")
+  ) %>%
+  transmute(
+    geography,
+    time    = year_end(format(as.Date(time), "%Y")),
+    measure = measure_id,
+    value   = natality_births
+  )
+
 combined <- bind_rows(
   census_direct_long, chr_long, census_long, brfss_long,
   imm_long, svv_exempt_long, exempt_long, cms_long, epic_dx_long,
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,
-  nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long, bls_long, hud_long
+  nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long, bls_long, hud_long,
+  natality_long, natality_detail_long
 ) %>%
   arrange(geography, time, measure)
 

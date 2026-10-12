@@ -4179,7 +4179,9 @@
     "stateFips": "12",
     "slug": "12025-dade",
     "dataPath": "states/florida/counties/12025_dade/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "1997-07-22",
+    "supersededBy": ["12086"]
   },
   {
     "fips": "12027",
@@ -4489,7 +4491,9 @@
     "stateFips": "12",
     "slug": "12086-miami-dade",
     "dataPath": "states/florida/counties/12086_miami_dade/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "activeFrom": "1997-07-22",
+    "supersedes": ["12025"]
   },
   {
     "fips": "12087",
@@ -17009,7 +17013,8 @@
     "stateFips": "30",
     "slug": "30031-gallatin",
     "dataPath": "states/montana/counties/30031_gallatin/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "supersedes": ["30113"]
   },
   {
     "fips": "30033",
@@ -17189,7 +17194,8 @@
     "stateFips": "30",
     "slug": "30067-park",
     "dataPath": "states/montana/counties/30067_park/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "supersedes": ["30113"]
   },
   {
     "fips": "30069",
@@ -17419,7 +17425,9 @@
     "stateFips": "30",
     "slug": "30113-yellowstone-national-park",
     "dataPath": "states/montana/counties/30113_yellowstone_national_park/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "1997-11-07",
+    "supersededBy": ["30031", "30067"]
   },
   {
     "fips": "31001",
@@ -25829,7 +25837,9 @@
     "stateFips": "46",
     "slug": "46102-oglala-lakota",
     "dataPath": "states/south_dakota/counties/46102_oglala_lakota/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "activeFrom": "2015-05-01",
+    "supersedes": ["46113"]
   },
   {
     "fips": "46103",
@@ -25889,7 +25899,9 @@
     "stateFips": "46",
     "slug": "46113-shannon",
     "dataPath": "states/south_dakota/counties/46113_shannon/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "2015-05-01",
+    "supersededBy": ["46102"]
   },
   {
     "fips": "46115",
@@ -29989,7 +30001,8 @@
     "stateFips": "51",
     "slug": "51005-alleghany",
     "dataPath": "states/virginia/counties/51005_alleghany/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "supersedes": ["51560"]
   },
   {
     "fips": "51007",
@@ -30059,7 +30072,8 @@
     "stateFips": "51",
     "slug": "51019-bedford",
     "dataPath": "states/virginia/counties/51019_bedford/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "supersedes": ["51515"]
   },
   {
     "fips": "51515",
@@ -30069,7 +30083,9 @@
     "stateFips": "51",
     "slug": "51515-bedford-city",
     "dataPath": "states/virginia/counties/51515_bedford_city/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "2013-07-01",
+    "supersededBy": ["51019"]
   },
   {
     "fips": "51021",
@@ -30239,7 +30255,9 @@
     "stateFips": "51",
     "slug": "51560-clifton-forge-city",
     "dataPath": "states/virginia/counties/51560_clifton_forge_city/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "2001-07-01",
+    "supersededBy": ["51005"]
   },
   {
     "fips": "51570",
@@ -30519,7 +30537,8 @@
     "stateFips": "51",
     "slug": "51083-halifax",
     "dataPath": "states/virginia/counties/51083_halifax/county_rates.csv.gz",
-    "retired": false
+    "retired": false,
+    "supersedes": ["51780"]
   },
   {
     "fips": "51650",
@@ -31129,7 +31148,9 @@
     "stateFips": "51",
     "slug": "51780-south-boston-city",
     "dataPath": "states/virginia/counties/51780_south_boston_city/county_rates.csv.gz",
-    "retired": false
+    "retired": true,
+    "activeThrough": "1995-06-30",
+    "supersededBy": ["51083"]
   },
   {
     "fips": "51175",

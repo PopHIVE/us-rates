@@ -512,6 +512,15 @@
       "description": "The Geographic Variation Public Use File reports Medicare fee-for-service spending and utilization aggregated to state and county, built from Medicare FFS claims. It covers traditional Medicare only -- beneficiaries enrolled in Medicare Advantage are excluded, so county figures reflect a shrinking share of the Medicare population over time.",
       "restrictions": "Public domain. U.S. federal government data are generally not subject to copyright restrictions.",
       "date_accessed": 2026
+    },
+    "cdc_wonder_natality": {
+      "name": "CDC WONDER Natality, 2016-2024 expanded",
+      "url": "https://wonder.cdc.gov/natality-expanded-current.html",
+      "organization": "Centers for Disease Control and Prevention, National Center for Health Statistics",
+      "organization_url": "https://www.cdc.gov/nchs/",
+      "description": "Counts of live births from the National Vital Statistics System birth certificate file, published through CDC WONDER's Natality database (D149, single race). Counts are available nationally, by state, and by county; CDC publishes county counts only for counties of 100,000 or more, with smaller counties pooled within each state. Cells representing 1-9 births are suppressed by CDC for confidentiality.",
+      "restrictions": "Data Use Restrictions: The Public Health Service Act (42 U.S.C. 242m(d)) provides that the data collected by the National Center for Health Statistics (NCHS) may be used only for the purpose for which they were obtained; any effort to determine the identity of any reported cases, or to use the information for any purpose other than for health statistical reporting and analysis, is against the law. Users will use these data for health statistical reporting and analysis only, will not present or publish birth counts of 9 or fewer, and will make no attempt to learn the identity of any person or establishment included in these data.",
+      "date_accessed": 2026
     }
   },
   "cms_colorectal_breast_prostate_lung_cancer": {
@@ -2331,6 +2340,804 @@
     "sources": [
       {
         "id": "acs5"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_births": {
+    "id": "natality_births",
+    "short_name": "Live births",
+    "long_name": "Number of Live Births",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births to residents of the area.",
+    "long_description": "Annual count of live births registered in the National Vital Statistics System, from CDC WONDER's Natality database (single race, 2016-2024). Counted by the mother's residence. National values are CDC WONDER's own national query rather than a sum of states, because suppressed state cells each hide 1-9 births and a state sum runs low. Counties with fewer than 100,000 residents are not published individually by CDC and are excluded here. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_1000_1499g": {
+    "id": "natality_bw_1000_1499g",
+    "short_name": "Infant birth weight: 1000 - 1499 grams",
+    "long_name": "Live Births by Infant birth weight: 1000 - 1499 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 1000 - 1499 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 1000 - 1499 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 1000 - 1499 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_1500_1999g": {
+    "id": "natality_bw_1500_1999g",
+    "short_name": "Infant birth weight: 1500 - 1999 grams",
+    "long_name": "Live Births by Infant birth weight: 1500 - 1999 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 1500 - 1999 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 1500 - 1999 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 1500 - 1999 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_2000_2499g": {
+    "id": "natality_bw_2000_2499g",
+    "short_name": "Infant birth weight: 2000 - 2499 grams",
+    "long_name": "Live Births by Infant birth weight: 2000 - 2499 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 2000 - 2499 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 2000 - 2499 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 2000 - 2499 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_2500_2999g": {
+    "id": "natality_bw_2500_2999g",
+    "short_name": "Infant birth weight: 2500 - 2999 grams",
+    "long_name": "Live Births by Infant birth weight: 2500 - 2999 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 2500 - 2999 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 2500 - 2999 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 2500 - 2999 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_3000_3499g": {
+    "id": "natality_bw_3000_3499g",
+    "short_name": "Infant birth weight: 3000 - 3499 grams",
+    "long_name": "Live Births by Infant birth weight: 3000 - 3499 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 3000 - 3499 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 3000 - 3499 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 3000 - 3499 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_3500_3999g": {
+    "id": "natality_bw_3500_3999g",
+    "short_name": "Infant birth weight: 3500 - 3999 grams",
+    "long_name": "Live Births by Infant birth weight: 3500 - 3999 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 3500 - 3999 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 3500 - 3999 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 3500 - 3999 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_4000_4499g": {
+    "id": "natality_bw_4000_4499g",
+    "short_name": "Infant birth weight: 4000 - 4499 grams",
+    "long_name": "Live Births by Infant birth weight: 4000 - 4499 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 4000 - 4499 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 4000 - 4499 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 4000 - 4499 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_4500_4999g": {
+    "id": "natality_bw_4500_4999g",
+    "short_name": "Infant birth weight: 4500 - 4999 grams",
+    "long_name": "Live Births by Infant birth weight: 4500 - 4999 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 4500 - 4999 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 4500 - 4999 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 4500 - 4999 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_under_500g": {
+    "id": "natality_bw_under_500g",
+    "short_name": "Infant birth weight: 499 grams or less",
+    "long_name": "Live Births by Infant birth weight: 499 grams or less",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 499 grams or less group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 499 grams or less. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 499 grams or less.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_500_999g": {
+    "id": "natality_bw_500_999g",
+    "short_name": "Infant birth weight: 500 - 999 grams",
+    "long_name": "Live Births by Infant birth weight: 500 - 999 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 500 - 999 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 500 - 999 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 500 - 999 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_bw_5000_plus_g": {
+    "id": "natality_bw_5000_plus_g",
+    "short_name": "Infant birth weight: 5000 - 8165 grams",
+    "long_name": "Live Births by Infant birth weight: 5000 - 8165 grams",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 5000 - 8165 grams group for infant birth weight.",
+    "long_description": "Count of live births to residents of the area, by infant birth weight: 5000 - 8165 grams. Infant birth weight in the 12-group resolution of CDC WONDER's Infant Birth Weight 12 variable (finer 14-group and 100 g versions are not pulled). From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown infant birth weight are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by infant birth weight: 5000 - 8165 grams.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_delivery_cesarean": {
+    "id": "natality_delivery_cesarean",
+    "short_name": "Delivery method: Cesarean",
+    "long_name": "Live Births by Delivery method: Cesarean",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Cesarean group for delivery method.",
+    "long_description": "Count of live births to residents of the area, by delivery method: Cesarean. Delivery method (vaginal or cesarean), from the plain three-level WONDER variable; the finer route variables are not pulled. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown delivery method are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by delivery method: Cesarean.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_delivery_vaginal": {
+    "id": "natality_delivery_vaginal",
+    "short_name": "Delivery method: Vaginal",
+    "long_name": "Live Births by Delivery method: Vaginal",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Vaginal group for delivery method.",
+    "long_description": "Count of live births to residents of the area, by delivery method: Vaginal. Delivery method (vaginal or cesarean), from the plain three-level WONDER variable; the finer route variables are not pulled. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown delivery method are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by delivery method: Vaginal.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_20_27wk": {
+    "id": "natality_ga_20_27wk",
+    "short_name": "Gestational age: 20 - 27 weeks",
+    "long_name": "Live Births by Gestational age: 20 - 27 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 20 - 27 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 20 - 27 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 20 - 27 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_28_31wk": {
+    "id": "natality_ga_28_31wk",
+    "short_name": "Gestational age: 28 - 31 weeks",
+    "long_name": "Live Births by Gestational age: 28 - 31 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 28 - 31 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 28 - 31 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 28 - 31 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_32_35wk": {
+    "id": "natality_ga_32_35wk",
+    "short_name": "Gestational age: 32 - 35 weeks",
+    "long_name": "Live Births by Gestational age: 32 - 35 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 32 - 35 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 32 - 35 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 32 - 35 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_36wk": {
+    "id": "natality_ga_36wk",
+    "short_name": "Gestational age: 36 weeks",
+    "long_name": "Live Births by Gestational age: 36 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 36 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 36 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 36 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_37_39wk": {
+    "id": "natality_ga_37_39wk",
+    "short_name": "Gestational age: 37 - 39 weeks",
+    "long_name": "Live Births by Gestational age: 37 - 39 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 37 - 39 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 37 - 39 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 37 - 39 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_40wk": {
+    "id": "natality_ga_40wk",
+    "short_name": "Gestational age: 40 weeks",
+    "long_name": "Live Births by Gestational age: 40 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 40 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 40 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 40 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_41wk": {
+    "id": "natality_ga_41wk",
+    "short_name": "Gestational age: 41 weeks",
+    "long_name": "Live Births by Gestational age: 41 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 41 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 41 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 41 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_42wk_plus": {
+    "id": "natality_ga_42wk_plus",
+    "short_name": "Gestational age: 42 weeks or more",
+    "long_name": "Live Births by Gestational age: 42 weeks or more",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 42 weeks or more group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: 42 weeks or more. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: 42 weeks or more.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_ga_under_20wk": {
+    "id": "natality_ga_under_20wk",
+    "short_name": "Gestational age: Under 20 weeks",
+    "long_name": "Live Births by Gestational age: Under 20 weeks",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Under 20 weeks group for gestational age.",
+    "long_description": "Count of live births to residents of the area, by gestational age: Under 20 weeks. Gestational age from the Obstetric Estimate method (OE Gestational Age Recode 10), which NCHS has preferred since about 2014 over the older LMP-based method. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown gestational age are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by gestational age: Under 20 weeks.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_married": {
+    "id": "natality_married",
+    "short_name": "Mother's marital status: Married",
+    "long_name": "Live Births by Mother's marital status: Married",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Married group for mother's marital status.",
+    "long_description": "Count of live births to residents of the area, by mother's marital status: Married. Mother's marital status, married or unmarried. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's marital status are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's marital status: Married.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_unmarried": {
+    "id": "natality_unmarried",
+    "short_name": "Mother's marital status: Unmarried",
+    "long_name": "Live Births by Mother's marital status: Unmarried",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Unmarried group for mother's marital status.",
+    "long_description": "Count of live births to residents of the area, by mother's marital status: Unmarried. Mother's marital status, married or unmarried. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's marital status are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's marital status: Unmarried.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_8th_or_less": {
+    "id": "natality_educ_8th_or_less",
+    "short_name": "Mother's education: 8th grade or less",
+    "long_name": "Live Births by Mother's education: 8th grade or less",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 8th grade or less group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: 8th grade or less. Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: 8th grade or less.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_9_12_no_diploma": {
+    "id": "natality_educ_9_12_no_diploma",
+    "short_name": "Mother's education: 9th through 12th grade with no diploma",
+    "long_name": "Live Births by Mother's education: 9th through 12th grade with no diploma",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 9th through 12th grade with no diploma group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: 9th through 12th grade with no diploma. Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: 9th through 12th grade with no diploma.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_associate": {
+    "id": "natality_educ_associate",
+    "short_name": "Mother's education: Associate degree (AA, AS)",
+    "long_name": "Live Births by Mother's education: Associate degree (AA, AS)",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Associate degree (AA, AS) group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: Associate degree (AA, AS). Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: Associate degree (AA, AS).",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_bachelor": {
+    "id": "natality_educ_bachelor",
+    "short_name": "Mother's education: Bachelor's degree (BA, AB, BS)",
+    "long_name": "Live Births by Mother's education: Bachelor's degree (BA, AB, BS)",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Bachelor's degree (BA, AB, BS) group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: Bachelor's degree (BA, AB, BS). Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: Bachelor's degree (BA, AB, BS).",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_doctorate_prof": {
+    "id": "natality_educ_doctorate_prof",
+    "short_name": "Mother's education: Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD)",
+    "long_name": "Live Births by Mother's education: Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD)",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD) group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD). Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD).",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_hs_or_ged": {
+    "id": "natality_educ_hs_or_ged",
+    "short_name": "Mother's education: High school graduate or GED completed",
+    "long_name": "Live Births by Mother's education: High school graduate or GED completed",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the High school graduate or GED completed group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: High school graduate or GED completed. Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: High school graduate or GED completed.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_master": {
+    "id": "natality_educ_master",
+    "short_name": "Mother's education: Master's degree (MA, MS, MEng, MEd, MSW, MBA)",
+    "long_name": "Live Births by Mother's education: Master's degree (MA, MS, MEng, MEd, MSW, MBA)",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Master's degree (MA, MS, MEng, MEd, MSW, MBA) group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: Master's degree (MA, MS, MEng, MEd, MSW, MBA). Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: Master's degree (MA, MS, MEng, MEd, MSW, MBA).",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_educ_some_college": {
+    "id": "natality_educ_some_college",
+    "short_name": "Mother's education: Some college credit, but not a degree",
+    "long_name": "Live Births by Mother's education: Some college credit, but not a degree",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Some college credit, but not a degree group for mother's education.",
+    "long_description": "Count of live births to residents of the area, by mother's education: Some college credit, but not a degree. Mother's education level. States whose birth-certificate revision does not collect this item are not represented, so national and state totals for it are not complete. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's education are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's education: Some college credit, but not a degree.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_plural_single": {
+    "id": "natality_plural_single",
+    "short_name": "Plurality: Single",
+    "long_name": "Live Births by Plurality: Single",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Single group for plurality.",
+    "long_description": "Count of live births to residents of the area, by plurality: Single. Plurality (single, twin, or triplet or higher). Exhaustive: the three categories sum to total births. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown plurality are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by plurality: Single.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_plural_triplet_plus": {
+    "id": "natality_plural_triplet_plus",
+    "short_name": "Plurality: Triplet or higher",
+    "long_name": "Live Births by Plurality: Triplet or higher",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Triplet or higher group for plurality.",
+    "long_description": "Count of live births to residents of the area, by plurality: Triplet or higher. Plurality (single, twin, or triplet or higher). Exhaustive: the three categories sum to total births. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown plurality are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by plurality: Triplet or higher.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_plural_twin": {
+    "id": "natality_plural_twin",
+    "short_name": "Plurality: Twin",
+    "long_name": "Live Births by Plurality: Twin",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Twin group for plurality.",
+    "long_description": "Count of live births to residents of the area, by plurality: Twin. Plurality (single, twin, or triplet or higher). Exhaustive: the three categories sum to total births. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown plurality are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by plurality: Twin.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_prenatal_1_3mo": {
+    "id": "natality_prenatal_1_3mo",
+    "short_name": "Trimester prenatal care began: 1st to 3rd month",
+    "long_name": "Live Births by Trimester prenatal care began: 1st to 3rd month",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 1st to 3rd month group for trimester prenatal care began.",
+    "long_description": "Count of live births to residents of the area, by trimester prenatal care began: 1st to 3rd month. Trimester in which prenatal care began. 'No prenatal care' is a substantive category, not a missing value. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown trimester prenatal care began are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by trimester prenatal care began: 1st to 3rd month.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_prenatal_4_6mo": {
+    "id": "natality_prenatal_4_6mo",
+    "short_name": "Trimester prenatal care began: 4th to 6th month",
+    "long_name": "Live Births by Trimester prenatal care began: 4th to 6th month",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 4th to 6th month group for trimester prenatal care began.",
+    "long_description": "Count of live births to residents of the area, by trimester prenatal care began: 4th to 6th month. Trimester in which prenatal care began. 'No prenatal care' is a substantive category, not a missing value. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown trimester prenatal care began are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by trimester prenatal care began: 4th to 6th month.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_prenatal_7mo_plus": {
+    "id": "natality_prenatal_7mo_plus",
+    "short_name": "Trimester prenatal care began: 7th to final month",
+    "long_name": "Live Births by Trimester prenatal care began: 7th to final month",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the 7th to final month group for trimester prenatal care began.",
+    "long_description": "Count of live births to residents of the area, by trimester prenatal care began: 7th to final month. Trimester in which prenatal care began. 'No prenatal care' is a substantive category, not a missing value. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown trimester prenatal care began are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by trimester prenatal care began: 7th to final month.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_prenatal_none": {
+    "id": "natality_prenatal_none",
+    "short_name": "Trimester prenatal care began: No prenatal care",
+    "long_name": "Live Births by Trimester prenatal care began: No prenatal care",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the No prenatal care group for trimester prenatal care began.",
+    "long_description": "Count of live births to residents of the area, by trimester prenatal care began: No prenatal care. Trimester in which prenatal care began. 'No prenatal care' is a substantive category, not a missing value. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown trimester prenatal care began are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by trimester prenatal care began: No prenatal care.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_tobacco_no": {
+    "id": "natality_tobacco_no",
+    "short_name": "Mother's tobacco use: No",
+    "long_name": "Live Births by Mother's tobacco use: No",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the No group for mother's tobacco use.",
+    "long_description": "Count of live births to residents of the area, by mother's tobacco use: No. Whether the mother used tobacco, as a yes or no variable; cigarette-count variables are not pulled. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's tobacco use are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's tobacco use: No.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
+      }
+    ],
+    "display_status": "primary"
+  },
+  "natality_tobacco_yes": {
+    "id": "natality_tobacco_yes",
+    "short_name": "Mother's tobacco use: Yes",
+    "long_name": "Live Births by Mother's tobacco use: Yes",
+    "category": "maternal_and_infant_health",
+    "subcategory": "birth_outcomes_and_fertility",
+    "short_description": "Count of live births in the Yes group for mother's tobacco use.",
+    "long_description": "Count of live births to residents of the area, by mother's tobacco use: Yes. Whether the mother used tobacco, as a yes or no variable; cigarette-count variables are not pulled. From CDC WONDER Natality (single race, 2016-2024). Each breakdown is queried on its own rather than crossed with the others, so this count is not split further by age, sex, or race. Births with an unknown mother's tobacco use are not published as a measure. Cells of 1-9 births are suppressed and left blank rather than estimated.",
+    "statement": "In {location}, there were {value} live births in {time}, by mother's tobacco use: Yes.",
+    "measure_type": "number",
+    "unit": "Live births",
+    "time_resolution": "Year",
+    "sources": [
+      {
+        "id": "cdc_wonder_natality"
       }
     ],
     "display_status": "primary"
