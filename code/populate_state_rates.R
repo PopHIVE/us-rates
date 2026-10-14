@@ -567,28 +567,17 @@ natality_long <- vroom(
   ) %>%
   filter(!is.na(value))
 
-# CDC WONDER natality detail breakdowns: one measure per (dimension, category),
-# e.g. natality_delivery_cesarean; names come from resources/natality_detail_measures.csv. Each dimension is queried on its own,
-# so a count is never split by another breakdown. "Unknown" is a placeholder
-# and is not published as a measure.
-natality_detail_long <- vroom(
+# CDC WONDER natality percents (code/natality_helpers.R): low birth weight,
+# preterm birth, and mother's education groups, each as a share of births with
+# a known value. Suppressed cells drop the percent rather than estimating it.
+source(file.path(REPO_ROOT, "code/natality_helpers.R"))
+natality_pct_long <- vroom(
   file.path(INGEST_PATH, "cdc_wonder_natality/standard/data_state_detail.csv.gz"),
   show_col_types = FALSE
 ) %>%
-  filter(
-    nchar(geography) == 2, geography != "00",
-    category != "Unknown", !is.na(natality_births)
-  ) %>%
-  inner_join(
-    vroom(file.path(REPO_ROOT, "resources/natality_detail_measures.csv"), show_col_types = FALSE),
-    by = c("dimension", "category")
-  ) %>%
-  transmute(
-    geography,
-    time    = year_end(format(as.Date(time), "%Y")),
-    measure = measure_id,
-    value   = natality_births
-  )
+  filter(nchar(geography) == 2, geography != "00") %>%
+  mutate(time = year_end(format(as.Date(time), "%Y"))) %>%
+  natality_percent_long()
 
 combined <- bind_rows(
   census_direct_long, chr_long, census_long, brfss_long,
@@ -596,7 +585,7 @@ combined <- bind_rows(
   nchs_overdose_rate_long, healthmap_long, nssp_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long, ahrf_long,
   nchs_long, nchs_causes_long, noaa_heat_long, jhu_measles_long, bls_long, hud_long,
-  natality_long, natality_detail_long
+  natality_long, natality_pct_long
 ) %>%
   arrange(geography, time, measure)
 
