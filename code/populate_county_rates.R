@@ -500,6 +500,28 @@ nssp_long <- vroom(
     time = as.Date(time)
   )
 
+# Connecticut's 2022 planning regions have no NSSP rows of their own; NSSP still
+# reports the retired counties. Derive each region's rate from the legacy
+# counties in geography-crosswalk.json: a weighted average of the legacy values
+# it draws from, weighted by percent_of_legacy and computed per week over the
+# legacy counties that report that week. The shares are town-based, not
+# population-based, so these are approximations.
+ct_planning_crosswalk <- jsonlite::fromJSON(
+  file.path(REPO_ROOT, "geography-crosswalk.json")
+)$geographies %>%
+  purrr::imap_dfr(~ data.frame(
+    region = .y,
+    legacy = .x$legacy_geographies$fips,
+    share  = .x$legacy_geographies$percent_of_legacy
+  )) %>%
+  filter(startsWith(region, "09"))
+
+nssp_planning_long <- nssp_long %>%
+  inner_join(ct_planning_crosswalk, by = c("geography" = "legacy"),
+             relationship = "many-to-many") %>%
+  group_by(geography = region, time, measure) %>%
+  summarise(value = round(sum(value * share) / sum(share), 2), .groups = "drop")
+
 # NCHS drug overdose death rate (per capita), distinct from the raw monthly
 # count in nchs_long above, which comes from a different upstream file that
 # has no rate column.
@@ -621,7 +643,7 @@ combined <- bind_rows(
   cms_long, nchs_long, ahrf_long, usda_long, bls_long, hud_long, natality_long, natality_pct_long,
   nhtsa_long, nhtsa_crash_type_long, delphi_doc_long, delphi_hosp_long,
   epic_dx_long, noaa_heat_long, jhu_measles_long,
-  ww_measles_long, epic_heat_long, nssp_long, nchs_overdose_rate_long
+  ww_measles_long, epic_heat_long, nssp_long, nssp_planning_long, nchs_overdose_rate_long
 ) %>%
   # Guards against duplicate (geography, time, measure) rows from upstream
   # sources -- e.g. NCHS mortality repeats Bedford (51019) and Alleghany
